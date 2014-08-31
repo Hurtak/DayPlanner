@@ -1,4 +1,3 @@
-
 .item {
 	box-sizing: border-box;
 	width: 50%;
@@ -16,5 +15,4 @@
 	outline: solid 2px #000;
 	cursor: pointer;
 	transition: .3s all;
-
 }
