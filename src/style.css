@@ -34,11 +34,10 @@ body {
 }
 
 
-/* not used */
 .item .time {
 	background-color: rgba(255, 0, 0, .5);
-	width: 50%;
-	height: 50%;
+	width: 50px;
+	height: 100%;
 	float: right;
 }
 
