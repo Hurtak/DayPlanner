@@ -1,0 +1,32 @@
+var Time = function() {
+
+	// converts "95" minutes to "01:35"
+	var minutesToTime = function(minutes) {
+		var hours = Math.floor(minutes / 60 % 24).toString();
+		minutes = (minutes % 60).toString();
+
+		if (minutes.length === 1) {
+			minutes = "0" + minutes;
+		}
+		while (hours.length < 2) {
+			hours = "0" + hours;
+		}		
+
+		return hours + ":" + minutes;
+	};
+
+	// converts "01:35" minutes to "95"
+	var timeToMinutes = function(time) {
+		time = time.split(":");
+
+		return time[0] * 60 + time[1] * 1; 
+	};
+
+	var init = function() {
+		console.log(minutesToTime(24* 60 +1));
+	};
+
+	return {
+		init: init
+	};
+}();
