@@ -19,14 +19,15 @@ var Time = function() {
 	var timeToMinutes = function(time) {
 		time = time.split(":");
 
-		return time[0] * 60 + time[1] * 1; 
+		return time[0] * 60 + time[1] * 1;
 	};
 
 	var init = function() {
-		console.log(minutesToTime(24* 60 +1));
 	};
 
 	return {
-		init: init
+		init: init, 
+		timeToMinutes: timeToMinutes,
+		minutesToTime: minutesToTime
 	};
 }();

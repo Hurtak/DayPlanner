@@ -4,6 +4,8 @@ var DayPlanner = function() {
 	var openedItemHeight = 200; // px
 	var openedItem;
 
+	var startTime = "00:00";
+
 	var closeItem = function(el) {
 		el.style.height = el.getAttribute("data-duration") + "px";
 	};
@@ -29,6 +31,10 @@ var DayPlanner = function() {
 			items[i].onclick = function() {
 				openItem(this);
 			};
+
+			//calculates times
+			items[i].querySelector(".time").innerHTML = Time.minutesToTime(Time.timeToMinutes(startTime) + items[i].getAttribute("data-duration") * 1);
+			startTime = Time.minutesToTime(items[i].getAttribute("data-duration") * 1 + Time.timeToMinutes(startTime));
 		}
 	};
 
