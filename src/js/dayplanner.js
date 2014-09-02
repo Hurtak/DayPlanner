@@ -35,7 +35,7 @@ var DayPlanner = function() {
 		items = document.querySelectorAll('.item');
 		menu = document.getElementById('menu');
 
-		document.getElementById('start-time').innerHTML =  startTime;
+		document.getElementById('start-time').innerHTML = startTime;
 
 		// items init
 		for (var i = 0; i < items.length; i++) {
@@ -44,7 +44,7 @@ var DayPlanner = function() {
 
 			// add onclick to display options
 			items[i].onclick = function() {
-				openItem(this);
+				clickOnItem(this);
 			};
 
 		}
@@ -63,18 +63,22 @@ var DayPlanner = function() {
 
 			// add onclick event
 			newItem.onclick = function() {
-				openItem(this);
+				clickOnItem(this);
 			};
 			
+			// opens menu on newly created item
+			openItem(newItem);
+
 			// recalculate times
 			calculateTimes(document.querySelectorAll('.item'), startTime);
 		};
 
+		
 		// delete button init
 		var deleteButton = document.getElementById("delete-item");
 		deleteButton.onclick = function() {
 			// add default item behind selected item
-			var selectedItem = deleteButton.parentNode.parentNode;
+			var selectedItem = this.parentNode.parentNode;
 			selectedItem.outerHTML = "";
 
 			// recalculate times
@@ -85,18 +89,25 @@ var DayPlanner = function() {
 		var durationInput = document.getElementById("duration");
 		var plusButton = document.getElementById("duration-plus");
 		plusButton.onclick = function() {
-			durationInput.value = durationInput.value * 1 + 10;
+			this.value = this.value * 1 + 10;
 		};
 		var minusButton = document.getElementById("duration-minus");
 		minusButton.onclick = function() {
-			durationInput.value = durationInput.value * 1 - 10;
+			this.value = this.value * 1 - 10;
 		};		
 
 		//hide menu button
-		
+		var hideMenuButton = document.getElementById("hide-menu");
+		hideMenuButton.onclick = function() {
+			var item = this.parentNode.parentNode;
+
+			closeItem(item);
+			hideMenu(item);
+			alert(1);
+		};			
 	};
 
-	var openItem = function(item) {
+	var clickOnItem = function(item) {
 		// click folded on item
 		if (item.getAttribute("data-duration") === item.style.height.slice(0, - 2)) {
 			item.style.height = openedItemHeight + "px";
@@ -108,9 +119,15 @@ var DayPlanner = function() {
 			showMenu(item);
 		// click different item, or the same opened item
 		} else {
-			// item.style.height = item.getAttribute("data-duration") + "px";
-			// hideMenu(item);
+			closeItem(item);
+			hideMenu(item);
 		}
+	};
+
+	var openItem = function(item) {
+		item.style.height = openedItemHeight + "px";
+		openedItem = item;
+		showMenu(item);		
 	};
 
 	return {
