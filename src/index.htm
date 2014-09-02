@@ -14,17 +14,6 @@
 <script src="js/dayplanner.js"></script>
 <script src="js/time.js"></script>
 
-<div id="menu">
-	<ul>
-		<li><b>menu</b></li>
-		<li>
-			<i>duration</i>
-			<input type="text">
-		</li>
-		
-	</ul>
-</div>
-
 <div id="item-container">
 	<div class="item" data-duration="60">
 		<div class="content">
@@ -67,6 +56,28 @@
 		</div>
 		<div class="time">
 
+		</div>
+	</div>
+</div>
+
+<div class="hidden">
+	<div id="menu">
+		<b>menu</b><br>
+		<i>duration</i><input type="text"><br>
+		<button id="add-item">Add</button>
+	</div>
+
+	<div id="default-item">
+		<div class="item" data-duration="60">
+			<div class="content">
+				60
+			</div>
+			<div id="start-time" class="start-time">
+			
+			</div>
+			<div class="time">
+
+			</div>
 		</div>
 	</div>
 </div>

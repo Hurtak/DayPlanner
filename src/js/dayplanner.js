@@ -26,6 +26,7 @@ var DayPlanner = function() {
 		document.getElementById('start-time').innerHTML =  startTime;
 		var previousTime = startTime;
 
+		// items init
 		for (var i = 0; i < items.length; i++) {
 			// set height according to duration (1 minute = 1px)
 			items[i].style.height = items[i].getAttribute("data-duration") + "px";
@@ -39,6 +40,18 @@ var DayPlanner = function() {
 			items[i].querySelector(".time").innerHTML = Time.minutesToTime(Time.timeToMinutes(previousTime) + items[i].getAttribute("data-duration") * 1);
 			previousTime = Time.minutesToTime(items[i].getAttribute("data-duration") * 1 + Time.timeToMinutes(previousTime));
 		}
+
+		// add button init
+		var addButton = document.getElementById("add-item");
+		addButton.onclick = function() {
+			// add default item behind selected item
+			var itemNode = addButton.parentNode.parentNode;
+			
+			var defaultItem = document.getElementById("default-item");
+			defaultItem = defaultItem.cloneNode(true);
+
+			itemNode.parentNode.insertBefore(defaultItem, itemNode.nextSibling);
+		};
 	};
 
 	var openItem = function(el) {
