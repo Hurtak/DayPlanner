@@ -6,7 +6,8 @@ var DayPlanner = function() {
 
 	var startTime = "00:00";
 
-	var closeItem = function(item) {
+	// set height according to duration (1 minute = 1px)
+	var resetHeight = function(item) {
 		item.style.height = item.getAttribute("data-duration") + "px";
 	};
 
@@ -35,22 +36,28 @@ var DayPlanner = function() {
 		items = document.querySelectorAll('.item');
 		menu = document.getElementById('menu');
 
+		// initialize first time in items start/end times 
 		document.getElementById('start-time').innerHTML = startTime;
 
 		// items init
 		for (var i = 0; i < items.length; i++) {
 			// set height according to duration (1 minute = 1px)
-			items[i].style.height = items[i].getAttribute("data-duration") + "px";
+			resetHeight(items[i]);
 
 			// add onclick to display options
 			items[i].onclick = function() {
 				clickOnItem(this);
 			};
-
 		}
-		// calculates times
+
+		// calculates start/end times of items
 		calculateTimes(items, startTime);
 
+		//initialize menu
+		menuInit();
+	};
+
+	var menuInit = function() {
 		// add button init
 		var addButton = document.getElementById("add-item");
 		addButton.onclick = function() {
@@ -58,7 +65,7 @@ var DayPlanner = function() {
 			var defaultItem = document.getElementById("default-item").children[0];
 			defaultItem = defaultItem.cloneNode(true);
 
-			var itemNode = addButton.parentNode.parentNode;
+			var itemNode = this.parentNode.parentNode;
 			var newItem = itemNode.parentNode.insertBefore(defaultItem, itemNode.nextSibling);
 
 			// add onclick event
@@ -101,25 +108,26 @@ var DayPlanner = function() {
 		hideMenuButton.onclick = function() {
 			var item = this.parentNode.parentNode;
 
-			closeItem(item);
+			resetHeight(item);
 			hideMenu(item);
 			alert(1);
-		};			
+		};	
 	};
+
 
 	var clickOnItem = function(item) {
 		// click folded on item
 		if (item.getAttribute("data-duration") === item.style.height.slice(0, - 2)) {
 			item.style.height = openedItemHeight + "px";
 			if (openedItem && openedItem !== item) {
-				closeItem(openedItem);
+				resetHeight(openedItem);
 			}
 			openedItem = item;
 
 			showMenu(item);
 		// click different item, or the same opened item
 		} else {
-			closeItem(item);
+			resetHeight(item);
 			hideMenu(item);
 		}
 	};
