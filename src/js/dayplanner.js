@@ -6,13 +6,16 @@ var DayPlanner = function() {
 
 	var startTime = "00:00";
 
-	var closeItem = function(el) {
-		el.style.height = el.getAttribute("data-duration") + "px";
+	var closeItem = function(item) {
+		item.style.height = item.getAttribute("data-duration") + "px";
 	};
 
 	var showMenu = function(item) {
 		item.appendChild(menu);
 		menu.style.display = "block";
+
+		// refresh duration input
+		document.getElementById("duration").value = item.getAttribute("data-duration");
 	};
 
 	var hideMenu = function(item) {
@@ -63,6 +66,17 @@ var DayPlanner = function() {
 				openItem(this);
 			};
 			
+			// recalculate times
+			calculateTimes(document.querySelectorAll('.item'), startTime);
+		};
+
+		// delete button init
+		var deleteButton = document.getElementById("delete-item");
+		deleteButton.onclick = function() {
+			// add default item behind selected item
+			var selectedItem = deleteButton.parentNode.parentNode;
+			selectedItem.outerHTML = "";
+
 			// recalculate times
 			calculateTimes(document.querySelectorAll('.item'), startTime);
 		};
