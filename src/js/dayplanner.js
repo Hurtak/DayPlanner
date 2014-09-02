@@ -47,11 +47,18 @@ var DayPlanner = function() {
 			// add default item behind selected item
 			var itemNode = addButton.parentNode.parentNode;
 			
-			var defaultItem = document.getElementById("default-item");
+			var defaultItem = document.getElementById("default-item").children[0];
 			defaultItem = defaultItem.cloneNode(true);
 
-			itemNode.parentNode.insertBefore(defaultItem, itemNode.nextSibling);
+			var newItem = itemNode.parentNode.insertBefore(defaultItem, itemNode.nextSibling);
+
+			// add onclick event
+			newItem.onclick = function() {
+				openItem(this);
+			};
+			
 		};
+
 	};
 
 	var openItem = function(el) {
