@@ -1,14 +1,16 @@
 var DayPlanner = function() {
-	var items, menu;
+	var menu;
 
 	var openedItemHeight = 200; // px
-	var openedItem;
 
 	var startTime = "00:00";
 
 	// set height according to duration (1 minute = 1px)
-	var resetHeight = function(item) {
-		item.style.height = item.getAttribute("data-duration") + "px";
+	var resetItemsHeight = function() {
+		var items = document.querySelectorAll('.item');
+		for (var i = 0; i < items.length; i++) {
+			items[i].style.height = items[i].getAttribute("data-duration") + "px";
+		}
 	};
 
 	var showMenu = function(item) {
@@ -19,13 +21,14 @@ var DayPlanner = function() {
 		document.getElementById("duration").value = item.getAttribute("data-duration");
 	};
 
-	var hideMenu = function(item) {
-		item.removeChild(menu);
+	var hideMenu = function() {
+		document.getElementById("menu").outerHTML = "";
 	};
 
-	var calculateTimes = function(items, startTime) {
-		var previousTime = startTime;
+	var calculateTimes = function() {
+		var items = document.querySelectorAll('.item');
 
+		var previousTime = startTime;
 		for (var i = 0; i < items.length; i++) {
 			items[i].querySelector(".time").innerHTML = Time.minutesToTime(Time.timeToMinutes(previousTime) + items[i].getAttribute("data-duration") * 1);
 			previousTime = Time.minutesToTime(items[i].getAttribute("data-duration") * 1 + Time.timeToMinutes(previousTime));		
@@ -33,25 +36,25 @@ var DayPlanner = function() {
 	};
 
 	var init = function() {
-		items = document.querySelectorAll('.item');
 		menu = document.getElementById('menu');
 
 		// initialize first time in items start/end times 
 		document.getElementById('start-time').innerHTML = startTime;
 
+		var items = document.querySelectorAll('.content');
 		// items init
 		for (var i = 0; i < items.length; i++) {
-			// set height according to duration (1 minute = 1px)
-			resetHeight(items[i]);
-
 			// add onclick to display options
 			items[i].onclick = function() {
-				clickOnItem(this);
+				clickOnItem(this.parentNode);
 			};
 		}
 
+		// set height according to duration (1 minute = 1px)
+		resetItemsHeight();
+
 		// calculates start/end times of items
-		calculateTimes(items, startTime);
+		calculateTimes();
 
 		//initialize menu
 		menuInit();
@@ -68,19 +71,17 @@ var DayPlanner = function() {
 			var itemNode = this.parentNode.parentNode;
 			var newItem = itemNode.parentNode.insertBefore(defaultItem, itemNode.nextSibling);
 
-			// add onclick event
-			newItem.onclick = function() {
-				clickOnItem(this);
+			// add onclick event on newly created item
+			newItem.querySelector(".content").onclick = function() {
+				clickOnItem(this.parentNode);
 			};
-			
+
 			// opens menu on newly created item
-			openItem(newItem);
-
+			clickOnItem(newItem);
 			// recalculate times
-			calculateTimes(document.querySelectorAll('.item'), startTime);
+			calculateTimes();
 		};
-
-		
+	
 		// delete button init
 		var deleteButton = document.getElementById("delete-item");
 		deleteButton.onclick = function() {
@@ -89,53 +90,36 @@ var DayPlanner = function() {
 			selectedItem.outerHTML = "";
 
 			// recalculate times
-			calculateTimes(document.querySelectorAll('.item'), startTime);
+			calculateTimes();
 		};
 
 		// duration buttons
 		var durationInput = document.getElementById("duration");
+
 		var plusButton = document.getElementById("duration-plus");
 		plusButton.onclick = function() {
-			this.value = this.value * 1 + 10;
+			durationInput.value = durationInput.value * 1 + 10;
 		};
+
 		var minusButton = document.getElementById("duration-minus");
 		minusButton.onclick = function() {
-			this.value = this.value * 1 - 10;
-		};		
+			durationInput.value = durationInput.value * 1 - 10;
+		};
 
 		//hide menu button
 		var hideMenuButton = document.getElementById("hide-menu");
 		hideMenuButton.onclick = function() {
 			var item = this.parentNode.parentNode;
 
-			resetHeight(item);
-			hideMenu(item);
-			alert(1);
+			resetItemsHeight();
+			hideMenu();
 		};	
 	};
 
-
 	var clickOnItem = function(item) {
-		// click folded on item
-		if (item.getAttribute("data-duration") === item.style.height.slice(0, - 2)) {
-			item.style.height = openedItemHeight + "px";
-			if (openedItem && openedItem !== item) {
-				resetHeight(openedItem);
-			}
-			openedItem = item;
-
-			showMenu(item);
-		// click different item, or the same opened item
-		} else {
-			resetHeight(item);
-			hideMenu(item);
-		}
-	};
-
-	var openItem = function(item) {
+		resetItemsHeight();
 		item.style.height = openedItemHeight + "px";
-		openedItem = item;
-		showMenu(item);		
+		showMenu(item);
 	};
 
 	return {
