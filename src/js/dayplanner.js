@@ -19,12 +19,20 @@ var DayPlanner = function() {
 		item.removeChild(menu);
 	};
 
+	var calculateTimes = function(items, startTime) {
+		var previousTime = startTime;
+
+		for (var i = 0; i < items.length; i++) {
+			items[i].querySelector(".time").innerHTML = Time.minutesToTime(Time.timeToMinutes(previousTime) + items[i].getAttribute("data-duration") * 1);
+			previousTime = Time.minutesToTime(items[i].getAttribute("data-duration") * 1 + Time.timeToMinutes(previousTime));		
+		}
+	};
+
 	var init = function() {
 		items = document.querySelectorAll('.item');
 		menu = document.getElementById('menu');
 
 		document.getElementById('start-time').innerHTML =  startTime;
-		var previousTime = startTime;
 
 		// items init
 		for (var i = 0; i < items.length; i++) {
@@ -36,20 +44,18 @@ var DayPlanner = function() {
 				openItem(this);
 			};
 
-			// calculates times
-			items[i].querySelector(".time").innerHTML = Time.minutesToTime(Time.timeToMinutes(previousTime) + items[i].getAttribute("data-duration") * 1);
-			previousTime = Time.minutesToTime(items[i].getAttribute("data-duration") * 1 + Time.timeToMinutes(previousTime));
 		}
+		// calculates times
+		calculateTimes(items, startTime);
 
 		// add button init
 		var addButton = document.getElementById("add-item");
 		addButton.onclick = function() {
 			// add default item behind selected item
-			var itemNode = addButton.parentNode.parentNode;
-			
 			var defaultItem = document.getElementById("default-item").children[0];
 			defaultItem = defaultItem.cloneNode(true);
 
+			var itemNode = addButton.parentNode.parentNode;
 			var newItem = itemNode.parentNode.insertBefore(defaultItem, itemNode.nextSibling);
 
 			// add onclick event
@@ -57,6 +63,8 @@ var DayPlanner = function() {
 				openItem(this);
 			};
 			
+			// recalculate times
+			calculateTimes(document.querySelectorAll('.item'), startTime);
 		};
 
 	};
