@@ -81,22 +81,35 @@ var DayPlanner = function() {
 			calculateTimes(document.querySelectorAll('.item'), startTime);
 		};
 
+		// duration buttons
+		var durationInput = document.getElementById("duration");
+		var plusButton = document.getElementById("duration-plus");
+		plusButton.onclick = function() {
+			durationInput.value = durationInput.value * 1 + 10;
+		};
+		var minusButton = document.getElementById("duration-minus");
+		minusButton.onclick = function() {
+			durationInput.value = durationInput.value * 1 - 10;
+		};		
+
+		//hide menu button
+		
 	};
 
-	var openItem = function(el) {
+	var openItem = function(item) {
 		// click folded on item
-		if (el.getAttribute("data-duration") === el.style.height.slice(0, - 2)) {
-			el.style.height = openedItemHeight + "px";
-			if (openedItem && openedItem !== el) {
+		if (item.getAttribute("data-duration") === item.style.height.slice(0, - 2)) {
+			item.style.height = openedItemHeight + "px";
+			if (openedItem && openedItem !== item) {
 				closeItem(openedItem);
 			}
-			openedItem = el;
+			openedItem = item;
 
-			showMenu(el);
+			showMenu(item);
 		// click different item, or the same opened item
 		} else {
-			el.style.height = el.getAttribute("data-duration") + "px";
-			hideMenu(el);
+			// item.style.height = item.getAttribute("data-duration") + "px";
+			// hideMenu(item);
 		}
 	};
 
