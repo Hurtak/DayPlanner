@@ -10,7 +10,7 @@ var DayPlanner = function() {
 	var resetItemsHeight = function() {
 		var items = document.querySelectorAll('.item');
 		for (var i = 0; i < items.length; i++) {
-			resizeItem(items[i], items[i].getAttribute("data-duration"));
+			resizeItem(items[i], getItemDuration(items[i]));
 		}
 	};
 
@@ -26,8 +26,25 @@ var DayPlanner = function() {
 		item.appendChild(menu);
 		menu.style.display = "block";
 
+		refreshMenu();
+	};
+
+	var refreshMenu = function() {
+		var openedItem = getOpenedItem();
+
+		// refresh change item name input
+		document.getElementById("name-input").value = getItemName(openedItem);
+	
 		// refresh duration input
-		document.getElementById("duration").value = item.getAttribute("data-duration");
+		document.getElementById("duration-input").value = getItemDuration(openedItem);
+	};
+
+	var getItemDuration = function(item) {
+		return item.querySelector(".duration").innerHTML.trim() * 1;
+	};
+
+	var getItemName = function(item) {
+		return item.querySelector(".item-name").innerHTML.trim();
 	};
 
 	var hideMenu = function() {
@@ -39,8 +56,8 @@ var DayPlanner = function() {
 
 		var previousTime = startTime;
 		for (var i = 0; i < items.length; i++) {
-			items[i].querySelector(".time").innerHTML = Time.minutesToTime(Time.timeToMinutes(previousTime) + items[i].getAttribute("data-duration") * 1);
-			previousTime = Time.minutesToTime(items[i].getAttribute("data-duration") * 1 + Time.timeToMinutes(previousTime));		
+			items[i].querySelector(".time").innerHTML = Time.minutesToTime(Time.timeToMinutes(previousTime) + getItemDuration(items[i]));
+			previousTime = Time.minutesToTime(getItemDuration(items[i]) + Time.timeToMinutes(previousTime));		
 		}
 	};
 
@@ -102,12 +119,12 @@ var DayPlanner = function() {
 		};
 
 		// duration buttons
-		var durationInput = document.getElementById("duration");
+		var durationInput = document.getElementById("duration-input");
 		var changeDurationInput = function(amount) {
 			if (Lib.isNumber(durationInput.value)) {
 				durationInput.value = durationInput.value * 1 + amount;
 			} else {
-				durationInput.value = getOpenedItem().getAttribute("data-duration");
+				durationInput.value = getItemDuration(getOpenedItem());
 			}
 		};
 
@@ -134,7 +151,7 @@ var DayPlanner = function() {
 			// resizes item height according to input value
 			var openedItem = getOpenedItem();
 			if (Lib.isNumber(durationInput.value) && durationInput.value >= minItemInterval) {
-				getOpenedItem().setAttribute('data-duration', durationInput.value);
+				getOpenedItem().querySelector(".duration").innerHTML = durationInput.value;
 			}
 
 			resetItemsHeight();
@@ -145,7 +162,7 @@ var DayPlanner = function() {
 
 	var clickOnItem = function(item) {
 		resetItemsHeight();
-		item.style.height = openedItemHeight + "px";
+		resizeItem(item, openedItemHeight);
 		showMenu(item);
 	};
 

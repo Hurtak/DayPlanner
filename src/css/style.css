@@ -45,6 +45,10 @@ body {
 	transition: .3s all;
 }
 
+.duration {
+	float: right;
+	
+}
 
 .time, .start-time {
 	background-color: rgba(0, 0, 255, .5);
