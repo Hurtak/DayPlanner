@@ -29,6 +29,10 @@ body {
 	transition: .3s all;
 }
 
+.item:first-child {
+	border-top: 0;
+}
+
 .content {
 	padding-left: 15px;
 	display: table-cell;
