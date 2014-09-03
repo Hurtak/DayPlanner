@@ -2,7 +2,8 @@ var DayPlanner = function() {
 	var menu;
 
 	var openedItemHeight = 200; // px
-	var minItemInterval = 5; // min
+	var minItemInterval = 1; // min
+	var maxItemInterval = 120; // min
 
 	var startTime = "00:00";
 
@@ -119,23 +120,42 @@ var DayPlanner = function() {
 		};
 
 		// duration buttons
-		var durationInput = document.getElementById("duration-input");
-		var changeDurationInput = function(amount) {
-			if (Lib.isNumber(durationInput.value)) {
-				durationInput.value = durationInput.value * 1 + amount;
-			} else {
-				durationInput.value = getItemDuration(getOpenedItem());
+		var addDuration = function(amount) {
+			var durationInput = document.getElementById("duration-input");
+
+			amount = amount * 1 + durationInput.value * 1;
+			if (amount < minItemInterval) {
+				amount = minItemInterval;
+			} else if (amount > maxItemInterval) {
+				amount = maxItemInterval;
 			}
+
+			getOpenedItem().querySelector(".duration").innerHTML = amount;
+			durationInput.value = amount;
+			
+			calculateTimes();
+		};
+
+		var changeDuration = function(amount) {
+			if (Lib.isNumber(amount) && amount >= minItemInterval && amount <= maxItemInterval) {
+				getOpenedItem().querySelector(".duration").innerHTML = amount;
+				calculateTimes();
+			}
+		};
+
+		var durationInput = document.getElementById("duration-input");
+		durationInput.oninput = function() {
+			changeDuration(this.value);
 		};
 
 		var plusButton = document.getElementById("duration-plus");
 		plusButton.onclick = function() {
-			changeDurationInput(10);
+			addDuration(10);
 		};
 
 		var minusButton = document.getElementById("duration-minus");
 		minusButton.onclick = function() {
-			changeDurationInput(-10);
+			addDuration(-10);
 		};
 
 		//hide menu button
@@ -148,10 +168,6 @@ var DayPlanner = function() {
 		// save button
 		var saveButton = document.getElementById("save");
 		saveButton.onclick = function() {
-			// resizes item height according to input value
-			if (Lib.isNumber(durationInput.value) && durationInput.value >= minItemInterval) {
-				getOpenedItem().querySelector(".duration").innerHTML = durationInput.value;
-			}
 
 			// changes name of item
 			var nameInput = document.getElementById("name-input");
