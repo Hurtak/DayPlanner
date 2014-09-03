@@ -22,11 +22,7 @@ var Time = function() {
 		return time[0] * 60 + time[1] * 1;
 	};
 
-	var init = function() {
-	};
-
 	return {
-		init: init, 
 		timeToMinutes: timeToMinutes,
 		minutesToTime: minutesToTime
 	};

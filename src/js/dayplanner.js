@@ -149,13 +149,16 @@ var DayPlanner = function() {
 		var saveButton = document.getElementById("save");
 		saveButton.onclick = function() {
 			// resizes item height according to input value
-			var openedItem = getOpenedItem();
 			if (Lib.isNumber(durationInput.value) && durationInput.value >= minItemInterval) {
 				getOpenedItem().querySelector(".duration").innerHTML = durationInput.value;
 			}
 
-			resetItemsHeight();
+			// changes name of item
+			var nameInput = document.getElementById("name-input");
+			getOpenedItem().querySelector(".item-name").innerHTML = nameInput.value;
+
 			hideMenu();
+			resetItemsHeight();
 			calculateTimes();
 		};
 	};
