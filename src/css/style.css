@@ -18,11 +18,9 @@ body {
 	display: table;
 	box-sizing: border-box;
 	width: 50%;
-	height: 100px;
 
 	text-align: left;
-	margin: auto;
-	padding-left: 15px;
+	margin: 0 auto;
 
 	background-color: rgba(0, 0, 0, .5);
 	border-top: 2px solid yellow;
@@ -31,16 +29,18 @@ body {
 	transition: .3s all;
 }
 
-.item:hover {
+.content {
+	padding-left: 15px;
+	display: table-cell;
+	vertical-align: middle;
+	width: 100%;
+}
+.content:hover {
 	background-color: rgba(255, 0, 0, .8);
 	cursor: pointer;
 	transition: .3s all;
 }
 
-.content {
-	display: table-cell;
-	vertical-align: middle;
-}
 
 .time, .start-time {
 	background-color: rgba(0, 0, 255, .5);
