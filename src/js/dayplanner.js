@@ -2,6 +2,7 @@ var DayPlanner = function() {
 	var menu;
 
 	var openedItemHeight = 200; // px
+	var minItemInterval = 5; // min
 
 	var startTime = "00:00";
 
@@ -131,7 +132,10 @@ var DayPlanner = function() {
 		var saveButton = document.getElementById("save");
 		saveButton.onclick = function() {
 			// resizes item height according to input value
-			getOpenedItem().setAttribute('data-duration', durationInput.value);
+			var openedItem = getOpenedItem();
+			if (Lib.isNumber(durationInput.value) && durationInput.value >= minItemInterval) {
+				getOpenedItem().setAttribute('data-duration', durationInput.value);
+			}
 
 			resetItemsHeight();
 			hideMenu();
