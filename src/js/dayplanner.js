@@ -9,8 +9,16 @@ var DayPlanner = function() {
 	var resetItemsHeight = function() {
 		var items = document.querySelectorAll('.item');
 		for (var i = 0; i < items.length; i++) {
-			items[i].style.height = items[i].getAttribute("data-duration") + "px";
+			resizeItem(items[i], items[i].getAttribute("data-duration"));
 		}
+	};
+
+	var resizeItem = function(item, height) {
+		item.style.height = height + "px";
+	};
+
+	var getOpenedItem = function() {
+		return document.getElementById("menu").parentNode;
 	};
 
 	var showMenu = function(item) {
@@ -36,8 +44,6 @@ var DayPlanner = function() {
 	};
 
 	var init = function() {
-		menu = document.getElementById('menu');
-
 		// initialize first time in items start/end times 
 		document.getElementById('start-time').innerHTML = startTime;
 
@@ -61,6 +67,8 @@ var DayPlanner = function() {
 	};
 
 	var menuInit = function() {
+		menu = document.getElementById('menu');
+
 		// add button init
 		var addButton = document.getElementById("add-item");
 		addButton.onclick = function() {
@@ -113,7 +121,18 @@ var DayPlanner = function() {
 
 			resetItemsHeight();
 			hideMenu();
-		};	
+		};
+
+		// save button
+		var saveButton = document.getElementById("save");
+		saveButton.onclick = function() {
+			// resizes item height according to input value
+			getOpenedItem().setAttribute('data-duration', durationInput.value);
+
+			resetItemsHeight();
+			hideMenu();
+			calculateTimes();
+		};
 	};
 
 	var clickOnItem = function(item) {
