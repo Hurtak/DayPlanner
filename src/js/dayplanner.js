@@ -76,7 +76,7 @@ var DayPlanner = function() {
 			var defaultItem = document.getElementById("default-item").children[0];
 			defaultItem = defaultItem.cloneNode(true);
 
-			var itemNode = this.parentNode.parentNode;
+			var itemNode = getOpenedItem();
 			var newItem = itemNode.parentNode.insertBefore(defaultItem, itemNode.nextSibling);
 
 			// add onclick event on newly created item
@@ -93,9 +93,8 @@ var DayPlanner = function() {
 		// delete button init
 		var deleteButton = document.getElementById("delete-item");
 		deleteButton.onclick = function() {
-			// add default item behind selected item
-			var selectedItem = this.parentNode.parentNode;
-			selectedItem.outerHTML = "";
+			// delete current item
+			getOpenedItem().outerHTML = "";
 
 			// recalculate times
 			calculateTimes();
@@ -103,22 +102,27 @@ var DayPlanner = function() {
 
 		// duration buttons
 		var durationInput = document.getElementById("duration");
+		var changeDurationInput = function(amount) {
+			if (Lib.isNumber(durationInput.value)) {
+				durationInput.value = durationInput.value * 1 + amount;
+			} else {
+				durationInput.value = getOpenedItem().getAttribute("data-duration");
+			}
+		};
 
 		var plusButton = document.getElementById("duration-plus");
 		plusButton.onclick = function() {
-			durationInput.value = durationInput.value * 1 + 10;
+			changeDurationInput(10);
 		};
 
 		var minusButton = document.getElementById("duration-minus");
 		minusButton.onclick = function() {
-			durationInput.value = durationInput.value * 1 - 10;
+			changeDurationInput(-10);
 		};
 
 		//hide menu button
 		var hideMenuButton = document.getElementById("hide-menu");
 		hideMenuButton.onclick = function() {
-			var item = this.parentNode.parentNode;
-
 			resetItemsHeight();
 			hideMenu();
 		};
