@@ -158,24 +158,17 @@ var DayPlanner = function() {
 			addDuration(-10);
 		};
 
+		// changes name of item
+		var nameInput = document.getElementById("name-input");
+		nameInput.oninput = function() {
+			getOpenedItem().querySelector(".item-name").innerHTML = nameInput.value;
+		};
+
 		//hide menu button
 		var hideMenuButton = document.getElementById("hide-menu");
 		hideMenuButton.onclick = function() {
 			resetItemsHeight();
 			hideMenu();
-		};
-
-		// save button
-		var saveButton = document.getElementById("save");
-		saveButton.onclick = function() {
-
-			// changes name of item
-			var nameInput = document.getElementById("name-input");
-			getOpenedItem().querySelector(".item-name").innerHTML = nameInput.value;
-
-			hideMenu();
-			resetItemsHeight();
-			calculateTimes();
 		};
 	};
 
