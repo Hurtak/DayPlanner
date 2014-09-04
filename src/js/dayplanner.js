@@ -138,7 +138,7 @@ var DayPlanner = function() {
 
 		var changeDuration = function(amount) {
 			if (Lib.isNumber(amount) && amount >= minItemInterval && amount <= maxItemInterval) {
-				getOpenedItem().querySelector(".duration").innerHTML = amount;
+				getOpenedItem().querySelector(".duration").innerHTML = Math.round(amount);
 				calculateTimes();
 			}
 		};

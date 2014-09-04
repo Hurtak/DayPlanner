@@ -10,7 +10,7 @@ var Time = function() {
 	// converts "95" minutes to "01:35"
 	var minutesToTime = function(minutes) {
 		var hours = Math.floor(minutes / 60 % 24).toString();
-		minutes = (minutes % 60).toString();
+		minutes = (Math.round(minutes % 60)).toString();
 
 		minutes = addLeadingZeros(minutes);
 		hours = addLeadingZeros(hours);
