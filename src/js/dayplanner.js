@@ -145,6 +145,7 @@ var DayPlanner = function() {
 
 		var durationInput = document.getElementById("duration-input");
 		durationInput.oninput = function() {
+			// It's not quite magic to make onchange fire on all those actions.  <input onchange="doSomething();" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"> will do well enough for most
 			changeDuration(this.value);
 		};
 
