@@ -68,7 +68,8 @@ var DayPlanner = function() {
 	};
 
 	var deleteItem = function(item) {
-		item.outerHTML = "";
+		// item.outerHTML = "";
+		item.parentNode.removeChild(item);
 	};
 
 	var createItem = function(where, behind, firstItem) {
@@ -160,8 +161,11 @@ var DayPlanner = function() {
 			// moves start-time div so its not deleted
 			hide(getStartTimeDiv());
 
+			// removes all items
 			var itemsContainer = getItemsContainer();
-			itemsContainer.innerHTML = "";
+			while (itemsContainer.firstChild) {
+				itemsContainer.removeChild(itemsContainer.firstChild);
+			}
 
 			createItem(itemsContainer, false, true);
 			for (var i = 1; i < 5; i++) {
