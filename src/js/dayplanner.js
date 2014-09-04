@@ -1,7 +1,9 @@
 var DayPlanner = function() {
 	var menu;
 
-	var openedItemHeight = 200; // px
+	var minOpenedItemHeight = 100; // px
+	var maxOpenedItemHeight = 300; // px
+
 	var minItemInterval = 1; // min
 	var maxItemInterval = 120; // min
 
@@ -133,12 +135,14 @@ var DayPlanner = function() {
 			getOpenedItem().querySelector(".duration").innerHTML = amount;
 			durationInput.value = amount;
 			
+			resizeOpenedItem(amount);
 			calculateTimes();
 		};
 
 		var changeDuration = function(amount) {
 			if (Lib.isNumber(amount) && amount >= minItemInterval && amount <= maxItemInterval) {
 				getOpenedItem().querySelector(".duration").innerHTML = Math.round(amount);
+				resizeOpenedItem(amount);
 				calculateTimes();
 			}
 		};
@@ -177,14 +181,20 @@ var DayPlanner = function() {
 		for (var i = 0; i < colors.length; i++) {
 			colors[i].onclick = function() {
 				getOpenedItem().style.backgroundColor = this.style.backgroundColor;
-			}
+			};
 		}
 	};
 
 	var clickOnItem = function(item) {
 		resetItemsHeight();
-		resizeItem(item, openedItemHeight);
 		showMenu(item);
+		resizeOpenedItem(item.querySelector(".duration").innerHTML);
+	};
+
+	var resizeOpenedItem = function(minutes) {
+		minutes = minutes * 1;
+		minutes = Lib.linearConversion(minutes, minItemInterval, maxItemInterval, minOpenedItemHeight, maxOpenedItemHeight);
+		resizeItem(getOpenedItem(), minutes);
 	};
 
 	return {
