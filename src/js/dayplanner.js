@@ -171,6 +171,14 @@ var DayPlanner = function() {
 			resetItemsHeight();
 			hideMenu();
 		};
+
+		// color settings
+		var colors = document.getElementById("colors").getElementsByTagName("div");
+		for (var i = 0; i < colors.length; i++) {
+			colors[i].onclick = function() {
+				getOpenedItem().style.backgroundColor = this.style.backgroundColor;
+			}
+		}
 	};
 
 	var clickOnItem = function(item) {
