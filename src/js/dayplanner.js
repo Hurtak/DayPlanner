@@ -9,6 +9,10 @@ var DayPlanner = function() {
 
 	var startTime = "00:00";
 
+	/********
+	 * MAIN *
+	 ********/
+
 	// set height according to duration (1 minute = 1px)
 	var resetItemsHeight = function() {
 		var items = document.querySelectorAll('.item');
@@ -22,24 +26,7 @@ var DayPlanner = function() {
 	};
 
 	var getOpenedItem = function() {
-		return document.getElementById("menu").parentNode;
-	};
-
-	var showMenu = function(item) {
-		item.appendChild(menu);
-		menu.style.display = "block";
-
-		refreshMenu();
-	};
-
-	var refreshMenu = function() {
-		var openedItem = getOpenedItem();
-
-		// refresh change item name input
-		document.getElementById("name-input").value = getItemName(openedItem);
-	
-		// refresh duration input
-		document.getElementById("duration-input").value = getItemDuration(openedItem);
+		return getMenu().parentNode;
 	};
 
 	var getItemDuration = function(item) {
@@ -48,10 +35,6 @@ var DayPlanner = function() {
 
 	var getItemName = function(item) {
 		return item.querySelector(".item-name").innerHTML.trim();
-	};
-
-	var hideMenu = function() {
-		document.getElementById("menu").outerHTML = "";
 	};
 
 	var calculateTimes = function() {
@@ -64,6 +47,48 @@ var DayPlanner = function() {
 		}
 	};
 
+	var openItem = function(item) {
+		resetItemsHeight();
+		showMenu(item);
+		resizeOpenedItem(item.querySelector(".duration").innerHTML);
+	};
+
+	var resizeOpenedItem = function(minutes) {
+		minutes = minutes * 1;
+		minutes = Lib.linearConversion(minutes, minItemInterval, maxItemInterval, minOpenedItemHeight, maxOpenedItemHeight);
+		resizeItem(getOpenedItem(), minutes);
+	};
+
+	/********
+	 * MENU *
+	 ********/
+
+	var getMenu = function() {
+		return document.getElementById("menu");
+	};
+
+	var showMenu = function(item) {
+		item.appendChild(getMenu());
+		refreshMenu();
+	};
+
+	var hideMenu = function() {
+		document.getElementById("hide").appendChild(getMenu());
+	};
+
+	var refreshMenu = function() {
+		var openedItem = getOpenedItem();
+
+		// refresh change item name input
+		document.getElementById("name-input").value = getItemName(openedItem);
+		// refresh duration input
+		document.getElementById("duration-input").value = getItemDuration(openedItem);
+	};
+
+	/********
+	 * INIT *
+	 ********/
+
 	var init = function() {
 		// initialize first time in items start/end times 
 		document.getElementById('start-time').innerHTML = startTime;
@@ -73,7 +98,7 @@ var DayPlanner = function() {
 		for (var i = 0; i < items.length; i++) {
 			// add onclick to display options
 			items[i].onclick = function() {
-				clickOnItem(this.parentNode);
+				openItem(this.parentNode);
 			};
 		}
 
@@ -102,11 +127,11 @@ var DayPlanner = function() {
 
 			// add onclick event on newly created item
 			newItem.querySelector(".content").onclick = function() {
-				clickOnItem(this.parentNode);
+				openItem(this.parentNode);
 			};
 
 			// opens menu on newly created item
-			clickOnItem(newItem);
+			openItem(newItem);
 			// recalculate times
 			calculateTimes();
 		};
@@ -114,8 +139,12 @@ var DayPlanner = function() {
 		// delete button init
 		var deleteButton = document.getElementById("delete-item");
 		deleteButton.onclick = function() {
+			var openedItem = getOpenedItem();
+
+			hideMenu();
+			
 			// delete current item
-			getOpenedItem().outerHTML = "";
+			openedItem.outerHTML = "";
 
 			// recalculate times
 			calculateTimes();
@@ -183,18 +212,6 @@ var DayPlanner = function() {
 				getOpenedItem().style.backgroundColor = this.style.backgroundColor;
 			};
 		}
-	};
-
-	var clickOnItem = function(item) {
-		resetItemsHeight();
-		showMenu(item);
-		resizeOpenedItem(item.querySelector(".duration").innerHTML);
-	};
-
-	var resizeOpenedItem = function(minutes) {
-		minutes = minutes * 1;
-		minutes = Lib.linearConversion(minutes, minItemInterval, maxItemInterval, minOpenedItemHeight, maxOpenedItemHeight);
-		resizeItem(getOpenedItem(), minutes);
 	};
 
 	return {
