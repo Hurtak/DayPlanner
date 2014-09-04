@@ -1,16 +1,19 @@
 var Time = function() {
 
+	var addLeadingZeros = function(number) {
+		while (number.length < 2) {
+			number = "0" + number;
+		}	
+		return number;
+	};
+
 	// converts "95" minutes to "01:35"
 	var minutesToTime = function(minutes) {
 		var hours = Math.floor(minutes / 60 % 24).toString();
 		minutes = (minutes % 60).toString();
 
-		if (minutes.length === 1) {
-			minutes = "0" + minutes;
-		}
-		while (hours.length < 2) {
-			hours = "0" + hours;
-		}		
+		minutes = addLeadingZeros(minutes);
+		hours = addLeadingZeros(hours);
 
 		return hours + ":" + minutes;
 	};
