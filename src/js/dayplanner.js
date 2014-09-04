@@ -29,6 +29,10 @@ var DayPlanner = function() {
 		return getMenu().parentNode;
 	};
 
+	var getItemsContainer = function() {
+		return document.getElementById("items-container");
+	};	
+
 	var getItemDuration = function(item) {
 		return item.querySelector(".duration").innerHTML.trim() * 1;
 	};
@@ -57,6 +61,27 @@ var DayPlanner = function() {
 		minutes = minutes * 1;
 		minutes = Lib.linearConversion(minutes, minItemInterval, maxItemInterval, minOpenedItemHeight, maxOpenedItemHeight);
 		resizeItem(getOpenedItem(), minutes);
+	};
+
+	var createItem = function(where, behind) {
+		var defaultItem = document.getElementById("default-item").children[0];
+		defaultItem = defaultItem.cloneNode(true);
+
+		var newItem;
+		// adds item behind "where"
+		if (behind) {
+			newItem = where.parentNode.insertBefore(defaultItem, where.nextSibling);
+		} else { 
+		// adds item inside "where"
+			newItem = where.appendChild(defaultItem);
+		}
+
+		// add onclick event on newly created item
+		newItem.querySelector(".content").onclick = function() {
+			openItem(this.parentNode);
+		};
+
+		return newItem;
 	};
 
 	/********
@@ -108,8 +133,21 @@ var DayPlanner = function() {
 		// calculates start/end times of items
 		calculateTimes();
 
-		//initialize menu
+		// initialize menu
 		menuInit();
+
+		// reset button
+		document.getElementById("reset").onclick = function() {
+			hideMenu();
+
+			var itemsContainer = getItemsContainer();
+			itemsContainer.innerHTML = "";
+			for (var i = 0; i < 5; i++) {
+				createItem(itemsContainer, false);
+			}
+			
+			calculateTimes();
+		};
 	};
 
 	var menuInit = function() {
@@ -119,19 +157,11 @@ var DayPlanner = function() {
 		var addButton = document.getElementById("add-item");
 		addButton.onclick = function() {
 			// add default item behind selected item
-			var defaultItem = document.getElementById("default-item").children[0];
-			defaultItem = defaultItem.cloneNode(true);
-
-			var itemNode = getOpenedItem();
-			var newItem = itemNode.parentNode.insertBefore(defaultItem, itemNode.nextSibling);
-
-			// add onclick event on newly created item
-			newItem.querySelector(".content").onclick = function() {
-				openItem(this.parentNode);
-			};
+			newItem = createItem(getOpenedItem(), true);
 
 			// opens menu on newly created item
 			openItem(newItem);
+
 			// recalculate times
 			calculateTimes();
 		};
