@@ -1,6 +1,6 @@
 var Lib = function() {
 
-	function isNumber(n) {
+	var isNumber = function(n) {
 		return (Object.prototype.toString.call(n) === '[object Number]' || Object.prototype.toString.call(n) === '[object String]') &&!isNaN(parseFloat(n)) && isFinite(n.toString().replace(/^-/, ''));
 	}
 
@@ -14,7 +14,7 @@ var Lib = function() {
 	 * @param  [number] $newMax [new range maximum]
 	 * @return [number]         [converted number]
 	 */
-	function linearConversion(number, oldMin, oldMax, newMin, newMax) {
+	var linearConversion = function(number, oldMin, oldMax, newMin, newMax) {
 		oldRange = oldMax - oldMin;
 
 		if (oldRange === 0) {
