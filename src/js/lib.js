@@ -2,7 +2,7 @@ var Lib = function() {
 
 	var isNumber = function(n) {
 		return (Object.prototype.toString.call(n) === '[object Number]' || Object.prototype.toString.call(n) === '[object String]') &&!isNaN(parseFloat(n)) && isFinite(n.toString().replace(/^-/, ''));
-	}
+	};
 
 	/**
 	 * Converts number from one range to number scaled accoringly to another range
@@ -25,7 +25,7 @@ var Lib = function() {
 		}	
 
 		return newValue;
-	}
+	};
 
 	return {
 		isNumber: isNumber,

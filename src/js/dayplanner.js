@@ -179,71 +179,27 @@ var DayPlanner = function() {
 	 * SAVE / LOAD *
 	 ***************/
 
+	var saveAppState = function() {
+		var data = {};
+		var items = getItems();
 
-
-	/********
-	 * INIT *
-	 ********/
-
-	var init = function() {
-		// initialize first time in items start/end times 
-		getStartTimeDiv().innerHTML = startTime;
-
-		var items = document.querySelectorAll('.content');
-		// items init
 		for (var i = 0; i < items.length; i++) {
-			// add onclick to display options
-			items[i].onclick = function() {
-				openItem(this.parentNode);
+			data[i] = {
+				"name": getItemName(items[i]),
+				"duration": getItemDuration(items[i]),
+				"color": getItemColor(items[i])
 			};
 		}
+		
+		Storage.save(data, "data");
+	};
 
-		// set height according to duration (1 minute = 1px)
-		resetItemsHeight();
+	var loadAppState = function() {
+		deleteAllItems();
 
-		// calculates start/end times of items
-		recalculateTimes();
+		var items = Storage.load("data");
 
-		// initialize menu
-		menuInit();
-
-		// reset button
-		document.getElementById("reset").onclick = function() {
-			var itemsContainer = getItemsContainer();
-
-			deleteAllItems();
-
-			createItem(itemsContainer, false, true);
-			for (var i = 1; i < 5; i++) {
-				createItem(itemsContainer, false, false);
-			}
-	
-			resetItemsHeight();
-			recalculateTimes();
-
-		};
-
-		// save button
-		document.getElementById("save").onclick = function() {
-			var data = {};
-			var items = getItems();
-
-			for (var i = 0; i < items.length; i++) {
-				data[i] = {
-					"name": getItemName(items[i]),
-					"duration": getItemDuration(items[i]),
-					"color": getItemColor(items[i])
-				};
-			}
-			
-			Storage.save(data, "data");
-		};
-
-		// load button
-		document.getElementById("load").onclick = function() {
-			deleteAllItems();
-
-			var items = Storage.load("data");
+		if (items) {		
 			for (var i = 0; i < Object.keys(items).length; i++) {
 				var defaultItem  = getDefaultItemClone();
 
@@ -254,10 +210,49 @@ var DayPlanner = function() {
 				createItem(getItemsContainer(), false, i === 0 ? true : false, defaultItem);
 
 			}
+		} else {
+			resetAppState();
+		}
 
-			resetItemsHeight();
-			recalculateTimes();
-		};
+		resetItemsHeight();
+		recalculateTimes();
+	};
+
+	var resetAppState = function() {
+		var itemsContainer = getItemsContainer();
+
+		deleteAllItems();
+
+		createItem(itemsContainer, false, true);
+		for (var i = 1; i < 5; i++) {
+			createItem(itemsContainer, false, false);
+		}
+
+		resetItemsHeight();
+		recalculateTimes();
+	};
+
+	/********
+	 * INIT *
+	 ********/
+
+	var init = function() {
+		// initialize first time in items start/end times 
+		getStartTimeDiv().innerHTML = startTime;
+
+		loadAppState();
+
+		// initialize menu
+		menuInit();
+
+		// reset button
+		document.getElementById("reset").onclick = resetAppState;
+
+		// save button
+		document.getElementById("save").onclick = saveAppState;
+
+		// load button
+		document.getElementById("load").onclick = loadAppState;
 
 	};
 

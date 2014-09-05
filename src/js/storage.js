@@ -43,8 +43,8 @@ var Storage = function() {
 
 		var object = localStorage.getItem(objectName);
 		object = JSON.parse(object);
+		
 		return object;
-
 	};
 
 	return {
