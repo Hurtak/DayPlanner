@@ -25,7 +25,7 @@ var DayPlanner = function() {
 		var items = getItems();
 
 		var previousTime = startTime;
-		for (var i = 1; i < items.length; i++) {
+		for (var i = 0; i < items.length; i++) {
 			items[i].querySelector(".time").innerHTML = Time.minutesToTime(Time.timeToMinutes(previousTime) + getItemDuration(items[i]));
 			previousTime = Time.minutesToTime(getItemDuration(items[i]) + Time.timeToMinutes(previousTime));		
 		}
@@ -43,9 +43,18 @@ var DayPlanner = function() {
 		setItemHeight(getOpenedItem(), Math.round(minutes));
 	};
 
-	var hide = function(element) {
+	var hideAndMove = function(element) {
 		document.getElementById("hide").appendChild(element);
 	};
+
+	var hide = function(element) {
+		element.className += " hidden";
+	};
+
+	var show = function(element) {
+		element.classList.remove('hidden');
+	};
+
 
 		/*****************
 		 * GET FUNCTIONS *
@@ -61,6 +70,10 @@ var DayPlanner = function() {
 		var getItems = function() {
 			return getItemsContainer().querySelectorAll(".item");
 		};
+		var getStartTimeDiv = function() {
+			return document.getElementById("start-time");
+		};
+
 
 		var getItemName = function(item) {
 			return item.querySelector(".item-name").innerHTML.trim();
@@ -109,6 +122,9 @@ var DayPlanner = function() {
 		var deleteAllItems = function() {
 			hideMenu();
 
+			// moves start-time div so its not deleted
+			hideAndMove(getStartTimeDiv());
+
 			// removes all items
 			var itemsContainer = getItemsContainer();
 			while (itemsContainer.firstChild) {
@@ -116,7 +132,7 @@ var DayPlanner = function() {
 			}
 		};
 
-		var createItem = function(where, behind, item) {
+		var createItem = function(where, behind, firstItem, item) {
 			var defaultItem;
 			if (!item) {
 				defaultItem = getDefaultItemClone();
@@ -131,6 +147,11 @@ var DayPlanner = function() {
 			} else { 
 				// adds item inside "where"
 				newItem = where.appendChild(defaultItem);
+			}
+
+			if (firstItem) {
+				// if its first item in the list, we need to add start-time div
+				newItem.appendChild(getStartTimeDiv());
 			}
 
 			// add onclick event on newly created item
@@ -151,11 +172,19 @@ var DayPlanner = function() {
 
 	var showMenu = function(item) {
 		item.appendChild(getMenu());
+
+		var itemsContainer = getItemsContainer();
+		if (item === itemsContainer.firstChild) {
+			hide(document.getElementById("delete-item"));
+		} else {
+			show(document.getElementById("delete-item"));
+		}
+
 		refreshMenu();
 	};
 
 	var hideMenu = function() {
-		hide(getMenu());
+		hideAndMove(getMenu());
 	};
 
 	var refreshMenu = function() {
@@ -199,7 +228,7 @@ var DayPlanner = function() {
 				setItemName(defaultItem, items[i].name);
 				setItemColor(defaultItem, items[i].color);
 
-				createItem(getItemsContainer(), false, defaultItem);
+				createItem(getItemsContainer(), false, i === 0 ? true : false, defaultItem);
 
 			}
 		} else {
@@ -215,8 +244,9 @@ var DayPlanner = function() {
 
 		deleteAllItems();
 
-		for (var i = 0; i < 5; i++) {
-			createItem(itemsContainer, false);
+		createItem(itemsContainer, false, true);
+		for (var i = 1; i < 5; i++) {
+			createItem(itemsContainer, false, false);
 		}
 
 		resetItemsHeight();
@@ -228,6 +258,9 @@ var DayPlanner = function() {
 	 ********/
 
 	var init = function() {
+		// initialize first time in items start/end times 
+		getStartTimeDiv().innerHTML = startTime;
+
 		loadAppState();
 
 		// initialize menu
@@ -251,7 +284,7 @@ var DayPlanner = function() {
 		var addButton = document.getElementById("add-item");
 		addButton.onclick = function() {
 			// add default item behind selected item
-			newItem = createItem(getOpenedItem(), true);
+			newItem = createItem(getOpenedItem(), true, false);
 
 			// opens menu on newly created item
 			openItem(newItem);
