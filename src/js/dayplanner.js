@@ -274,6 +274,8 @@ var DayPlanner = function() {
 
 			// recalculate times
 			recalculateTimes();
+
+			saveAppState();
 		};
 	
 		// delete button init
@@ -288,6 +290,8 @@ var DayPlanner = function() {
 
 			// recalculate times
 			recalculateTimes();
+
+			saveAppState();
 		};
 
 		// duration buttons
@@ -306,13 +310,19 @@ var DayPlanner = function() {
 			
 			resizeOpenedItem(amount);
 			recalculateTimes();
+
+			saveAppState();
 		};
 
 		var changeDuration = function(amount) {
 			if (Lib.isNumber(amount) && amount >= minItemInterval && amount <= maxItemInterval) {
+
 				getOpenedItem().querySelector(".duration").innerHTML = Math.round(amount);
+
 				resizeOpenedItem(amount);
 				recalculateTimes();
+
+				saveAppState();
 			}
 		};
 
@@ -336,6 +346,8 @@ var DayPlanner = function() {
 		var nameInput = document.getElementById("name-input");
 		nameInput.oninput = function() {
 			setItemName(getOpenedItem(), this.value);
+
+			saveAppState();
 		};
 
 		//hide menu button
@@ -350,6 +362,8 @@ var DayPlanner = function() {
 		for (var i = 0; i < colors.length; i++) {
 			colors[i].onclick = function() {
 				setItemColor(getOpenedItem(), getItemColor(this));
+
+				saveAppState();
 			};
 		}
 	};
