@@ -61,10 +61,6 @@ var DayPlanner = function() {
 		var getItems = function() {
 			return getItemsContainer().querySelectorAll(".item");
 		};
-		var getStartTimeDiv = function() {
-			return document.getElementById("start-time");
-		};
-
 
 		var getItemName = function(item) {
 			return item.querySelector(".item-name").innerHTML.trim();
@@ -113,9 +109,6 @@ var DayPlanner = function() {
 		var deleteAllItems = function() {
 			hideMenu();
 
-			// moves start-time div so its not deleted
-			hide(getStartTimeDiv());
-
 			// removes all items
 			var itemsContainer = getItemsContainer();
 			while (itemsContainer.firstChild) {
@@ -123,7 +116,7 @@ var DayPlanner = function() {
 			}
 		};
 
-		var createItem = function(where, behind, firstItem, item) {
+		var createItem = function(where, behind, item) {
 			var defaultItem;
 			if (!item) {
 				defaultItem = getDefaultItemClone();
@@ -138,11 +131,6 @@ var DayPlanner = function() {
 			} else { 
 				// adds item inside "where"
 				newItem = where.appendChild(defaultItem);
-			}
-
-			if (firstItem) {
-				// if its first item in the list, we need to add start-time div
-				newItem.appendChild(getStartTimeDiv());
 			}
 
 			// add onclick event on newly created item
@@ -211,7 +199,7 @@ var DayPlanner = function() {
 				setItemName(defaultItem, items[i].name);
 				setItemColor(defaultItem, items[i].color);
 
-				createItem(getItemsContainer(), false, i === 0 ? true : false, defaultItem);
+				createItem(getItemsContainer(), false, defaultItem);
 
 			}
 		} else {
@@ -227,9 +215,8 @@ var DayPlanner = function() {
 
 		deleteAllItems();
 
-		createItem(itemsContainer, false, true);
-		for (var i = 1; i < 5; i++) {
-			createItem(itemsContainer, false, false);
+		for (var i = 0; i < 5; i++) {
+			createItem(itemsContainer, false);
 		}
 
 		resetItemsHeight();
@@ -241,9 +228,6 @@ var DayPlanner = function() {
 	 ********/
 
 	var init = function() {
-		// initialize first time in items start/end times 
-		getStartTimeDiv().innerHTML = startTime;
-
 		loadAppState();
 
 		// initialize menu
@@ -267,7 +251,7 @@ var DayPlanner = function() {
 		var addButton = document.getElementById("add-item");
 		addButton.onclick = function() {
 			// add default item behind selected item
-			newItem = createItem(getOpenedItem(), true, false);
+			newItem = createItem(getOpenedItem(), true);
 
 			// opens menu on newly created item
 			openItem(newItem);
