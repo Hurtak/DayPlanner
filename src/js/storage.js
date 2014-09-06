@@ -1,41 +1,9 @@
-
-
-
-// var testObject = { 'one': 1, 'two': 2, 'three': 3 };
-
-// // Put the object into storage
-// localStorage.setItem('testObject', JSON.stringify(testObject));
-
-// // Retrieve the object from storage
-// var retrievedObject = localStorage.getItem('testObject');
-
-// console.log('retrievedObject: ', JSON.parse(retrievedObject));
-
-
-
-
-
-
-
-// nebo 
-
-
-// Storage.prototype.setObject = function(key, value) {
-//     this.setItem(key, JSON.stringify(value));
-// }
-
-// Storage.prototype.getObject = function(key) {
-//     var value = this.getItem(key);
-//     return value && JSON.parse(value);
-// }
-
-
-
 var Storage = function() {
 
 	var save = function(object, objectName) {
 
-		localStorage.setItem(objectName, JSON.stringify(object));
+		object = JSON.stringify(object);
+		localStorage.setItem(objectName, object);
 
 	};
 
@@ -52,3 +20,31 @@ var Storage = function() {
 		load: load
 	};
 }();
+
+
+// var testObject = { 'one': 1, 'two': 2, 'three': 3 };
+
+// // Put the object into storage
+// localStorage.setItem('testObject', JSON.stringify(testObject));
+
+// // Retrieve the object from storage
+// var retrievedObject = localStorage.getItem('testObject');
+
+// console.log('retrievedObject: ', JSON.parse(retrievedObject));
+
+
+
+// OR
+
+
+
+// Storage.prototype.setObject = function(key, value) {
+//     this.setItem(key, JSON.stringify(value));
+// }
+
+// Storage.prototype.getObject = function(key) {
+//     var value = this.getItem(key);
+//     return value && JSON.parse(value);
+// }
+
+

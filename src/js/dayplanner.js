@@ -17,12 +17,34 @@ var DayPlanner = function() {
 	var resetItemsHeight = function() {
 		var items = getItems();
 		for (var i = 0; i < items.length; i++) {
-			resizeItem(items[i], getItemDuration(items[i]));
+			setItemHeight(items[i], getItemDuration(items[i]));
 		}
 	};
 
-	var resizeItem = function(item, height) {
-		item.style.height = height + "px";
+	var recalculateTimes = function() {
+		var items = getItems();
+
+		var previousTime = startTime;
+		for (var i = 0; i < items.length; i++) {
+			items[i].querySelector(".time").innerHTML = Time.minutesToTime(Time.timeToMinutes(previousTime) + getItemDuration(items[i]));
+			previousTime = Time.minutesToTime(getItemDuration(items[i]) + Time.timeToMinutes(previousTime));		
+		}
+	};
+
+	var openItem = function(item) {
+		resetItemsHeight();
+		showMenu(item);
+		resizeOpenedItem(item.querySelector(".duration").innerHTML);
+	};
+
+	var resizeOpenedItem = function(minutes) {
+		minutes = minutes * 1;
+		minutes = Lib.linearConversion(minutes, minItemInterval, maxItemInterval, minOpenedItemHeight, maxOpenedItemHeight);
+		setItemHeight(getOpenedItem(), Math.round(minutes));
+	};
+
+	var hide = function(element) {
+		document.getElementById("hide").appendChild(element);
 	};
 
 		/*****************
@@ -74,80 +96,62 @@ var DayPlanner = function() {
 			item.style.backgroundColor = color;
 		};
 
-
-	var recalculateTimes = function() {
-		var items = getItems();
-
-		var previousTime = startTime;
-		for (var i = 0; i < items.length; i++) {
-			items[i].querySelector(".time").innerHTML = Time.minutesToTime(Time.timeToMinutes(previousTime) + getItemDuration(items[i]));
-			previousTime = Time.minutesToTime(getItemDuration(items[i]) + Time.timeToMinutes(previousTime));		
-		}
-	};
-
-	var openItem = function(item) {
-		resetItemsHeight();
-		showMenu(item);
-		resizeOpenedItem(item.querySelector(".duration").innerHTML);
-	};
-
-	var resizeOpenedItem = function(minutes) {
-		minutes = minutes * 1;
-		minutes = Lib.linearConversion(minutes, minItemInterval, maxItemInterval, minOpenedItemHeight, maxOpenedItemHeight);
-		resizeItem(getOpenedItem(), Math.round(minutes));
-	};
-
-	var deleteItem = function(item) {
-		// item.outerHTML = "";
-		item.parentNode.removeChild(item);
-	};
-
-	var deleteAllItems = function() {
-		hideMenu();
-
-		// moves start-time div so its not deleted
-		hide(getStartTimeDiv());
-
-		// removes all items
-		var itemsContainer = getItemsContainer();
-		while (itemsContainer.firstChild) {
-			itemsContainer.removeChild(itemsContainer.firstChild);
-		}
-	};
-
-	var createItem = function(where, behind, firstItem, item) {
-		var defaultItem;
-		if (!item) {
-			defaultItem = getDefaultItemClone();
-		} else {
-			defaultItem = item;
-		}
-
-		var newItem;
-		if (behind) {
-			// adds item behind "where"
-			newItem = where.parentNode.insertBefore(defaultItem, where.nextSibling);
-		} else { 
-			// adds item inside "where"
-			newItem = where.appendChild(defaultItem);
-		}
-
-		if (firstItem) {
-			// if its first item in the list, we need to add start-time div
-			newItem.appendChild(getStartTimeDiv());
-		}
-
-		// add onclick event on newly created item
-		newItem.querySelector(".content").onclick = function() {
-			openItem(this.parentNode);
+		var setItemHeight = function(item, height) {
+			item.style.height = height + "px";
 		};
 
-		return newItem;
-	};
 
-	var hide = function(element) {
-		document.getElementById("hide").appendChild(element);
-	};
+		/************************
+		 * ITEM DELETE / CREATE *
+		 ************************/	
+
+		var deleteItem = function(item) {
+			// item.outerHTML = "";
+			item.parentNode.removeChild(item);
+		};
+
+		var deleteAllItems = function() {
+			hideMenu();
+
+			// moves start-time div so its not deleted
+			hide(getStartTimeDiv());
+
+			// removes all items
+			var itemsContainer = getItemsContainer();
+			while (itemsContainer.firstChild) {
+				itemsContainer.removeChild(itemsContainer.firstChild);
+			}
+		};
+
+		var createItem = function(where, behind, firstItem, item) {
+			var defaultItem;
+			if (!item) {
+				defaultItem = getDefaultItemClone();
+			} else {
+				defaultItem = item;
+			}
+
+			var newItem;
+			if (behind) {
+				// adds item behind "where"
+				newItem = where.parentNode.insertBefore(defaultItem, where.nextSibling);
+			} else { 
+				// adds item inside "where"
+				newItem = where.appendChild(defaultItem);
+			}
+
+			if (firstItem) {
+				// if its first item in the list, we need to add start-time div
+				newItem.appendChild(getStartTimeDiv());
+			}
+
+			// add onclick event on newly created item
+			newItem.querySelector(".content").onclick = function() {
+				openItem(this.parentNode);
+			};
+
+			return newItem;
+		};
 
 	/********
 	 * MENU *
@@ -201,7 +205,7 @@ var DayPlanner = function() {
 
 		if (items) {		
 			for (var i = 0; i < Object.keys(items).length; i++) {
-				var defaultItem  = getDefaultItemClone();
+				var defaultItem = getDefaultItemClone();
 
 				setItemDuration(defaultItem, items[i].duration);
 				setItemName(defaultItem, items[i].name);
