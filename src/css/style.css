@@ -50,17 +50,13 @@ body {
 	
 }
 
-.time, .start-time {
+.time {
 	background-color: rgba(0, 0, 255, .5);
 	width: 50px;
 	right: -50px;
 	line-height: 20px;
-	top: calc(100% - 10px);
-	position: absolute;
-}
-
-.start-time {
 	top: -10px;
+	position: absolute;
 }
 
 .menu {

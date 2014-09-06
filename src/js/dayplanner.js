@@ -25,7 +25,7 @@ var DayPlanner = function() {
 		var items = getItems();
 
 		var previousTime = startTime;
-		for (var i = 0; i < items.length; i++) {
+		for (var i = 1; i < items.length; i++) {
 			items[i].querySelector(".time").innerHTML = Time.minutesToTime(Time.timeToMinutes(previousTime) + getItemDuration(items[i]));
 			previousTime = Time.minutesToTime(getItemDuration(items[i]) + Time.timeToMinutes(previousTime));		
 		}
