@@ -110,8 +110,11 @@ var DayPlanner = function() {
 			item.style.backgroundColor = color;
 		};
 		var setItemHeight = function(item, height) {
-			item.style.height = height + "px";
-			// getItemDuration(item).
+			height = height + "px";
+
+			item.style.height = height;
+			getItemDurationDiv(item).style.lineHeight = height; 
+			getItemNameDiv(item).style.lineHeight = height; 
 		};
 
 
