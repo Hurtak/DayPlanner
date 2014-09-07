@@ -15,8 +15,6 @@ body {
 }
 
 .item {
-	display: table;
-	box-sizing: border-box;
 	width: 50%;
 
 	text-align: left;
@@ -35,9 +33,7 @@ body {
 
 .content {
 	padding-left: 15px;
-	display: table-cell;
-	vertical-align: middle;
-	width: 100%;
+	line-height: 60px;
 }
 .content:hover {
 	background-color: rgba(255, 255, 255, .5);
@@ -46,8 +42,10 @@ body {
 }
 
 .duration {
-	float: right;
-	
+	position: absolute;
+	top: 0;
+	right: 0;
+ 	line-height: 60px;
 }
 
 .time, .start-time {
@@ -69,6 +67,7 @@ body {
 
 	position: absolute;
 	left: 0;
+	top: 0;
 
 	background-color: rgba(255, 255, 255, .2);
 }
