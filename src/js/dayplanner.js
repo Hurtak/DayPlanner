@@ -34,7 +34,7 @@ var DayPlanner = function() {
 	var openItem = function(item) {
 		resetItemsHeight();
 		showMenu(item);
-		resizeOpenedItem(item.querySelector(".duration").innerHTML);
+		resizeOpenedItem(getItemDuration(item));
 	};
 
 	var resizeOpenedItem = function(minutes) {
@@ -78,9 +78,13 @@ var DayPlanner = function() {
 		var getItemName = function(item) {
 			return item.querySelector(".item-name").innerHTML.trim();
 		};
+
 		var getItemDuration = function(item) {
-			return item.querySelector(".duration").innerHTML.trim() * 1;
+			return getItemDurationDiv(item).innerHTML.trim() * 1;
 		};
+		var getItemDurationDiv = function(item) {
+			return item.querySelector(".duration");
+		};		
 		var getItemColor = function(item) {
 			return item.style.backgroundColor;
 		};
@@ -96,7 +100,7 @@ var DayPlanner = function() {
 		 *****************/	
 	
 		var setItemDuration = function(item, duration) {
-			item.querySelector(".duration").innerHTML = duration;
+			getItemDurationDiv(item).innerHTML = duration;
 		};
 		var setItemName = function(item, name) {
 			item.querySelector(".item-name").innerHTML = name;
@@ -107,6 +111,7 @@ var DayPlanner = function() {
 
 		var setItemHeight = function(item, height) {
 			item.style.height = height + "px";
+			// getItemDuration(item).
 		};
 
 
@@ -322,7 +327,7 @@ var DayPlanner = function() {
 				amount = maxItemInterval;
 			}
 
-			getOpenedItem().querySelector(".duration").innerHTML = amount;
+			setItemDuration(getOpenedItem(), amount);
 			durationInput.value = amount;
 			
 			resizeOpenedItem(amount);
@@ -334,7 +339,7 @@ var DayPlanner = function() {
 		var changeDuration = function(amount) {
 			if (Lib.isNumber(amount) && amount >= minItemInterval && amount <= maxItemInterval) {
 
-				getOpenedItem().querySelector(".duration").innerHTML = Math.round(amount);
+				setItemDuration(getOpenedItem(), Math.round(amount));
 
 				resizeOpenedItem(amount);
 				recalculateTimes();
