@@ -209,7 +209,7 @@ var DayPlanner = function() {
 	 ***************/
 
 	var saveAppState = function() {
-		var data = {};
+		var data = [];
 		var items = getItems();
 
 		for (var i = 0; i < items.length; i++) {
@@ -229,7 +229,7 @@ var DayPlanner = function() {
 		var items = Storage.load("data");
 
 		if (items) {		
-			for (var i = 0; i < Object.keys(items).length; i++) {
+			for (var i = 0; i < items.length; i++) {
 				var defaultItem = getDefaultItemClone();
 
 				setItemDuration(defaultItem, items[i].duration);
