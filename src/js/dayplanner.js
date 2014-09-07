@@ -74,11 +74,12 @@ var DayPlanner = function() {
 			return document.getElementById("start-time");
 		};
 
-
 		var getItemName = function(item) {
-			return item.querySelector(".item-name").innerHTML.trim();
+			return getItemNameDiv(item).innerHTML.trim();
 		};
-
+		var getItemNameDiv = function(item) {
+			return item.querySelector(".item-name");
+		};
 		var getItemDuration = function(item) {
 			return getItemDurationDiv(item).innerHTML.trim() * 1;
 		};
@@ -103,12 +104,11 @@ var DayPlanner = function() {
 			getItemDurationDiv(item).innerHTML = duration;
 		};
 		var setItemName = function(item, name) {
-			item.querySelector(".item-name").innerHTML = name;
+			getItemNameDiv(item).innerHTML = name;
 		};
 		var setItemColor = function(item, color) {
 			item.style.backgroundColor = color;
 		};
-
 		var setItemHeight = function(item, height) {
 			item.style.height = height + "px";
 			// getItemDuration(item).
