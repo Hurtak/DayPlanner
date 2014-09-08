@@ -38,9 +38,18 @@ var DayPlanner = function() {
 				newItem.querySelector(".content").onclick = function() {
 					openItem(this.parentNode);
 				};
+
 				getItemDurationInput(newItem).oninput = function() {
 					// It's not quite magic to make onchange fire on all those actions.  <input onchange="doSomething();" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"> will do well enough for most
 					changeDuration(this.value);
+				};
+
+				// changes name of item
+				getItemNameInput(newItem).oninput = function() {
+					setItemName(getOpenedItem(), this.value);
+
+					// TODO mayby save on menu close
+					saveAppState();
 				};
 
 				return newItem;
@@ -119,14 +128,17 @@ var DayPlanner = function() {
 			};
 
 		// item name
-			var getItemName = function(item) {
-				return getItemNameDiv(item).innerHTML.trim();
-			};
 			var getItemNameDiv = function(item) {
 				return item.querySelector(".item-name");
 			};
+			var getItemNameInput = function(item) {
+				return getItemNameDiv(item).getElementsByTagName('input')[0];
+			};			
+			var getItemName = function(item) {
+				return getItemNameInput(item).value.trim();
+			};
 			var setItemName = function(item, name) {
-				getItemNameDiv(item).innerHTML = name;
+				getItemNameInput(item).value = name;
 			};
 
 		// item duration
@@ -208,9 +220,6 @@ var DayPlanner = function() {
 
 		var refreshMenu = function() {
 			var openedItem = getOpenedItem();
-
-			// refresh change item name input
-			document.getElementById("name-input").value = getItemName(openedItem);
 		};
 
 	// *** GENERAL ***
@@ -328,7 +337,6 @@ var DayPlanner = function() {
 				// opens menu on newly created item
 				openItem(newItem);
 
-				// recalculate times
 				recalculateTimes();
 
 				saveAppState();
@@ -350,7 +358,6 @@ var DayPlanner = function() {
 				saveAppState();
 			};
 
-
 			var plusButton = document.getElementById("duration-plus");
 			plusButton.onclick = function() {
 				addDuration(10);
@@ -359,14 +366,6 @@ var DayPlanner = function() {
 			var minusButton = document.getElementById("duration-minus");
 			minusButton.onclick = function() {
 				addDuration(-10);
-			};
-
-			// changes name of item
-			var nameInput = document.getElementById("name-input");
-			nameInput.oninput = function() {
-				setItemName(getOpenedItem(), this.value);
-
-				saveAppState();
 			};
 
 			//hide menu button
