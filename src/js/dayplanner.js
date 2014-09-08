@@ -35,7 +35,7 @@ var DayPlanner = function() {
 				}
 
 				// add onclick event on newly created item
-				newItem.querySelector(".content").onclick = function() {
+				getOverlay(newItem).onclick = function() {
 					openItem(this.parentNode);
 				};
 
@@ -110,8 +110,9 @@ var DayPlanner = function() {
 		// open
 
 			var openItem = function(item) {
-				resetItemsHeight();
+				hideMenu();
 				showMenu(item);
+				resetItemsHeight();
 				resizeOpenedItem(getItemDuration(item));
 			};
 
@@ -169,17 +170,7 @@ var DayPlanner = function() {
 				getItemDurationInput(item).value = duration;
 			};
 
-		// item color
-
-			var getItemColor = function(item) {
-				return item.style.backgroundColor;
-			};
-
-			var setItemColor = function(item, color) {
-				item.style.backgroundColor = color;
-			};
-
-		// change item duration functions
+		// item duration functions
 
 			var addDuration = function(amount) {
 				var durationInput = getItemDurationInput(getOpenedItem());
@@ -212,13 +203,37 @@ var DayPlanner = function() {
 				}
 			};
 
+		// item color
+
+			var getItemColor = function(item) {
+				return item.style.backgroundColor;
+			};
+
+			var setItemColor = function(item, color) {
+				item.style.backgroundColor = color;
+			};
+
+		// item overlay (for click events)
+
+			var getOverlay = function(item) {
+				return item.querySelector(".overlay");
+			};
+
 	// *** MENU ***
 
 		var getMenu = function() {
 			return document.getElementById("menu");
 		};
 
+		var isMenuShown = function() {
+			if (getItemsContainer().querySelector("#menu")) {
+				return true;
+			}
+			return false;
+		};
+
 		var showMenu = function(item) {
+
 			item.appendChild(getMenu());
 
 			var itemsContainer = getItemsContainer();
@@ -227,16 +242,28 @@ var DayPlanner = function() {
 			} else {
 				show(document.getElementById("delete-item"));
 			}
+			
+			var openedItem = getOpenedItem();
+
+			getItemDurationInput(openedItem).readOnly = false;
+			getItemNameInput(openedItem).readOnly = false;
+			hide(getOverlay(openedItem));
 
 			refreshMenu();
 		};
 
 		var hideMenu = function() {
+			var openedItem = getOpenedItem();
+
+			getItemDurationInput(openedItem).readOnly = true;
+			getItemNameInput(openedItem).readOnly = true;
+			show(getOverlay(openedItem));
+
 			hideAndMove(getMenu());
 		};
 
 		var refreshMenu = function() {
-			var openedItem = getOpenedItem();
+			// var openedItem = getOpenedItem();
 		};
 
 	// *** GENERAL ***

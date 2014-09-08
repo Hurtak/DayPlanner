@@ -35,11 +35,15 @@ body {
 	border-top: 0;
 }
 
-.content {
-	padding-left: 15px;
-	line-height: 60px;
+.overlay {
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
-.content:hover {
+.overlay:hover {
 	background-color: rgba(255, 255, 255, .5);
 	cursor: pointer;
 	transition: .3s all;
@@ -50,6 +54,21 @@ body {
 	top: 0;
 	right: 0;
  	line-height: 60px;
+ 	z-index: 10;
+}
+
+.duration input {
+	background-color: white;
+}
+.duration input[readonly] {
+	background-color: gray;
+}
+
+.item-name input {
+	background-color: white;
+}
+.item-name input[readonly] {
+	background-color: gray;
 }
 
 .time, .start-time {
