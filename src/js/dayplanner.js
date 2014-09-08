@@ -80,12 +80,22 @@ var DayPlanner = function() {
 		var getItemNameDiv = function(item) {
 			return item.querySelector(".item-name");
 		};
-		var getItemDuration = function(item) {
-			return getItemDurationDiv(item).innerHTML.trim() * 1;
-		};
+
+
 		var getItemDurationDiv = function(item) {
 			return item.querySelector(".duration");
-		};		
+		};
+		var getItemDurationInput = function(item) {
+			return getItemDurationDiv(item).getElementsByTagName('input')[0];
+		};
+		var getItemDuration = function(item) {
+			return getItemDurationInput(item).value.trim() * 1;
+		};	
+		var setItemDuration = function(item, duration) {
+			getItemDurationInput(item).value = duration;
+		};
+
+				
 		var getItemColor = function(item) {
 			return item.style.backgroundColor;
 		};
@@ -100,9 +110,6 @@ var DayPlanner = function() {
 		 * SET FUNCTIONS *
 		 *****************/	
 	
-		var setItemDuration = function(item, duration) {
-			getItemDurationDiv(item).innerHTML = duration;
-		};
 		var setItemName = function(item, name) {
 			getItemNameDiv(item).innerHTML = name;
 		};
@@ -166,8 +173,45 @@ var DayPlanner = function() {
 			newItem.querySelector(".content").onclick = function() {
 				openItem(this.parentNode);
 			};
+			getItemDurationInput(newItem).oninput = function() {
+				// It's not quite magic to make onchange fire on all those actions.  <input onchange="doSomething();" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"> will do well enough for most
+				changeDuration(this.value);
+			};
 
 			return newItem;
+		};
+
+
+		// duration buttons
+		var addDuration = function(amount) {
+			var durationInput = getItemDurationInput(getOpenedItem());
+
+			amount = amount * 1 + durationInput.value * 1;
+			if (amount < minItemInterval) {
+				amount = minItemInterval;
+			} else if (amount > maxItemInterval) {
+				amount = maxItemInterval;
+			}
+
+			setItemDuration(getOpenedItem(), amount);
+			durationInput.value = amount;
+			
+			resizeOpenedItem(amount);
+			recalculateTimes();
+
+			saveAppState();
+		};
+
+		var changeDuration = function(amount) {
+			if (Lib.isNumber(amount) && amount >= minItemInterval && amount <= maxItemInterval) {
+
+				setItemDuration(getOpenedItem(), Math.round(amount));
+
+				resizeOpenedItem(amount);
+				recalculateTimes();
+
+				saveAppState();
+			}
 		};
 
 	/********
@@ -200,8 +244,6 @@ var DayPlanner = function() {
 
 		// refresh change item name input
 		document.getElementById("name-input").value = getItemName(openedItem);
-		// refresh duration input
-		document.getElementById("duration-input").value = getItemDuration(openedItem);
 	};
 
 	/***************
@@ -319,43 +361,6 @@ var DayPlanner = function() {
 			saveAppState();
 		};
 
-		// duration buttons
-		var addDuration = function(amount) {
-			var durationInput = document.getElementById("duration-input");
-
-			amount = amount * 1 + durationInput.value * 1;
-			if (amount < minItemInterval) {
-				amount = minItemInterval;
-			} else if (amount > maxItemInterval) {
-				amount = maxItemInterval;
-			}
-
-			setItemDuration(getOpenedItem(), amount);
-			durationInput.value = amount;
-			
-			resizeOpenedItem(amount);
-			recalculateTimes();
-
-			saveAppState();
-		};
-
-		var changeDuration = function(amount) {
-			if (Lib.isNumber(amount) && amount >= minItemInterval && amount <= maxItemInterval) {
-
-				setItemDuration(getOpenedItem(), Math.round(amount));
-
-				resizeOpenedItem(amount);
-				recalculateTimes();
-
-				saveAppState();
-			}
-		};
-
-		var durationInput = document.getElementById("duration-input");
-		durationInput.oninput = function() {
-			// It's not quite magic to make onchange fire on all those actions.  <input onchange="doSomething();" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"> will do well enough for most
-			changeDuration(this.value);
-		};
 
 		var plusButton = document.getElementById("duration-plus");
 		plusButton.onclick = function() {
