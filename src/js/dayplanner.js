@@ -56,6 +56,7 @@ var DayPlanner = function() {
 			};
 
 		// delete items
+
 			var deleteItem = function(item) {
 				// item.outerHTML = "";
 				item.parentNode.removeChild(item);
@@ -75,6 +76,7 @@ var DayPlanner = function() {
 			};
 
 		// deafult item
+
 			var getDefaultItemClone = function() {
 				var defaultItem = document.getElementById("default-item").children[0];
 				defaultItem = defaultItem.cloneNode(true);
@@ -82,6 +84,7 @@ var DayPlanner = function() {
 			};
 
 		// resize
+
 			var setItemHeight = function(item, height) {
 				height = height + "px";
 
@@ -105,6 +108,7 @@ var DayPlanner = function() {
 			};
 
 		// open
+
 			var openItem = function(item) {
 				resetItemsHeight();
 				showMenu(item);
@@ -119,51 +123,64 @@ var DayPlanner = function() {
 
 			var getItemsContainer = function() {
 				return document.getElementById("items-container");
-			};	
+			};
+
 			var getItems = function() {
 				return getItemsContainer().querySelectorAll(".item");
 			};
+
 			var getStartTimeDiv = function() {
 				return document.getElementById("start-time");
 			};
 
 		// item name
+
 			var getItemNameDiv = function(item) {
 				return item.querySelector(".item-name");
 			};
+
 			var getItemNameInput = function(item) {
 				return getItemNameDiv(item).getElementsByTagName('input')[0];
-			};			
+			};
+
 			var getItemName = function(item) {
 				return getItemNameInput(item).value.trim();
 			};
+
 			var setItemName = function(item, name) {
 				getItemNameInput(item).value = name;
 			};
 
 		// item duration
+
 			var getItemDurationDiv = function(item) {
 				return item.querySelector(".duration");
 			};
+
 			var getItemDurationInput = function(item) {
 				return getItemDurationDiv(item).getElementsByTagName('input')[0];
 			};
+
 			var getItemDuration = function(item) {
 				return getItemDurationInput(item).value.trim() * 1;
-			};	
+			};
+
 			var setItemDuration = function(item, duration) {
 				getItemDurationInput(item).value = duration;
 			};
 
 		// item color
+
 			var getItemColor = function(item) {
 				return item.style.backgroundColor;
 			};
+
 			var setItemColor = function(item, color) {
 				item.style.backgroundColor = color;
 			};
 
 		// change item duration functions
+
 			var addDuration = function(amount) {
 				var durationInput = getItemDurationInput(getOpenedItem());
 
@@ -176,7 +193,7 @@ var DayPlanner = function() {
 
 				setItemDuration(getOpenedItem(), amount);
 				durationInput.value = amount;
-				
+
 				resizeOpenedItem(amount);
 				recalculateTimes();
 
@@ -232,7 +249,7 @@ var DayPlanner = function() {
 				items[i].querySelector(".time").innerHTML = Time.minutesToTime(Time.timeToMinutes(previousTime) + getItemDuration(items[i]));
 				previousTime = Time.minutesToTime(getItemDuration(items[i]) + Time.timeToMinutes(previousTime));
 			}
-		};	
+		};
 
 	// *** SAVE / LOAD ***
 
@@ -247,7 +264,7 @@ var DayPlanner = function() {
 					"color": getItemColor(items[i])
 				};
 			}
-			
+
 			Storage.save(data, "data");
 		};
 
@@ -256,7 +273,7 @@ var DayPlanner = function() {
 
 			var items = Storage.load("data");
 
-			if (items) {		
+			if (items) {
 				for (var i = 0; i < items.length; i++) {
 					var defaultItem = getDefaultItemClone();
 
@@ -341,14 +358,14 @@ var DayPlanner = function() {
 
 				saveAppState();
 			};
-		
+
 			// delete button init
 			var deleteButton = document.getElementById("delete-item");
 			deleteButton.onclick = function() {
 				var openedItem = getOpenedItem();
 
 				hideMenu();
-				
+
 				// delete current item
 				deleteItem(openedItem);
 
