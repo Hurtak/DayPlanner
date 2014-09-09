@@ -21,11 +21,13 @@ body {
 .item {
 	text-align: left;
 
-	background-color: rgba(0, 0, 0, .5);
-	border-bottom: 2px solid yellow;
+	background-color: #BFBFBF;
+	border-bottom: 2px solid white;
 
 	position: relative;
 	transition: .3s all;
+
+	padding: 2% 2% 0 2%;
 }
 
 .item:last-child {
@@ -33,56 +35,67 @@ body {
 }
 
 .overlay {
+	box-sizing: border-box;
+
 	width: 100%;
 	height: 100%;
 	z-index: 100;
+
 	position: absolute;
 	top: 0;
 	left: 0;
+
+	border-left : 0 solid white;
 }
 .overlay:hover {
-	background-color: rgba(255, 255, 255, .5);
+	background-color: rgba(0, 0, 0, .1);
 	cursor: pointer;
-	transition: .3s all;
+
+	border-left : 6px solid white;
 }
 
 .duration {
-	position: absolute;
-	top: 0;
-	right: 0;
- 	line-height: 60px;
+	float: right;
+	text-align: right;
+ 	width: 20%;
  	z-index: 10;
 }
 
 .item-name {
-
+	width: 80%;
+	float: left;
 }
 
 .item-name input[readonly] {
 	background-color: transparent;
-	background-color: rgba(255, 0, 0, .3);
 	border: 0;
+
 }
 .item-name input {
 	background-color: white;
-	width: 80%;
+	width: 100%;
 	border: 0;
+
+	font-family: "Cambria", "Times New Roman", serif;
+	font-size: 18px;
 }
 
 .duration input[readonly] {
+	text-align: right;
+
 	background-color: transparent;
-	background-color: rgba(255, 0, 0, .3);
-	width: 2em;
-	height: 2em;
+	
 	border: 0;
 }
 .duration input {
+	text-align: right;
 	background-color: white;
 	width: 3em;
-	height: 3em;
 	border: 0;
-}
 
+	font-family: "Cambria", "Times New Roman", serif;
+	font-size: 18px;
+}
 
 .time, .start-time {
 	background-color: rgba(0, 0, 255, .5);

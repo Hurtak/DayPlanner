@@ -7,6 +7,8 @@ var DayPlanner = function() {
 	var minItemInterval = 1; // min
 	var maxItemInterval = 120; // min
 
+	var menuOffset = 50; // px
+
 	var startTime = "00:00";
 
 	// *** ITEMS ***
@@ -89,8 +91,8 @@ var DayPlanner = function() {
 				height = height + "px";
 
 				item.style.height = height;
-				getItemDurationDiv(item).style.lineHeight = height; 
-				getItemNameDiv(item).style.lineHeight = height; 
+				// getItemDurationDiv(item).style.lineHeight = height; 
+				// getItemNameDiv(item).style.lineHeight = height; 
 			};
 
 			var resizeOpenedItem = function(minutes) {
@@ -268,12 +270,12 @@ var DayPlanner = function() {
 
 	// *** CURRENT TIME ***
 	
-	var initTime = function() {
-		var minTime = startTime;
-		var maxTime = getItems();
-		maxTime = maxTime[maxTime.length - 1].querySelector(".time").innerHTML;
+		var initTime = function() {
+			var minTime = startTime;
+			var maxTime = getItems();
+			maxTime = maxTime[maxTime.length - 1].querySelector(".time").innerHTML;
 
-	};
+		};
 
 	// *** GENERAL ***
 
