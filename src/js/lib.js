@@ -15,12 +15,13 @@ var Lib = function() {
 	 * @return [number]         [converted number]
 	 */
 	var linearConversion = function(number, oldMin, oldMax, newMin, newMax) {
-		oldRange = oldMax - oldMin;
+		var newValue;
+		var oldRange = oldMax - oldMin;
 
 		if (oldRange === 0) {
 			newValue = newMax;
 		} else {
-			newRange = newMax - newMin;
+			var newRange = newMax - newMin;
 			newValue = (((number - oldMin) * newRange) / oldRange) + newMin;
 		}	
 
