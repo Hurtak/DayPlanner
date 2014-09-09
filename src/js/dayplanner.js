@@ -69,9 +69,9 @@ var DayPlanner = function() {
 				hideAndMove(getStartTimeDiv());
 
 				// removes all items
-				var itemsContainer = getItemsContainer();
-				while (itemsContainer.firstChild) {
-					itemsContainer.removeChild(itemsContainer.firstChild);
+				var items = getItems();
+				for (var i = 0; i < items.length; i++) {
+					deleteItem(items[i]);
 				}
 			};
 
@@ -266,6 +266,15 @@ var DayPlanner = function() {
 			// var openedItem = getOpenedItem();
 		};
 
+	// *** CURRENT TIME ***
+	
+	var initTime = function() {
+		var minTime = startTime;
+		var maxTime = getItems();
+		maxTime = maxTime[maxTime.length - 1].querySelector(".time").innerHTML;
+
+	};
+
 	// *** GENERAL ***
 
 		var recalculateTimes = function() {
@@ -357,6 +366,8 @@ var DayPlanner = function() {
 
 			// initialize menu
 			menuInit();
+
+			initTime();
 
 			// reset button
 			document.getElementById("reset").onclick = function() {resetAppState(5);};
