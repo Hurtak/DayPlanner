@@ -7,7 +7,7 @@ var DayPlanner = function() {
 	var minItemInterval = 1; // min
 	var maxItemInterval = 120; // min
 
-	var menuLineHeight = 50; // px
+	var maxItemNameLength = 50;
 
 	var startTime = "00:00";
 
@@ -150,6 +150,9 @@ var DayPlanner = function() {
 			};
 
 			var setItemName = function(item, name) {
+				if (name.length > maxItemNameLength) {
+					name = name.substring(0, maxItemNameLength);
+				}				
 				getItemNameInput(item).value = name;
 			};
 
