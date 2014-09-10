@@ -140,6 +140,22 @@ body {
 	cursor: pointer;
 }
 
+.controls {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+}
+.controls button {
+	height: 50px;
+	width: 32%;
+	margin-left: 2%;
+	float: right;
+}
+.controls button:first-child {
+	margin-left: 0;
+	float: left;
+}
 
 /* ITEMS CONTAINER */
 #items-container {
