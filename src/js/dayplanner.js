@@ -7,7 +7,7 @@ var DayPlanner = function() {
 	var minItemInterval = 1; // min
 	var maxItemInterval = 120; // min
 
-	var menuOffset = 50; // px
+	var menuLineHeight = 50; // px
 
 	var startTime = "00:00";
 
@@ -88,11 +88,10 @@ var DayPlanner = function() {
 		// resize
 
 			var setItemHeight = function(item, height) {
-				height = height + "px";
+				item.style.height = height + "px";
 
-				item.style.height = height;
-				// getItemDurationDiv(item).style.lineHeight = height; 
-				// getItemNameDiv(item).style.lineHeight = height; 
+				// getItemDurationDiv(item).style.lineHeight = height + "px"; 
+				// getItemNameDiv(item).style.lineHeight = height + "px"; 
 			};
 
 			var resizeOpenedItem = function(minutes) {

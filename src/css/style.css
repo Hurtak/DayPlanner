@@ -25,9 +25,8 @@ body {
 	border-bottom: 2px solid white;
 
 	position: relative;
-	transition: .3s all;
 
-	padding: 2% 2% 0 2%;
+	padding: 2%;
 }
 
 .item:last-child {
@@ -70,6 +69,7 @@ body {
 	background-color: transparent;
 	border: 0;
 
+	margin-top: 0;
 }
 .item-name input {
 	background-color: white;
@@ -78,6 +78,8 @@ body {
 
 	font-family: "Cambria", "Times New Roman", serif;
 	font-size: 18px;
+
+	margin-top: 50px;
 }
 
 .duration input[readonly] {
@@ -86,6 +88,8 @@ body {
 	background-color: transparent;
 	
 	border: 0;
+
+	margin-top: 0;
 }
 .duration input {
 	text-align: right;
@@ -95,6 +99,8 @@ body {
 
 	font-family: "Cambria", "Times New Roman", serif;
 	font-size: 18px;
+
+	margin-top: 50px;
 }
 
 .time, .start-time {
@@ -110,17 +116,20 @@ body {
 	top: -10px;
 }
 
+
+/* MENU */
 .menu {
-	position: absolute;
-	left: 0;
-	top: 0;
 	z-index: 5;
-	background-color: rgba(255, 255, 255, .2);
+	margin: 0 auto;
+	width: 70%;
 }
 
 .colors div {
 	box-sizing: border-box;
 	display: inline-block;
+	position: relative;
+	top: 0;
+	left: 0;
 	width: 50px;
 	height: 50px;
 	border: 2px solid #000;
@@ -131,12 +140,16 @@ body {
 	cursor: pointer;
 }
 
+
+/* ITEMS CONTAINER */
 #items-container {
 	position: relative;
 	width: 50%;
 	margin: 0 auto;
 }
 
+
+/* CURRENT TIME */
 #current-time {
 	width: 50px;
 	height: 20px;
