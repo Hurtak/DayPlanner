@@ -240,8 +240,8 @@ var DayPlanner = function() {
 
 			item.appendChild(getMenu());
 
-			var itemsContainer = getItemsContainer();
-			if (item === itemsContainer.firstChild) {
+			var items = getItems();
+			if (item === items[0]) {
 				hide(document.getElementById("delete-item"));
 			} else {
 				show(document.getElementById("delete-item"));
