@@ -1,8 +1,11 @@
 var DayPlanner = function() {
 	var menu;
 
-	var minOpenedItemHeight = 100; // px
-	var maxOpenedItemHeight = 300; // px
+	var minItemHeight = 40; // px
+	var maxItemHeight = 180; // px	
+	
+	var minOpenedItemHeight = 200; // px
+	var maxOpenedItemHeight = 250; // px
 
 	var minItemInterval = 1; // min
 	var maxItemInterval = 120; // min
@@ -104,7 +107,10 @@ var DayPlanner = function() {
 				// set height according to duration (1 minute = 1px)
 				var items = getItems();
 				for (var i = 0; i < items.length; i++) {
-					setItemHeight(items[i], getItemDuration(items[i]));
+					var minutes = getItemDuration(items[i]);
+					minutes = Lib.linearConversion(minutes, minItemInterval, maxItemInterval, minItemHeight, maxItemHeight);
+
+					setItemHeight(items[i], minutes);
 				}
 			};
 

@@ -14,14 +14,14 @@
 }
 .menu button:hover {
 	background-color: rgba(255, 255, 255, .3);
-	box-shadow: 0 0 20px 5px rgba(255, 255, 255, .3) inset; 
+	
 }
 
 .colors div {
 	box-sizing: border-box;
 	float: left;
 
-	width: calc(100% / 13 - .005px);
+	width: calc(100% / 13);
 	height: 50px;
 	top: 0;
 	position: relative;
