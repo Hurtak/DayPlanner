@@ -127,24 +127,27 @@ body {
 /* MENU */
 .menu {
 	z-index: 5;
-	margin: 0 auto;
-	width: 70%;
+	width: 80%;
 }
+
 
 .colors div {
 	box-sizing: border-box;
-	display: inline-block;
-	position: relative;
-	top: 0;
-	left: 0;
-	width: 50px;
+	float: left;
+
+	width: 7.6923076923076%; /* calc(100% / 13) */
 	height: 50px;
-	border: 2px solid #000;
+	top: 0;
+	position: relative;
+
+	border: 2px solid #fff;
 }
 
 .colors div:hover {
-	border: 2px solid #fff;
 	cursor: pointer;
+	top: 10px;
+
+	
 }
 
 .duration-controls button {
