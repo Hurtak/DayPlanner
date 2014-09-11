@@ -1,0 +1,72 @@
+.menu {
+	z-index: 5;
+	width: 80%;
+}
+
+.menu button {
+	border-radius: 0;
+	border: 0;
+	outline: 0;
+	cursor: pointer;
+	background-color: rgba(255, 255, 255, .6);
+	font-family: "Cambria", "Times New Roman", serif;
+	font-size: 18px;	
+}
+.menu button:hover {
+	background-color: rgba(255, 255, 255, .3);
+	box-shadow: 0 0 20px 5px rgba(255, 255, 255, .3) inset; 
+}
+
+.colors div {
+	box-sizing: border-box;
+	float: left;
+
+	width: calc(100% / 13 - .005px);
+	height: 50px;
+	top: 0;
+	position: relative;
+
+	border: 2px solid #fff;
+}
+
+.colors div:hover {
+	cursor: pointer;
+	top: 10px;
+}
+
+.duration-controls button {
+	width: 50px;
+	height: 50px;
+	position: absolute;
+	font-weight: bold;
+	font-size: 22px;
+	font-family: "Vendara", "Times New Roman";
+
+}
+
+.duration-controls #duration-plus {
+	right: 40px;
+	top: 10px;
+
+}
+.duration-controls #duration-minus {
+	right: 40px;
+	top: 92px;
+}
+
+.controls {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+}
+.controls button {
+	height: 50px;
+	width: 32%;
+	margin-left: 2%;
+	float: right;
+}
+.controls button:first-child {
+	margin-left: 0;
+	float: left;
+}

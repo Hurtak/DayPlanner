@@ -1,0 +1,113 @@
+#items-container {
+	position: relative;
+	width: 50%;
+	margin: 0 auto;
+}
+
+.item {
+	border-bottom: 2px solid white;
+	position: relative;
+	padding: 10px 10px 0 10px;
+
+	background: -moz-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.03) 0%, rgba(0,0,0,0.15) 100%); /* FF3.6+ */
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(0,0,0,0.03)), color-stop(100%,rgba(0,0,0,0.15))); /* Chrome,Safari4+ */
+	background: -webkit-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.03) 0%,rgba(0,0,0,0.15) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.03) 0%,rgba(0,0,0,0.15) 100%); /* Opera 12+ */
+	background: -ms-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.03) 0%,rgba(0,0,0,0.15) 100%); /* IE10+ */
+	background: radial-gradient(ellipse at center,  rgba(0,0,0,0.03) 0%,rgba(0,0,0,0.15) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#08000000', endColorstr='#26000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+	background-color: #BFBFBF;
+}
+
+.item:last-child {
+	border-bottom: 0;
+}
+
+.overlay {
+	box-sizing: border-box;
+
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	border-left : 0 solid white;
+}
+.overlay:hover {
+	background-color: rgba(0, 0, 0, .1);
+	cursor: pointer;
+
+	border-left : 6px solid white;
+}
+
+.item-name {
+	width: 80%;
+	float: left;
+}
+
+.item-name input[readonly] {
+	background-color: transparent;
+	border: 0;
+
+	margin-top: 0;
+}
+.item-name input {
+	width: 100%;
+	height: 30px;
+
+	border: 0;
+
+	font-family: "Cambria", "Times New Roman", serif;
+	font-size: 18px;
+
+	margin-top: 50px;
+}
+.duration {
+	float: right;
+	text-align: right;
+ 	width: 20%;
+ 	z-index: 10;
+}
+.duration span {
+	width: 30px;
+}
+
+.duration input[readonly] {
+	text-align: right;
+
+	background-color: transparent;
+	
+	border: 0;
+	margin-top: 0;
+}
+.duration input {
+	text-align: right;
+	background-color: white;
+	width: 50px;
+	height: 30px;
+	border: 0;
+
+	font-family: "Cambria", "Times New Roman", serif;
+	font-size: 18px;
+
+	margin-top: 50px;
+	
+	margin-right: 5px;
+}
+
+.time, .start-time {
+	background-color: rgba(0, 0, 255, .5);
+	width: 50px;
+	right: -50px;
+	line-height: 20px;
+	top: calc(100% - 10px);
+	position: absolute;
+}
+
+.start-time {
+	top: -10px;
+}
