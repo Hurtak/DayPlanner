@@ -61,6 +61,7 @@
 	height: 30px;
 
 	border: 0;
+	outline: 0;
 
 	font-family: "Cambria", "Times New Roman", serif;
 	font-size: 18px;
@@ -109,6 +110,15 @@
 	
 	margin-right: 35px;
 	padding-right: 5px;
+}
+
+input:focus {
+	box-shadow: 0 0 20px 2px rgba(255, 255, 255, .7);
+}
+
+/* clears box-shadow on focus gained by tabbing  */
+input[readonly]:focus {
+	box-shadow: none;
 }
 
 .time, .start-time {
