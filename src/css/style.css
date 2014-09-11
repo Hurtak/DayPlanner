@@ -130,6 +130,18 @@ body {
 	width: 80%;
 }
 
+.menu button {
+	border-radius: 0;
+	border: 0;
+	outline: 0;
+	cursor: pointer;
+	background-color: rgba(255, 255, 255, .7);
+	font-family: "Cambria", "Times New Roman", serif;
+	font-size: 18px;	
+}
+.menu button:hover {
+	background-color: rgba(255, 255, 255, .4);
+}
 
 .colors div {
 	box-sizing: border-box;
@@ -146,14 +158,16 @@ body {
 .colors div:hover {
 	cursor: pointer;
 	top: 10px;
-
-	
 }
 
 .duration-controls button {
 	width: 50px;
 	height: 50px;
 	position: absolute;
+	font-weight: bold;
+	font-size: 22px;
+	font-family: "Vendara", "Times New Roman";
+
 }
 
 .duration-controls #duration-plus {
