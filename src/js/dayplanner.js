@@ -49,6 +49,20 @@ var DayPlanner = function() {
 					changeDuration(this.value);
 				};
 
+				getItemDurationInput(newItem).onblur = function() {
+					var duration = this.value;
+
+					if (!Lib.isNumber(duration)) {
+						duration = maxItemInterval / 2;
+					} else if (duration > maxItemInterval) {
+						duration = maxItemInterval;
+					} else if (duration < minItemInterval) {
+						duration = minItemInterval;
+					}
+
+					changeDuration(duration);
+				};
+
 				// changes name of item
 				getItemNameInput(newItem).oninput = function() {
 					setItemName(getOpenedItem(), this.value);
