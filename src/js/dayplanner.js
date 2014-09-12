@@ -455,14 +455,12 @@ var DayPlanner = function() {
 			};
 
 			// color settings
-			var colors = document.getElementById("colors").getElementsByTagName("div");
-			for (var i = 0; i < colors.length; i++) {
-				colors[i].onclick = function() {
-					setItemColor(getOpenedItem(), getItemColor(this));
+			var colors = document.getElementById("colors");
+			colors.addEventListener('click', function(e){
+				setItemColor(getOpenedItem(), getItemColor(e.target));
 
-					saveAppState();
-				};
-			}
+				saveAppState();
+			});
 		};
 
 	return {
