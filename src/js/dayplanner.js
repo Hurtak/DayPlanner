@@ -53,7 +53,7 @@ var DayPlanner = function() {
 					var duration = this.value;
 
 					if (!Lib.isNumber(duration)) {
-						duration = maxItemInterval / 2;
+						duration = 60;
 					} else if (duration > maxItemInterval) {
 						duration = maxItemInterval;
 					} else if (duration < minItemInterval) {
