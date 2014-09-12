@@ -21,7 +21,7 @@
 	box-sizing: border-box;
 	float: left;
 
-	width: calc(100% / 13);
+	width: 7.6923076923076923076923076923077%; /* calc(100% / 13); */
 	height: 50px;
 	top: 0;
 	position: relative;
