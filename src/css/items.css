@@ -34,14 +34,10 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-
-	border-left : 0 solid white;
 }
 .overlay:hover {
-	background-color: rgba(0, 0, 0, .1);
+	background-color: rgba(0, 0, 0, .2);
 	cursor: pointer;
-
-	border-left : 6px solid white;
 }
 
 .item-name {
