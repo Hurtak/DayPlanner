@@ -12,6 +12,15 @@ body {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+
+	background: rgb(156,197,229); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(156,197,229,1) 10%, rgba(201,255,191,1) 90%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(10%,rgba(156,197,229,1)), color-stop(90%,rgba(201,255,191,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(156,197,229,1) 10%,rgba(201,255,191,1) 90%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(156,197,229,1) 10%,rgba(201,255,191,1) 90%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(156,197,229,1) 10%,rgba(201,255,191,1) 90%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(156,197,229,1) 10%,rgba(201,255,191,1) 90%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9cc5e5', endColorstr='#c9ffbf',GradientType=0 ); /* IE6-9 */
 }
 
 .hidden {
