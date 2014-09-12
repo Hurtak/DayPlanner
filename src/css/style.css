@@ -26,22 +26,3 @@ body {
 .hidden {
 	display: none;
 }
-
-#current-time {
-	width: 50px;
-	height: 20px;
-	position: absolute;
-	
-	top: -10px;
-	left: -60px;
-
-	background-color: #FF8000;
-}
-
-#current-time:after {
-	content: '';
-	position: absolute;
-	left: 100%;
-	border: 10px solid transparent;
-	border-left: 10px solid #FF8000;
-}
