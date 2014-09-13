@@ -1,54 +1,57 @@
 .menu {
 	z-index: 5;
-	width: 80%;
 }
 
 	.menu button {
 		border: 0;
 		border-radius: 0;
 		outline: 0;
-		
+
 		cursor: pointer;
-		
+
 		background-color: rgba(255, 255, 255, .6);
 
 		font-family: "Cambria", "Times New Roman", serif;
-		font-size: 18px;	
+		font-size: 18px;
 	}
 
 	.menu button:hover {
 		background-color: rgba(255, 255, 255, .3);	
 	}
 
-.colors div {
-	box-sizing: border-box;
-	float: left;
-
-	width: 7.6923076923076923076923076923077%; /* calc(100% / 13); */
-	height: 50px;
-	top: 0;
-	position: relative;
-
-	border: 2px solid #fff;
+.colors {
+	width: 80%;
 }
 
-.colors div:hover {
-	cursor: pointer;
-	top: -10px;
-	z-index: 5;
-	transform: scale(1.3, 1.2);
-}
+	.colors div {
+		box-sizing: border-box;
+		float: left;
+
+		width: 7.6923076923076923076923076923077%; /* calc(100% / 13); */
+		height: 50px;
+		top: 0;
+		position: relative;
+
+		border: 2px solid #fff;
+	}
+
+	.colors div:hover {
+		cursor: pointer;
+		top: -10px;
+		z-index: 5;
+		transform: scale(1.3, 1.2);
+	}
 
 
 .duration-controls button {
 	position: absolute;
 	width: 50px;
 	height: 50px;
-	
+
 	font-family: "Vendara", "Times New Roman";
 	font-size: 22px;
 	font-weight: bold;
-	
+
 	z-index: 10;
 }
 
@@ -66,7 +69,7 @@
 
 .controls {
 	position: absolute;
-	
+
 	bottom: 0;
 	left: 0;
 
