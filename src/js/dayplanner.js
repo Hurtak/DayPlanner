@@ -271,7 +271,7 @@ var DayPlanner = function() {
 			hide(getOverlay(openedItem));
 
 			// changes readonly on time inputs
-			getTimeInput(openedItem).readOnly = false;
+			setTimeInputReadonly(openedItem, false);
 
 			refreshMenu();
 		};
@@ -285,7 +285,7 @@ var DayPlanner = function() {
 			show(getOverlay(openedItem));
 
 			// changes readonly on time inputs
-			getTimeInput(openedItem).readOnly = true;
+			setTimeInputReadonly(openedItem, true);
 
 			hideAndMove(getMenu());
 		};
@@ -314,9 +314,24 @@ var DayPlanner = function() {
 			return document.getElementById("start-time");
 		};
 
-		var setTimeInput = function(input, time) {
+		var setTimeInputValue = function(input, time) {
 			input.value = time;
-		};		
+		};
+
+		var setTimeInputReadonly = function(item, readOnlyValue) {
+			var items = getItems();
+
+			for (var i = 0; i < items.length; i++) {
+				if (items[i] === item) {
+					getTimeInput(items[i]).readOnly = readOnlyValue;
+					if (i === 0) {
+						getStartTimeInput().readOnly = readOnlyValue;
+					} else {
+						getTimeInput(items[i - 1]).readOnly = readOnlyValue;
+					}
+				}
+			}
+		};
 
 		var getTimes = function() {
 			return getItemsContainer().querySelectorAll(".time-input");
@@ -409,7 +424,7 @@ var DayPlanner = function() {
 
 		var init = function() {
 			// initialize first time in items start/end times 
-			setTimeInput(getStartTimeInput(), startTime);
+			setTimeInputValue(getStartTimeInput(), startTime);
 
 			loadAppState();
 
