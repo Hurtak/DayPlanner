@@ -31,7 +31,6 @@
 	content: '';
 	position: absolute;
 	border: 13px solid transparent;
-
 }
 
 #current-time:after {
@@ -44,8 +43,6 @@
 	border-right: 13px solid rgba(255, 255, 255, .7);
 }
 
-
 .start-time {
 	top: -13px;
 }
-
