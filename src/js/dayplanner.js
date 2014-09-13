@@ -151,10 +151,6 @@ var DayPlanner = function() {
 				return getItemsContainer().querySelectorAll(".item");
 			};
 
-			var getStartTimeDiv = function() {
-				return document.getElementById("start-time");
-			};
-
 		// item name
 
 			var getItemNameDiv = function(item) {
@@ -269,9 +265,13 @@ var DayPlanner = function() {
 			
 			var openedItem = getOpenedItem();
 
+			// changes readonly on duration and name inputs
 			getItemDurationInput(openedItem).readOnly = false;
 			getItemNameInput(openedItem).readOnly = false;
 			hide(getOverlay(openedItem));
+
+			// changes readonly on time inputs
+			getTimeInput(openedItem).readOnly = false;
 
 			refreshMenu();
 		};
@@ -279,9 +279,13 @@ var DayPlanner = function() {
 		var hideMenu = function() {
 			var openedItem = getOpenedItem();
 
+			// changes readonly on duration and name inputs
 			getItemDurationInput(openedItem).readOnly = true;
 			getItemNameInput(openedItem).readOnly = true;
 			show(getOverlay(openedItem));
+
+			// changes readonly on time inputs
+			getTimeInput(openedItem).readOnly = true;
 
 			hideAndMove(getMenu());
 		};
@@ -295,18 +299,39 @@ var DayPlanner = function() {
 		var initTime = function() {
 			var minTime = startTime;
 			var maxTime = getItems();
-			maxTime = maxTime[maxTime.length - 1].querySelector(".time").innerHTML;
+			maxTime = maxTime[maxTime.length - 1].querySelector(".time").value;
 
 		};
 
-	// *** GENERAL ***
+	// *** TIME ***
+
+
+		var getStartTimeDiv = function() {
+			return getStartTimeInput().parentNode;
+		};
+
+		var getStartTimeInput = function() {
+			return document.getElementById("start-time");
+		};
+
+		var setTimeInput = function(input, time) {
+			input.value = time;
+		};		
+
+		var getTimes = function() {
+			return getItemsContainer().querySelectorAll(".time-input");
+		};
+
+		var getTimeInput = function(item) {
+			return item.querySelector(".time-input");
+		};
 
 		var recalculateTimes = function() {
 			var items = getItems();
 
 			var previousTime = startTime;
 			for (var i = 0; i < items.length; i++) {
-				items[i].querySelector(".time").innerHTML = Time.minutesToTime(Time.timeToMinutes(previousTime) + getItemDuration(items[i]));
+				items[i].querySelector(".time-input").value = Time.minutesToTime(Time.timeToMinutes(previousTime) + getItemDuration(items[i]));
 				previousTime = Time.minutesToTime(getItemDuration(items[i]) + Time.timeToMinutes(previousTime));
 			}
 		};
@@ -384,7 +409,7 @@ var DayPlanner = function() {
 
 		var init = function() {
 			// initialize first time in items start/end times 
-			getStartTimeDiv().innerHTML = startTime;
+			setTimeInput(getStartTimeInput(), startTime);
 
 			loadAppState();
 
