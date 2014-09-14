@@ -28,3 +28,6 @@ body {
 	display: none;
 }
 
+input:invalid {
+  background-color: rgb(255, 120, 120);
+}

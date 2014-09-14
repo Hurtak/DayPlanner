@@ -8,9 +8,12 @@ var DayPlanner = function() {
 	var maxOpenedItemHeight = 250; // px
 
 	var minItemInterval = 1; // min
-	var maxItemInterval = 120; // min
+	var maxItemInterval = 600; // min
 
 	var maxItemNameLength = 50;
+
+	var startTimePattern = "^(0?[0-9]|1[0-9]|2[0-4]):[0-5][0-9]$";
+	var durationPattern = "^([1-9][0-9]?|[1-5][0-9]{2}|600)$"; // 1 - 600
 
 	// *** ITEMS ***
 
@@ -357,7 +360,7 @@ var DayPlanner = function() {
 			}
 
 			Storage.save(data, "data");
-			Storage.save(getStartTime(), "start-time");
+			saveStartTime();
 		};
 
 		var loadAppState = function() {
@@ -380,7 +383,7 @@ var DayPlanner = function() {
 				resetAppState();
 			}
 
-			setStartTime(Storage.load("start-time"));
+			loadStartTime();
 
 			resetItemsHeight();
 			recalculateTimes();
@@ -402,6 +405,14 @@ var DayPlanner = function() {
 			recalculateTimes();
 		};
 
+		var saveStartTime = function() {
+			Storage.save(getStartTime(), "start-time");
+		};
+
+		var loadStartTime = function() {
+			setStartTime(Storage.load("start-time"));
+		};
+
 	// *** HIDE / SHOW ***
 
 		var hideAndMove = function(element) {
@@ -419,11 +430,14 @@ var DayPlanner = function() {
 	// *** INIT ***
 
 		var init = function() {
+
 			var startTimeInput = getStartTimeInput();
+
 			startTimeInput.oninput = function() {
 				var time = this.value;
+				var pattern = new RegExp(startTimePattern);
 
-				if (/^[0-2]?[0-9]:[0-5][0-9]$/.test(time)) {	
+				if (pattern.test(time)) {
 					recalculateTimes();
 
 					saveAppState();
@@ -431,19 +445,16 @@ var DayPlanner = function() {
 			};
 
 			startTimeInput.onblur = function() {
+				loadStartTime();
 				var time = this.value;
 
-				// if (!Lib.isNumber(duration)) {
-				// 	duration = 60;
-				// } else if (duration > maxItemInterval) {
-				// 	duration = maxItemInterval;
-				// } else if (duration < minItemInterval) {
-				// 	duration = minItemInterval;
-				// }
-
-				// setStartTime(time);
+				// changes 0:00 to 00:00
+				if (time.length < 5) {
+					this.value = "0" + time; 
+				}
 			};
 
+			startTimeInput.setAttribute("pattern", startTimePattern);
 
 			loadAppState();
 
