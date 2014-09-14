@@ -12,8 +12,6 @@ var DayPlanner = function() {
 
 	var maxItemNameLength = 50;
 
-	var startTime = "00:00";
-
 	// *** ITEMS ***
 
 		// create items
@@ -306,7 +304,7 @@ var DayPlanner = function() {
 	// *** CURRENT TIME ***
 	
 		var initTime = function() {
-			var minTime = startTime;
+			var minTime = getStartTime;
 			var maxTime = getItems();
 			maxTime = maxTime[maxTime.length - 1].querySelector(".time").value;
 
@@ -321,6 +319,10 @@ var DayPlanner = function() {
 		var getStartTimeInput = function() {
 			return document.getElementById("start-time");
 		};
+
+		var getStartTime = function() {
+			return getStartTimeInput().value;
+		};	
 		
 		var setStartTime = function(time) {
 			getStartTimeInput().value = time;
@@ -333,7 +335,7 @@ var DayPlanner = function() {
 		var recalculateTimes = function() {
 			var items = getItems();
 
-			var previousTime = startTime;
+			var previousTime = getStartTime();
 			for (var i = 0; i < items.length; i++) {
 				items[i].querySelector(".time-input").value = Time.minutesToTime(Time.timeToMinutes(previousTime) + getItemDuration(items[i]));
 				previousTime = Time.minutesToTime(getItemDuration(items[i]) + Time.timeToMinutes(previousTime));
@@ -355,6 +357,7 @@ var DayPlanner = function() {
 			}
 
 			Storage.save(data, "data");
+			Storage.save(getStartTime(), "start-time");
 		};
 
 		var loadAppState = function() {
@@ -377,6 +380,8 @@ var DayPlanner = function() {
 				resetAppState();
 			}
 
+			setStartTime(Storage.load("start-time"));
+
 			resetItemsHeight();
 			recalculateTimes();
 		};
@@ -390,6 +395,8 @@ var DayPlanner = function() {
 			for (var i = 1; i < numberOfItems; i++) {
 				createItem(itemsContainer, false, false);
 			}
+
+			setStartTime("00:00");
 
 			resetItemsHeight();
 			recalculateTimes();
@@ -412,12 +419,12 @@ var DayPlanner = function() {
 	// *** INIT ***
 
 		var init = function() {
-			// initialize first time in items start/end times 
-			setStartTime(startTime);
+			getStartTimeInput().oninput = function() {
+
+			};
 
 			loadAppState();
 
-			// initialize menu
 			menuInit();
 
 			initTime();
