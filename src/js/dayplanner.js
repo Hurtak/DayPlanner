@@ -419,9 +419,31 @@ var DayPlanner = function() {
 	// *** INIT ***
 
 		var init = function() {
-			getStartTimeInput().oninput = function() {
+			var startTimeInput = getStartTimeInput();
+			startTimeInput.oninput = function() {
+				var time = this.value;
 
+				if (/^[0-2]?[0-9]:[0-5][0-9]$/.test(time)) {	
+					recalculateTimes();
+
+					saveAppState();
+				}
 			};
+
+			startTimeInput.onblur = function() {
+				var time = this.value;
+
+				// if (!Lib.isNumber(duration)) {
+				// 	duration = 60;
+				// } else if (duration > maxItemInterval) {
+				// 	duration = maxItemInterval;
+				// } else if (duration < minItemInterval) {
+				// 	duration = minItemInterval;
+				// }
+
+				// setStartTime(time);
+			};
+
 
 			loadAppState();
 
