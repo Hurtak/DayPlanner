@@ -18,7 +18,7 @@
 	background: linear-gradient(135deg,  rgba(0,0,0,0.03) 0%,rgba(0,0,0,0.25) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#08000000', endColorstr='#40000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
-	background-color: #BFBFBF;
+	background-color: #80BFFF;
 }
 
 .item:last-child {
