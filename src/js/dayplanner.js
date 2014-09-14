@@ -267,7 +267,7 @@ var DayPlanner = function() {
 
 			var openedItem = getOpenedItem();
 
-			if (isFirstItem(openedItem)) {
+			if (isFirstItem(item)) {
 				// first item
 				hide(document.getElementById("delete-item"));
 				setStartTimeInputReadonly(false); // changes readonly of start time input
@@ -277,9 +277,9 @@ var DayPlanner = function() {
 			}
 			
 			// changes readonly on duration and name inputs
-			getItemDurationInput(openedItem).readOnly = false;
-			getItemNameInput(openedItem).readOnly = false;
-			hide(getOverlay(openedItem));
+			getItemDurationInput(item).readOnly = false;
+			getItemNameInput(item).readOnly = false;
+			hide(getOverlay(item));
 
 			refreshMenu();
 		};
