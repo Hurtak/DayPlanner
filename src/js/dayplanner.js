@@ -151,6 +151,15 @@ var DayPlanner = function() {
 				return getItemsContainer().querySelectorAll(".item");
 			};
 
+			var isFirstItem = function(item) {
+				var items = getItems();
+				if (items[0] === item) {
+					return true;
+				} else {
+					return false;
+				}
+			};
+
 		// item name
 
 			var getItemNameDiv = function(item) {
@@ -256,22 +265,21 @@ var DayPlanner = function() {
 
 			item.appendChild(getMenu());
 
-			var items = getItems();
-			if (item === items[0]) {
+			var openedItem = getOpenedItem();
+
+			if (isFirstItem(openedItem)) {
+				// first item
 				hide(document.getElementById("delete-item"));
+				setStartTimeInputReadonly(false); // changes readonly of start time input
 			} else {
+				// other items
 				show(document.getElementById("delete-item"));
 			}
 			
-			var openedItem = getOpenedItem();
-
 			// changes readonly on duration and name inputs
 			getItemDurationInput(openedItem).readOnly = false;
 			getItemNameInput(openedItem).readOnly = false;
 			hide(getOverlay(openedItem));
-
-			// changes readonly on time inputs
-			setTimeInputReadonly(openedItem, false);
 
 			refreshMenu();
 		};
@@ -284,8 +292,9 @@ var DayPlanner = function() {
 			getItemNameInput(openedItem).readOnly = true;
 			show(getOverlay(openedItem));
 
-			// changes readonly on time inputs
-			setTimeInputReadonly(openedItem, true);
+			if (isFirstItem(openedItem)) {
+				setStartTimeInputReadonly(true); // changes readonly of start time input
+			}
 
 			hideAndMove(getMenu());
 		};
@@ -305,7 +314,6 @@ var DayPlanner = function() {
 
 	// *** TIME ***
 
-
 		var getStartTimeDiv = function() {
 			return getStartTimeInput().parentNode;
 		};
@@ -313,32 +321,13 @@ var DayPlanner = function() {
 		var getStartTimeInput = function() {
 			return document.getElementById("start-time");
 		};
-
-		var setTimeInputValue = function(input, time) {
-			input.value = time;
+		
+		var setStartTime = function(time) {
+			getStartTimeInput().value = time;
 		};
 
-		var setTimeInputReadonly = function(item, readOnlyValue) {
-			var items = getItems();
-
-			for (var i = 0; i < items.length; i++) {
-				if (items[i] === item) {
-					getTimeInput(items[i]).readOnly = readOnlyValue;
-					if (i === 0) {
-						getStartTimeInput().readOnly = readOnlyValue;
-					} else {
-						getTimeInput(items[i - 1]).readOnly = readOnlyValue;
-					}
-				}
-			}
-		};
-
-		var getTimes = function() {
-			return getItemsContainer().querySelectorAll(".time-input");
-		};
-
-		var getTimeInput = function(item) {
-			return item.querySelector(".time-input");
+		var setStartTimeInputReadonly = function(readOnlyValue) {
+			getStartTimeInput().readOnly = readOnlyValue;
 		};
 
 		var recalculateTimes = function() {
@@ -424,7 +413,7 @@ var DayPlanner = function() {
 
 		var init = function() {
 			// initialize first time in items start/end times 
-			setTimeInputValue(getStartTimeInput(), startTime);
+			setStartTime(startTime);
 
 			loadAppState();
 
