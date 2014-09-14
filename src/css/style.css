@@ -29,5 +29,5 @@ body {
 }
 
 input:invalid {
-  background-color: rgb(255, 120, 120);
+	background-color: rgb(255, 120, 120)!important;
 }

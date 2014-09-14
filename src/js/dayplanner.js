@@ -13,7 +13,7 @@ var DayPlanner = function() {
 	var maxItemNameLength = 50;
 
 	var startTimePattern = "^(0?[0-9]|1[0-9]|2[0-4]):[0-5][0-9]$";
-	var durationPattern = "^([1-9][0-9]?|[1-5][0-9]{2}|600)$"; // 1 - 600
+	var durationPattern = "[0-9]+"; // 1 - 600
 
 	// *** ITEMS ***
 
@@ -42,11 +42,13 @@ var DayPlanner = function() {
 
 				// add onclick event on newly created item
 				getOverlay(newItem).onclick = function() {
-					openItem(this.parentNode);
+					openItem(this.parentNode); // overlay is element with :hover and child element of item
 				};
 
-				getItemDurationInput(newItem).oninput = function() {
-					// It's not quite magic to make onchange fire on all those actions.  <input onchange="doSomething();" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"> will do well enough for most
+				var durationInput = getItemDurationInput(newItem);
+				durationInput.setAttribute("pattern", durationPattern);
+				durationInput.oninput = function() {
+					// backward compatibility: <input onchange="doSomething();" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
 					changeDuration(this.value);
 				};
 
