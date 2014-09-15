@@ -45,6 +45,8 @@
 
 .duration-controls button {
 	position: absolute;
+	right: 45px;
+	
 	width: 50px;
 	height: 50px;
 
@@ -53,16 +55,13 @@
 	z-index: 10;
 }
 
-.duration-controls #duration-plus {
-	right: 45px;
-	top: 10px;
+	#duration-plus {
+		top: 10px;
+	}
 
-}
-
-.duration-controls #duration-minus {
-	right: 45px;
-	top: 90px;
-}
+	#duration-minus {
+		top: 90px;
+	}
 
 
 .controls {
