@@ -77,15 +77,14 @@
 		height: 50px;
 		width: 32%;
 
-		margin-left: 2%;
+		margin-right: 2%;
 		
 		float: right;
 		position: relative;
 	}
 
 	.controls button:first-child {
-		margin-left: 0;
-		float: left;
+		margin-right: 0;
 	}
 
 	.controls button i {
