@@ -80,9 +80,21 @@
 		margin-left: 2%;
 		
 		float: right;
+		position: relative;
 	}
 
 	.controls button:first-child {
 		margin-left: 0;
 		float: left;
+	}
+
+	.controls button i {
+		position: absolute;
+		top: 0;
+		left: 13px;
+		
+		line-height: 50px;
+		font-size: 24px;
+
+		color: rgba(0, 0, 0, .7);
 	}
