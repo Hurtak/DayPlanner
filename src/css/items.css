@@ -1,6 +1,10 @@
 #items-container {
 	position: relative;
-	width: 50%;
+
+	width: calc(100% - 135px);
+	min-width: 460px;
+	max-width: 602px;
+
 	margin: 0 auto;
 }
 
