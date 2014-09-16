@@ -12,8 +12,9 @@ var DayPlanner = function() {
 
 	var maxItemNameLength = 50;
 
+	// regex patterns for html5 input validation
 	var startTimePattern = "^(0?[0-9]|1[0-9]|2[0-4]):[0-5][0-9]$";
-	var durationPattern = "[0-9]+"; // 1 - 600
+	var durationPattern = "^([1-9][0-9]?|[1-5][0-9]{2}|600)$"; // 1 - 600
 
 	// *** ITEMS ***
 
