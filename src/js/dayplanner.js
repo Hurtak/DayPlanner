@@ -53,7 +53,7 @@ var DayPlanner = function() {
 					changeDuration(this.value);
 				};
 
-				getItemDurationInput(newItem).onblur = function() {
+				durationInput.onblur = function() {
 					var duration = this.value;
 
 					if (!Lib.isNumber(duration)) {
@@ -96,6 +96,18 @@ var DayPlanner = function() {
 				for (var i = 0; i < items.length; i++) {
 					deleteItem(items[i]);
 				}
+			};
+
+		// move item
+
+			var moveItem = function(item, moveUp) {
+
+				if (moveUp) {
+					item.parentNode.insertBefore(item, item.previousSibling);
+				} else { // move down
+					item.parentNode.insertBefore(item.nextSibling, item);
+				}
+
 			};
 
 		// deafult item
@@ -477,7 +489,6 @@ var DayPlanner = function() {
 		var menuInit = function() {
 			menu = document.getElementById('menu');
 
-			// add button init
 			var addButton = document.getElementById("add-item");
 			addButton.onclick = function() {
 				// add default item behind selected item
@@ -491,7 +502,6 @@ var DayPlanner = function() {
 				saveAppState();
 			};
 
-			// delete button init
 			var deleteButton = document.getElementById("delete-item");
 			deleteButton.onclick = function() {
 				var openedItem = getOpenedItem();
@@ -531,6 +541,23 @@ var DayPlanner = function() {
 
 				saveAppState();
 			});
+
+			var moveUpButton = document.getElementById("move-up");
+			moveUpButton.onclick = function() {
+				moveItem(getOpenedItem(), true);
+
+				recalculateTimes();
+				// saveAppState();
+			};
+
+
+			var moveDownButton = document.getElementById("move-down");
+			moveDownButton.onclick = function() {
+				moveItem(getOpenedItem(), false);
+
+				recalculateTimes();
+				// saveAppState();
+			};			
 		};
 
 	return {
