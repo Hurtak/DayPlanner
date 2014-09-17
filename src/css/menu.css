@@ -72,8 +72,7 @@
 	left: 0;
 
 	width: 100%;
-	height: calc(100% - 160px);
-	min-height: 50px; 
+	height: calc(100% - 155px);
 }
 
 	.controls button {
@@ -92,10 +91,9 @@
 
 	.controls button i {
 		position: absolute;
-		top: 0;
-		left: 13px;
-		
-		line-height: 50px;
+		left:13px; 
+		margin: 0 auto;
+
 		font-size: 24px;
 
 		color: rgba(0, 0, 0, .7);
@@ -104,16 +102,16 @@
 
 .move {
 	position: absolute;
-	left: 0;
+	left: -10%;
 	top: 0;
 	
-	width: 10%;
+	width: 8%;
 	height: 100%;
 }
 
 	.move button {
 		width: 100%;
-		height: 48%;
+		height: 47%;
 
 		font-size: 24px;
 
@@ -123,4 +121,4 @@
 
 	.move button:first-child {
 		top: 0;
-	}	
+	}
