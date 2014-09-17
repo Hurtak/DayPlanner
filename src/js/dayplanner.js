@@ -459,6 +459,13 @@ var DayPlanner = function() {
 
 			startTimeInput.setAttribute("pattern", startTimePattern);
 
+			var dragBar = document.getElementById("drag-bar");
+
+			$('.sortable').sortable({
+			    handle: '.drag-bar'
+			});
+
+
 			loadAppState();
 
 			menuInit();
