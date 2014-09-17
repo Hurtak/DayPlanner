@@ -101,13 +101,16 @@ var DayPlanner = function() {
 		// move item
 
 			var moveItem = function(item, moveUp) {
-
-				if (moveUp) {
+				if (moveUp && !isFirstItem(item)) {
+					//move up
 					item.parentNode.insertBefore(item, item.previousSibling);
-				} else { // move down
+				} else if (!moveUp && !isLastItem(item)) {
+					//move down
 					item.parentNode.insertBefore(item.nextSibling, item);
 				}
 
+				// moves start time div to first item
+				getItems()[0].appendChild(getStartTimeDiv());
 			};
 
 		// deafult item
@@ -170,6 +173,15 @@ var DayPlanner = function() {
 			var isFirstItem = function(item) {
 				var items = getItems();
 				if (items[0] === item) {
+					return true;
+				} else {
+					return false;
+				}
+			};
+
+			var isLastItem = function(item) {
+				var items = getItems();
+				if (items[items.length - 1] === item) {
 					return true;
 				} else {
 					return false;
@@ -547,7 +559,7 @@ var DayPlanner = function() {
 				moveItem(getOpenedItem(), true);
 
 				recalculateTimes();
-				// saveAppState();
+				saveAppState();
 			};
 
 
@@ -556,7 +568,7 @@ var DayPlanner = function() {
 				moveItem(getOpenedItem(), false);
 
 				recalculateTimes();
-				// saveAppState();
+				saveAppState();
 			};			
 		};
 
