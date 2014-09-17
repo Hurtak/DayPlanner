@@ -104,16 +104,31 @@ var DayPlanner = function() {
 				if (moveUp && !isFirstItem(item)) {
 					//move up
 					item.parentNode.insertBefore(item, item.previousSibling);
+
+					if (isFirstItem(item)) {
+						// move 2nd item to 1st item position
+						hide(document.getElementById("delete-item"));
+						setStartTimeInputReadonly(false);
+
+						// moves start time div to first item
+						getItems()[0].appendChild(getStartTimeDiv());
+					}
 				} else if (!moveUp && !isLastItem(item)) {
 					//move down
 					item.parentNode.insertBefore(item.nextSibling, item);
+
+					if (isFirstItem(item.previousSibling)) {
+						// move 1st item to 2nd item position
+						show(document.getElementById("delete-item"));
+						setStartTimeInputReadonly(true);
+
+						getItems()[0].appendChild(getStartTimeDiv());
+					}
 				}
 
-				// moves start time div to first item
-				getItems()[0].appendChild(getStartTimeDiv());
 			};
 
-		// deafult item
+		// default item
 
 			var getDefaultItemClone = function() {
 				var defaultItem = document.getElementById("default-item").children[0];
