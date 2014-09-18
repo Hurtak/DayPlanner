@@ -497,10 +497,11 @@ var DayPlanner = function() {
 
 			var animationsCheckbox = document.getElementById("animations-checkbox");
 			animationsCheckbox.onclick = function() {
+				var animationsStyle = document.getElementById("animations-style");
 				if (this.checked) {
-					Lib.disableStyle("animations.css", false);
+					animationsStyle.disabled = false;
 				} else {
-					Lib.disableStyle("animations.css", true);
+					animationsStyle.disabled = true;
 				}
 			};
 

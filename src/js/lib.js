@@ -28,27 +28,8 @@ var Lib = function() {
 		return newValue;
 	};
 
-	/**
-	 * @param [string]  [styleName] [filename with suffix "style.css"]
-	 * @param [boolean] [disabled]  [true disables style]
-	 */
-	var disableStyle = function(styleName, disabled) {
-		var styles = document.styleSheets;
-		var href = "";
-		for (var i = 0; i < styles.length; i++) {
-			href = styles[i].href.split("/");
-			href = href[href.length - 1];
-
-			if (href === styleName) {
-				styles[i].disabled = disabled;
-				break;
-			}
-		}
-	};
-
 	return {
 		isNumber: isNumber,
 		linearConversion: linearConversion,
-		disableStyle: disableStyle
 	};
 }();
