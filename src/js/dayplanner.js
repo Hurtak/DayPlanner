@@ -71,7 +71,6 @@ var DayPlanner = function() {
 				getItemNameInput(newItem).oninput = function() {
 					setItemName(getOpenedItem(), this.value);
 
-					// TODO mayby save on menu close
 					saveAppState();
 				};
 
