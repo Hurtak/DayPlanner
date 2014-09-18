@@ -502,7 +502,13 @@ var DayPlanner = function() {
 			initTime();
 
 			// reset button
-			document.getElementById("reset").onclick = function() {resetAppState(5);};
+			document.getElementById("reset").onclick = function() {
+				var dialog = confirm("Are you sure?");
+				if (dialog) {
+					resetAppState(5);
+					saveAppState();
+				}
+			};
 
 			// save button
 			document.getElementById("save").onclick = saveAppState;

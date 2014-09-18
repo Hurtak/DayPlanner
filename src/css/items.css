@@ -1,14 +1,3 @@
-#items-container {
-	position: relative;
-
-	width: calc(100% - 135px);
-	min-width: 460px;
-	max-width: 602px;
-
-	margin: 0 auto;
-}
-
-
 .item {
 	border-bottom: 3px solid white;
 	position: relative;

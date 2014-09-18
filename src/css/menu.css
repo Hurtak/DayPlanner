@@ -2,23 +2,6 @@
 	z-index: 5;
 }
 
-	.menu button {
-		border: 0;
-		border-radius: 0;
-		outline: 0;
-
-		cursor: pointer;
-
-		background-color: rgba(255, 255, 255, .6);
-
-		font-family: "Cambria", "Times New Roman", serif;
-		font-size: 18px;
-	}
-
-	.menu button:hover {
-		background-color: rgba(255, 255, 255, .3);	
-	}
-
 .colors {
 	width: 80%;
 }
@@ -91,7 +74,7 @@
 
 	.controls button i {
 		position: absolute;
-		left:13px; 
+		left: 15px; 
 		margin: 0 auto;
 
 		font-size: 24px;
