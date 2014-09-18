@@ -40,41 +40,20 @@ input:invalid {
 	background-color: rgb(255, 120, 120)!important;
 }
 
-
 button {
 	border: 0;
 	border-radius: 0;
 	outline: 0;
+}
+	button:hover {
+		background-color: rgba(255, 255, 255, .3);
+	}
 
+button, label {
 	cursor: pointer;
-
 	background-color: rgba(255, 255, 255, .6);
 
 	font-family: "Cambria", "Times New Roman", serif;
-	font-size: 18px;
+	font-size: 18px;	
 }
 
-button:hover {
-	background-color: rgba(255, 255, 255, .3);	
-
-}
-
-
-.save-load {
-	margin-top: 50px;
-}
-
-.save-load button {
-	position: relative;
-
-	display: block;
-	margin: 0 auto;
-	
-	width: 35%;
-	height: 60px;
-}
-
-.save-load button i {
-	position: absolute;
-	left: 20px;
-}

@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/items.css">
 <link rel="stylesheet" href="css/menu.css">
+<link rel="stylesheet" href="css/options.css">
 <link rel="stylesheet" href="css/animations.css" id="animations-style">
 <link rel="stylesheet" href="css/time.css">
 
@@ -26,21 +27,31 @@
 		<!-- <div id="current-time">13:37</div> -->
 	</div>
 
-	<div id="save-load" class="save-load">
+	<div id="options" class="options">
+
 		<button id="reset">
 			<i class="el-icon-repeat"></i>
-			RESET
+			Reset
 		</button>
 
-		<label>
-			<input type="checkbox" id="animations-checkbox">
-			Animations
-		</label>
+		<div class="animations-checkbox">
+			<label>
+				<input type="checkbox" id="animations-checkbox">
+				<span>
+					Animations
+				</span>
+			</label>
+		</div>
+
 	</div>
+
 </div>
 
-<button id="save">save</button>
-<button id="load">load</button>
+<!-- dev menu -->
+<div style="position: fixed; bottom: 0; left: 0">
+	<button id="save">save</button>
+	<button id="load">load</button>
+</div>
 
 <div id="hide" class="hidden">
 

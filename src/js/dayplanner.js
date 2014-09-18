@@ -496,6 +496,7 @@ var DayPlanner = function() {
 			};
 
 			var animationsCheckbox = document.getElementById("animations-checkbox");
+			animationsCheckbox.checked = true;
 			animationsCheckbox.onclick = function() {
 				var animationsStyle = document.getElementById("animations-style");
 				if (this.checked) {
