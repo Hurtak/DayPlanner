@@ -495,6 +495,15 @@ var DayPlanner = function() {
 				}
 			};
 
+			var animationsCheckbox = document.getElementById("animations-checkbox");
+			animationsCheckbox.onclick = function() {
+				if (this.checked) {
+					Lib.disableStyle("animations.css", false);
+				} else {
+					Lib.disableStyle("animations.css", true);
+				}
+			};
+
 			loadAppState();
 
 			menuInit();
