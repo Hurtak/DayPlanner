@@ -38,11 +38,11 @@
 
 	.animations-checkbox input {
 		position: relative;
-		left: 14px;
-		top: 15px;
+		left: 16px;
+		top: 16px;
 
-		width: 25px;
-		height: 25px;
+		width: 20px;
+		height: 20px;
 
 		-moz-appearance: none;
 	}
