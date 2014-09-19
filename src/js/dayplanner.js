@@ -138,16 +138,13 @@ var DayPlanner = function() {
 		// resize
 
 			var setItemHeight = function(item, height) {
-				item.style.height = height + "px";
-
-				// getItemDurationDiv(item).style.lineHeight = height + "px"; 
-				// getItemNameDiv(item).style.lineHeight = height + "px"; 
+				item.style.height = Math.round(height) + "px";
 			};
 
 			var resizeOpenedItem = function(minutes) {
 				minutes = minutes * 1;
 				minutes = Lib.linearConversion(minutes, minItemInterval, maxItemInterval, minOpenedItemHeight, maxOpenedItemHeight);
-				setItemHeight(getOpenedItem(), Math.round(minutes));
+				setItemHeight(getOpenedItem(), minutes);
 			};
 
 			var resetItemsHeight = function() {
@@ -156,7 +153,7 @@ var DayPlanner = function() {
 					var minutes = getItemDuration(items[i]);
 					minutes = Lib.linearConversion(minutes, minItemInterval, maxItemInterval, minItemHeight, maxItemHeight);
 
-					setItemHeight(items[i], Math.round(minutes));
+					setItemHeight(items[i], minutes);
 				}
 			};
 
