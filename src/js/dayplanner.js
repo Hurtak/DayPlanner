@@ -151,13 +151,12 @@ var DayPlanner = function() {
 			};
 
 			var resetItemsHeight = function() {
-				// set height according to duration (1 minute = 1px)
 				var items = getItems();
 				for (var i = 0; i < items.length; i++) {
 					var minutes = getItemDuration(items[i]);
 					minutes = Lib.linearConversion(minutes, minItemInterval, maxItemInterval, minItemHeight, maxItemHeight);
 
-					setItemHeight(items[i], minutes);
+					setItemHeight(items[i], Math.round(minutes));
 				}
 			};
 
