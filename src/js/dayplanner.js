@@ -3,22 +3,23 @@ var DayPlanner = function() {
 
 	var minItemHeight = 42; // px
 	var maxItemHeight = 200; // px
-	
+
 	var minOpenedItemHeight = 200; // px
 	var maxOpenedItemHeight = 250; // px
 
-	var minItemInterval = 1; // min
-	var maxItemInterval = 600; // min
+	var minItemInterval = 1; // minutes
+	var maxItemInterval = 600; // minutes
 
 	var maxItemNameLength = 50;
 
 	// regex patterns for html5 input validation
-	var startTimePattern = "^(0?[0-9]|1[0-9]|2[0-4]):[0-5][0-9]$"; // time, eg. "00:00"
+	var startTimePattern = "^(0?[0-9]|1[0-9]|2[0-4]):[0-5][0-9]$"; // e.g.: "00:00"
 	var durationPattern = "^([1-9][0-9]?|[1-5][0-9]{2}|600)$"; // 1 - 600 range
 
 	// *** ITEMS ***
 
 		// create items
+
 			var createItem = function(where, behind, firstItem, item) {
 				var defaultItem;
 				if (!item) {
@@ -143,7 +144,13 @@ var DayPlanner = function() {
 
 			var resizeOpenedItem = function(minutes) {
 				minutes = minutes * 1;
-				minutes = Lib.linearConversion(minutes, minItemInterval, maxItemInterval, minOpenedItemHeight, maxOpenedItemHeight);
+				minutes = Lib.linearConversion(
+					minutes,
+					minItemInterval,
+					maxItemInterval,
+					minOpenedItemHeight,
+					maxOpenedItemHeight
+				);
 				setItemHeight(getOpenedItem(), minutes);
 			};
 
@@ -162,23 +169,23 @@ var DayPlanner = function() {
 			// 90 will be more visually distinguished between each other (e.g.:
 			// difference between 30 and 60 min will be bigger than 330 and 360)
 			var minutesToHeight = function(minutes) {
-				var range = 90; // <1;90)
-				var rangeHeight = 120; // marginal height for range transition (90 min == 120px)
+				var rangeSplit = 90; // <minItemHeight;90) <90;maxItemHeight> 
+				var marginalHeight = 120; // marginal height for ranges transition (90 min == 120 px)
 
-				if (minutes < range) {
+				if (minutes < rangeSplit) {
 					minutes = Lib.linearConversion(
 						minutes,
 						minItemInterval,
-						range,
+						rangeSplit,
 						minItemHeight,
-						rangeHeight
+						marginalHeight
 					);
 				} else {
 					minutes = Lib.linearConversion(
 						minutes, 
-						range, 
+						rangeSplit, 
 						maxItemInterval, 
-						rangeHeight, 
+						marginalHeight, 
 						maxItemHeight
 					);
 				}
@@ -342,7 +349,7 @@ var DayPlanner = function() {
 				// other items
 				show(document.getElementById("delete-item"));
 			}
-			
+
 			// changes readonly on duration and name inputs
 			getItemDurationInput(item).readOnly = false;
 			getItemNameInput(item).readOnly = false;
@@ -371,7 +378,7 @@ var DayPlanner = function() {
 		};
 
 	// *** CURRENT TIME ***
-	
+
 		var initTime = function() {
 			var minTime = getStartTime;
 			var maxTime = getItems();
@@ -392,7 +399,7 @@ var DayPlanner = function() {
 		var getStartTime = function() {
 			return getStartTimeInput().value;
 		};	
-		
+
 		var setStartTime = function(time) {
 			getStartTimeInput().value = time;
 		};
@@ -617,7 +624,6 @@ var DayPlanner = function() {
 				recalculateTimes();
 				saveAppState();
 			};
-
 
 			var moveDownButton = document.getElementById("move-down");
 			moveDownButton.onclick = function() {
