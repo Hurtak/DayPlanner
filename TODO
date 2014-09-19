@@ -10,4 +10,4 @@ save menu state (opened on what item / closed)
 
 save change of inputs (duration, item name, start time) maybe would be better on menuClose() rather than on .oninput
 
-vzorec na přepočítávání minut (největší rozdíly mezi intervaly 10 - 90 min, nad 90 min se bude přírůstek exponenciálně zmenšovat aby interval s 600 min nebyl moc dlouhej ale aby zárověň byl vidět rozdíl mezi 60 a 90 min)
+button for duplicating items or when we click on add button it will duplicate current item
