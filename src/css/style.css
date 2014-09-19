@@ -36,6 +36,17 @@ body {
 	display: none;
 }
 
+
+h1 {
+	text-align: center;
+	margin-top: 0;
+	margin-bottom: 14px; 
+
+	font-size: 50px;
+	font-family: 'Dancing Script', cursive;
+	text-decoration: underline;
+}
+
 input:invalid {
 	background-color: rgb(255, 120, 120)!important;
 }
