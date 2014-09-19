@@ -1,8 +1,8 @@
 var DayPlanner = function() {
 	var menu;
 
-	var minItemHeight = 40; // px
-	var maxItemHeight = 180; // px	
+	var minItemHeight = 42; // px
+	var maxItemHeight = 200; // px
 	
 	var minOpenedItemHeight = 200; // px
 	var maxOpenedItemHeight = 250; // px
@@ -13,8 +13,8 @@ var DayPlanner = function() {
 	var maxItemNameLength = 50;
 
 	// regex patterns for html5 input validation
-	var startTimePattern = "^(0?[0-9]|1[0-9]|2[0-4]):[0-5][0-9]$";
-	var durationPattern = "^([1-9][0-9]?|[1-5][0-9]{2}|600)$"; // 1 - 600
+	var startTimePattern = "^(0?[0-9]|1[0-9]|2[0-4]):[0-5][0-9]$"; // time, eg. "00:00"
+	var durationPattern = "^([1-9][0-9]?|[1-5][0-9]{2}|600)$"; // 1 - 600 range
 
 	// *** ITEMS ***
 
@@ -149,12 +149,41 @@ var DayPlanner = function() {
 
 			var resetItemsHeight = function() {
 				var items = getItems();
+				var minutes;
 				for (var i = 0; i < items.length; i++) {
-					var minutes = getItemDuration(items[i]);
-					minutes = Lib.linearConversion(minutes, minItemInterval, maxItemInterval, minItemHeight, maxItemHeight);
+					minutes = getItemDuration(items[i]);
+					minutes = minutesToHeight(minutes);
 
 					setItemHeight(items[i], minutes);
 				}
+			};
+
+			// translates items interval to items height. intervals smaller than
+			// 90 will be more visually distinguished between each other (e.g.:
+			// difference between 30 and 60 min will be bigger than 330 and 360)
+			var minutesToHeight = function(minutes) {
+				var range = 90; // <1;90)
+				var rangeHeight = 120; // marginal height for range transition (90 min == 120px)
+
+				if (minutes < range) {
+					minutes = Lib.linearConversion(
+						minutes,
+						minItemInterval,
+						range,
+						minItemHeight,
+						rangeHeight
+					);
+				} else {
+					minutes = Lib.linearConversion(
+						minutes, 
+						range, 
+						maxItemInterval, 
+						rangeHeight, 
+						maxItemHeight
+					);
+				}
+
+				return minutes;
 			};
 
 		// open
