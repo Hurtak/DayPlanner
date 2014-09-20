@@ -21,7 +21,7 @@ var DayPlanner = function() {
 		// create items
 
 			var createItem = function(where, behind, firstItem, item) {
-				if (!item) {
+				if (typeof(item) === "undefined") {
 					item = getDefaultItemClone();
 				}
 
@@ -439,14 +439,15 @@ var DayPlanner = function() {
 			var items = Storage.load("data");
 
 			if (items) {
+				var item;
 				for (var i = 0; i < items.length; i++) {
-					var defaultItem = getDefaultItemClone();
+					item = getDefaultItemClone();
 
-					setItemDuration(defaultItem, items[i].duration);
-					setItemName(defaultItem, items[i].name);
-					setItemColor(defaultItem, items[i].color);
+					setItemDuration(item, items[i].duration);
+					setItemName(item, items[i].name);
+					setItemColor(item, items[i].color);
 
-					createItem(getItemsContainer(), false, i === 0 ? true : false, defaultItem);
+					createItem(getItemsContainer(), false, i === 0 ? true : false, item);
 
 				}
 			} else {
