@@ -10,6 +10,4 @@ save menu state (opened on what item / closed)
 
 save change of inputs (duration, item name, start time) maybe would be better on menuClose() rather than on .oninput
 
-button for duplicating items or when we click on add button it will duplicate current item
-
 add input slider (or radio buttons) which will multiply items height (0.8x, 1x default, 1.2x) maybe detect this automatically and set it according to window height
