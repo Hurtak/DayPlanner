@@ -21,20 +21,17 @@ var DayPlanner = function() {
 		// create items
 
 			var createItem = function(where, behind, firstItem, item) {
-				var defaultItem;
 				if (!item) {
-					defaultItem = getDefaultItemClone();
-				} else {
-					defaultItem = item;
+					item = getDefaultItemClone();
 				}
 
 				var newItem;
 				if (behind) {
 					// adds item behind "where"
-					newItem = where.parentNode.insertBefore(defaultItem, where.nextSibling);
+					newItem = where.parentNode.insertBefore(item, where.nextSibling);
 				} else { 
 					// adds item inside "where"
-					newItem = where.appendChild(defaultItem);
+					newItem = where.appendChild(item);
 				}
 
 				if (firstItem) {
@@ -566,8 +563,11 @@ var DayPlanner = function() {
 
 			var addButton = document.getElementById("add-item");
 			addButton.onclick = function() {
-				// add default item behind selected item
-				newItem = createItem(getOpenedItem(), true, false);
+				// add clone of opened item behind opened item
+				hideMenu();
+				
+				var openedItem = getOpenedItem();
+				newItem = createItem(openedItem, true, false, openedItem.cloneNode(true));
 
 				// opens menu on newly created item
 				openItem(newItem);
