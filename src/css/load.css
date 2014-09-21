@@ -14,6 +14,9 @@
 .load-item button {
 	display: none;
 	float: right;
+
+	height: 100%;
+	margin-left: 2%;
 }
 
 .load-item:hover button {
