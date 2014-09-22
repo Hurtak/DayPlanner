@@ -580,17 +580,13 @@ var DayPlanner = function() {
 
 			var deleteButton = document.getElementById("delete-item");
 			deleteButton.onclick = function() {
-				var openedItem = getOpenedItem();
-
-				hideMenu();
-
-				// delete current item
-				deleteItem(openedItem);
-
-				// recalculate times
-				recalculateTimes();
-
-				saveAppState();
+				var dialog = confirm("Are you sure?");
+				if (dialog) {
+					hideMenu();
+					deleteItem(getOpenedItem());
+					recalculateTimes();
+					saveAppState();
+				}
 			};
 
 			var plusButton = document.getElementById("duration-plus");
