@@ -4,7 +4,7 @@
 
 .load-item {
 	width: 100%;
-	height: 50px;
+	height: 60px;
 
 	margin-top: 10px;
 	
@@ -26,21 +26,25 @@
 		outline: 0;
 
 		height: 30px;
+		width: 30%;
 		
-		margin-top: 10px;
-		margin-left: 10%;
+		margin-top: 15px;
+		margin-left: 12%;
+
 		padding-left: 8px;
 	}	
 
 		.load-item input[readonly] {
 			background-color: transparent;
 
-			margin-left: 10px;
+			margin-left: 2%;
+			width: 80%;
+
 		}	
 
 	.load-item button {
 		height: 100%;
-		width: 50px;
+		width: 60px;
 
 		float: right;
 		background-color: rgba(0, 0, 0, .2);
@@ -56,7 +60,7 @@
 
 
 #menu-save {
-	width: calc(100% - 50px);
+	width: calc(100% - 60px);
 	height: 100%;
 	position: absolute;
 	top: 0;
@@ -80,9 +84,14 @@
 
 		.load-menu-move .up, .load-menu-move .down {
 			width: 100%;
-			height: 50%;
+			height: 45%;
+			padding-bottom: 3px;
 
-			background-color: rgba(0, 0, 255, .5)!important;
+			background-color: rgba(255, 255, 255, .3)!important;
+		}
+
+		.load-menu-move .up {
+			margin-bottom: 10%;
 		}
 
 	#menu-save .controls-save {
@@ -92,8 +101,6 @@
 		position: relative;
 		float: right;
 		right: -50%;
-
-		background-color: green;
 	}
 
 		#menu-save[data-animate] .controls-save {
@@ -101,13 +108,16 @@
 		}
 
 		#menu-save .controls-save button {
-			width: 48%;
+			width: 46%;
 			height: 100%;
 
-			position: relative;
-			float: left;
+			float: right;
 			
-			margin-right: 2%;
+			margin-right: 4%;
 
-			background-color: rgba(255, 0, 0, .5);
+			background-color: rgba(255, 60, 60, .3);
 		}
+
+		#menu-save .controls-save button:first-child {
+			background-color: rgba(60, 255, 60, .3);
+		}		
