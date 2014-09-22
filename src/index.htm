@@ -31,11 +31,12 @@
 
 	<h2>Load</h2>	
 	<div class="load">
-		<div class="load-item">
-			<input type="text" value="name" readonly>
-			<button>
+		<div class="load-item" data-open>
+			<input type="text" value="name" class="load-item-name" readonly>
+			<button id="load-item-options">
 				<i class="el-icon-cog"></i>
 			</button>
+
 		</div>
 	</div>
 
@@ -114,6 +115,26 @@
 				<i class="el-icon-chevron-down"></i>
 			</button>			
 		</div>
+	</div>
+
+	<div id="menu-save">
+		<div class="load-menu-move">
+			<button class="up">
+				UP
+			</button>
+			<button class="down">
+				DOWN
+			</button>				
+		</div>
+		<div class="controls-save">
+			<button>
+				Delete
+			</button>
+			<button>
+				Duplicate
+			</button>		
+		</div>
+
 	</div>
 
 	<div id="default-item">

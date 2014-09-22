@@ -540,6 +540,8 @@ var DayPlanner = function() {
 
 			menuInit();
 
+			loadMenuInit();
+
 			initTime();
 
 			// reset button
@@ -633,6 +635,40 @@ var DayPlanner = function() {
 				saveAppState();
 			};			
 		};
+
+	var loadMenuInit = function() {
+		var loadOptions = document.getElementById("load-item-options");
+		loadOptions.onclick = function() {
+			var menuLoad = document.getElementById("menu-save");
+
+
+
+			var loadItemName = document.querySelector(".load-item-name");
+
+
+
+
+			if (loadItemName.readOnly) {
+				// opening
+				loadItemName.readOnly = false;
+
+				loadItemName.parentNode.appendChild(menuLoad);
+				
+				setTimeout(function() {
+					menuLoad.setAttribute("data-animate", "");
+				}, 1);
+				
+			} else {
+				// closing
+
+				loadItemName.readOnly = true;
+					
+				menuLoad.removeAttribute("data-animate");
+
+			}
+		};
+	};
+
 
 	return {
 		init: init
