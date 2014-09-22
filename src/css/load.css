@@ -9,15 +9,14 @@
 	margin-top: 10px;
 	
 	background-color: rgba(0, 0, 0, .2);
-	cursor: pointer;
 
 	position: relative;
 }
 
-	.load-item:hover {
-		background-color: rgba(0, 0, 0, .4);
-
+	.load-item .overlay {
+		width: calc(100% - 60px);
 	}
+
 
 	.load-item input {
 		box-sizing: border-box;
@@ -32,6 +31,9 @@
 		margin-left: 12%;
 
 		padding-left: 8px;
+
+		z-index: 10;
+		position: relative;
 	}	
 
 		.load-item input[readonly] {
@@ -39,7 +41,6 @@
 
 			margin-left: 2%;
 			width: 80%;
-
 		}	
 
 	.load-item button {

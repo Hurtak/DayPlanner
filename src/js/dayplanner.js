@@ -653,6 +653,10 @@ var DayPlanner = function() {
 				loadItemName.readOnly = false;
 
 				loadItemName.parentNode.appendChild(menuLoad);
+
+				hide(getOverlay(loadItemName.parentNode));
+
+
 				
 				setTimeout(function() {
 					menuLoad.setAttribute("data-animate", "");
@@ -662,6 +666,8 @@ var DayPlanner = function() {
 				// closing
 
 				loadItemName.readOnly = true;
+				show(getOverlay(loadItemName.parentNode));
+
 					
 				menuLoad.removeAttribute("data-animate");
 
