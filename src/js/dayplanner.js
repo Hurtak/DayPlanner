@@ -564,17 +564,15 @@ var DayPlanner = function() {
 
 			var addButton = document.getElementById("add-item");
 			addButton.onclick = function() {
-				// add clone of opened item behind opened item
-				hideMenu();
-				
-				var openedItem = getOpenedItem();
-				newItem = createItem(openedItem, true, false, openedItem.cloneNode(true));
+				// opened item needs to be initialized before hiding menu because opened item is located based on menu location
+				var openedItem = getOpenedItem(); 
 
-				// opens menu on newly created item
+				hideMenu();
+
+				newItem = createItem(openedItem, true, false, openedItem.cloneNode(true));
 				openItem(newItem);
 
 				recalculateTimes();
-
 				saveAppState();
 			};
 
@@ -582,8 +580,13 @@ var DayPlanner = function() {
 			deleteButton.onclick = function() {
 				var dialog = confirm("Are you sure?");
 				if (dialog) {
+					// opened item needs to be initialized before hiding menu because opened item is located based on menu location					
+					var openedItem = getOpenedItem();
+
 					hideMenu();
-					deleteItem(getOpenedItem());
+
+					deleteItem(openedItem);
+
 					recalculateTimes();
 					saveAppState();
 				}
