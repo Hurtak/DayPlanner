@@ -31,10 +31,10 @@
 	left: 0;
 }
 
-.overlay:hover {
-	background-color: rgba(0, 0, 0, .2);
-	cursor: pointer;
-}
+	.overlay:hover {
+		background-color: rgba(0, 0, 0, .2);
+		cursor: pointer;
+	}
 
 
 .item-name {
