@@ -12,6 +12,8 @@ var DayPlanner = function() {
 
 	var maxItemNameLength = 50;
 
+	var openedSave;
+
 	// regex patterns for html5 input validation
 	var startTimePattern = "^(0?[0-9]|1[0-9]|2[0-4]):[0-5][0-9]$"; // e.g.: "00:00"
 	var durationPattern = "^([1-9][0-9]?|[1-5][0-9]{2}|600)$"; // 1 - 600 range
@@ -643,10 +645,13 @@ var DayPlanner = function() {
 		};
 
 	var loadMenuInit = function() {
-		
+		openedSave = 0;
+
 		for (var i = 0; i < 3; i++) {
 			createSave(i);
 		}
+
+
 	};
 
 	var createSave = function(name) {
@@ -675,11 +680,34 @@ var DayPlanner = function() {
 			}
 		};
 
+		var overlay = defaultSave.querySelector(".overlay");
+		overlay.onclick = function() {
+			closeSave(openedSave);
 
+			// get index of save
+			var index = Array.prototype.indexOf.call(saveContainer.children, defaultSave);
+			openedSave = index;
+
+			openSave(openedSave);
+		};
 
 		saveContainer.appendChild(defaultSave);
 	};
 
+
+
+	openSave = function(index) {
+		var saveContainer = document.getElementById("save-container");
+
+		saveContainer.children[index].style.outline = "3px solid red";
+	};
+
+	closeSave = function(index) {
+		var saveContainer = document.getElementById("save-container");
+
+		saveContainer.children[index].style.outline = "0";
+
+	};
 
 	return {
 		init: init
