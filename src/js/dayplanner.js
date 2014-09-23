@@ -12,8 +12,6 @@ var DayPlanner = function() {
 
 	var maxItemNameLength = 50;
 
-	var openedSave;
-
 	// regex patterns for html5 input validation
 	var startTimePattern = "^(0?[0-9]|1[0-9]|2[0-4]):[0-5][0-9]$"; // e.g.: "00:00"
 	var durationPattern = "^([1-9][0-9]?|[1-5][0-9]{2}|600)$"; // 1 - 600 range
@@ -645,50 +643,52 @@ var DayPlanner = function() {
 		};
 
 	var loadMenuInit = function() {
-		openedSave = 0;
-
 		for (var i = 0; i < 3; i++) {
 			createSave(i);
 		}
 
-		openSave(openedSave);
+		getSaveContainer().children[0].appendChild(getSaveMenu());
+		openSave(getOpenedSave());
 	};
 
 	var createSave = function(name) {
-		var saveContainer = document.getElementById("save-container");
+		var saveContainer = getSaveContainer();
 
 		var defaultSave = getDefaultSaveClone();
-		var saveName = defaultSave.querySelector(".save-name");
+		var saveName = getSaveNameInput(defaultSave);
 		saveName.value = name;
+
+		
+		var saveMenu = getSaveMenu();
+		
 
 		var saveOptions = defaultSave.querySelector(".save-options");
 		saveOptions.onclick = function() {
-			var saveMenu = document.getElementById("menu-save");
 			if (saveName.readOnly) {
 				// opening
 				saveName.readOnly = false;
 				saveName.parentNode.appendChild(saveMenu);
-				hide(getOverlay(saveName.parentNode));
+
+				hide(getOverlay(defaultSave));
+
 				setTimeout(function() {
 					saveMenu.setAttribute("data-animate", "");
 				}, 1);
 			} else {
 				// closing
 				saveName.readOnly = true;
-				show(getOverlay(saveName.parentNode));
+				show(getOverlay(defaultSave));
 				saveMenu.removeAttribute("data-animate");
 			}
 		};
 
 		var overlay = defaultSave.querySelector(".overlay");
 		overlay.onclick = function() {
+			// FIX
+			var openedSave = getOpenedSave();
 			closeSave(openedSave);
 
-			// get index of save
-			var index = Array.prototype.indexOf.call(saveContainer.children, defaultSave);
-			openedSave = index;
-
-			openSave(openedSave);
+			openSave(this.parentNode);
 		};
 
 		saveContainer.appendChild(defaultSave);
@@ -696,18 +696,46 @@ var DayPlanner = function() {
 
 
 
-	openSave = function(index) {
-		var saveContainer = document.getElementById("save-container");
 
-		saveContainer.children[index].className += " selected";
+
+
+
+	var getOpenedSave = function() {
+		return getSaveMenu().parentNode;
 	};
 
-	closeSave = function(index) {
-		var saveContainer = document.getElementById("save-container");
-
-		saveContainer.children[index].classList.remove("selected");
-
+	var openSave = function(save) {
+		save.className += " selected";
 	};
+
+	var closeSave = function(save) {
+		save.classList.remove("selected");
+	};
+
+	var getSaveContainer = function() {
+		return document.getElementById("save-container");
+	};
+
+	var getSaves = function() {
+		return getSaveContainer().querySelectorAll(".save");
+	};
+
+	var getSaveNameInput = function(save) {
+		return save.querySelector(".save-name");
+	};
+
+	var getSaveMenu = function() {
+		return document.getElementById("menu-save");
+	};
+
+
+
+
+
+	var showSaveMenu = function(index) {
+			
+	};
+	
 
 	return {
 		init: init
