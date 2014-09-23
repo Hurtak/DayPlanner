@@ -1,5 +1,5 @@
-.load {
-
+.save.selected {
+	background-color: rgba(0, 0, 255, .3);
 }
 
 .save {
@@ -55,10 +55,6 @@
 		.save button:hover {
 			background-color: rgba(0, 0, 0, .4);
 		}
-
-
-
-
 
 #menu-save {
 	width: calc(100% - 60px);

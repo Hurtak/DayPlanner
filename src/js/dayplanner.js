@@ -651,7 +651,7 @@ var DayPlanner = function() {
 			createSave(i);
 		}
 
-
+		openSave(openedSave);
 	};
 
 	var createSave = function(name) {
@@ -699,13 +699,13 @@ var DayPlanner = function() {
 	openSave = function(index) {
 		var saveContainer = document.getElementById("save-container");
 
-		saveContainer.children[index].style.outline = "3px solid red";
+		saveContainer.children[index].className += " selected";
 	};
 
 	closeSave = function(index) {
 		var saveContainer = document.getElementById("save-container");
 
-		saveContainer.children[index].style.outline = "0";
+		saveContainer.children[index].classList.remove("selected");
 
 	};
 
