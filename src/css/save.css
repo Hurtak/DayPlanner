@@ -2,7 +2,7 @@
 
 }
 
-.load-item {
+.save {
 	width: 100%;
 	height: 60px;
 
@@ -13,12 +13,12 @@
 	position: relative;
 }
 
-	.load-item .overlay {
+	.save .overlay {
 		width: calc(100% - 60px);
 	}
 
 
-	.load-item input {
+	.save input {
 		box-sizing: border-box;
 
 		border: 0;
@@ -36,14 +36,14 @@
 		position: relative;
 	}	
 
-		.load-item input[readonly] {
+		.save input[readonly] {
 			background-color: transparent;
 
 			margin-left: 2%;
 			width: 80%;
 		}	
 
-	.load-item button {
+	.save button {
 		height: 100%;
 		width: 60px;
 
@@ -52,7 +52,7 @@
 	
 	}
 
-		.load-item button:hover {
+		.save button:hover {
 			background-color: rgba(0, 0, 0, .4);
 		}
 

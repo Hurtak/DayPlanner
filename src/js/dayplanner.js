@@ -133,6 +133,12 @@ var DayPlanner = function() {
 				return defaultItem;
 			};
 
+			var getDefaultSaveClone = function() {
+				var defaultSave = document.getElementById("default-save").children[0];
+				defaultSave = defaultSave.cloneNode(true);
+				return defaultSave;
+			};
+
 		// resize
 
 			var setItemHeight = function(item, height) {
@@ -637,42 +643,41 @@ var DayPlanner = function() {
 		};
 
 	var loadMenuInit = function() {
-		var loadOptions = document.getElementById("load-item-options");
-		loadOptions.onclick = function() {
-			var menuLoad = document.getElementById("menu-save");
+		
+		for (var i = 0; i < 3; i++) {
+			createSave(i);
+		}
+	};
 
+	var createSave = function(name) {
+		var saveContainer = document.getElementById("save-container");
 
+		var defaultSave = getDefaultSaveClone();
+		var saveName = defaultSave.querySelector(".save-name");
+		saveName.value = name;
 
-			var loadItemName = document.querySelector(".load-item-name");
-
-
-
-
-			if (loadItemName.readOnly) {
+		var saveOptions = defaultSave.querySelector(".save-options");
+		saveOptions.onclick = function() {
+			var saveMenu = document.getElementById("menu-save");
+			if (saveName.readOnly) {
 				// opening
-				loadItemName.readOnly = false;
-
-				loadItemName.parentNode.appendChild(menuLoad);
-
-				hide(getOverlay(loadItemName.parentNode));
-
-
-				
+				saveName.readOnly = false;
+				saveName.parentNode.appendChild(saveMenu);
+				hide(getOverlay(saveName.parentNode));
 				setTimeout(function() {
-					menuLoad.setAttribute("data-animate", "");
+					saveMenu.setAttribute("data-animate", "");
 				}, 1);
-				
 			} else {
 				// closing
-
-				loadItemName.readOnly = true;
-				show(getOverlay(loadItemName.parentNode));
-
-					
-				menuLoad.removeAttribute("data-animate");
-
+				saveName.readOnly = true;
+				show(getOverlay(saveName.parentNode));
+				saveMenu.removeAttribute("data-animate");
 			}
 		};
+
+
+
+		saveContainer.appendChild(defaultSave);
 	};
 
 

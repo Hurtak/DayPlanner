@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="css/items.css">
 <link rel="stylesheet" href="css/menu.css">
 <link rel="stylesheet" href="css/options.css">
-<link rel="stylesheet" href="css/load.css">
+<link rel="stylesheet" href="css/save.css">
 <link rel="stylesheet" href="css/animations.css" id="animations-style">
 <link rel="stylesheet" href="css/time.css">
 
@@ -30,18 +30,13 @@
 	</div>
 
 	<h2>Load</h2>	
-	<div class="load">
-		<div class="load-item">
-			<div class="overlay"></div>
-			<input type="text" value="name" class="load-item-name" readonly>
-			<button id="load-item-options">
-				<i class="el-icon-cog"></i>
-			</button>
 
-		</div>
+	<div id="save-container">
+
 	</div>
 
 	<h2>Options</h2>
+
 	<div id="options" class="options">
 
 		<button id="reset">
@@ -153,6 +148,16 @@
 			<div class="time">
 				<input type="text" class="time-input" readonly>
 			</div>
+		</div>
+	</div>
+
+	<div id="default-save">
+		<div class="save">
+			<div class="overlay"></div>
+			<input type="text" class="save-name" readonly>
+			<button class="save-options">
+				<i class="el-icon-cog"></i>
+			</button>
 		</div>
 	</div>
 
