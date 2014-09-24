@@ -546,7 +546,7 @@ var DayPlanner = function() {
 
 			menuInit();
 
-			loadMenuInit();
+			saveMenuInit();
 
 			initTime();
 
@@ -642,63 +642,82 @@ var DayPlanner = function() {
 			};			
 		};
 
-	var loadMenuInit = function() {
-		for (var i = 0; i < 3; i++) {
-			createSave(i);
-		}
+		var saveMenuInit = function() {
+			for (var i = 0; i < 3; i++) {
+				createSave(i);
+			}
 
-		getSaveContainer().children[0].appendChild(getSaveMenu());
-		openSave(getOpenedSave());
-	};
+			// getSaves()[0].appendChild(getSaveMenu());
+			// openSave(getOpenedSave());
+
+			// might be replaced with this
+			openSave(getSaves()[0]);			
+		};
+
+
+
+
+
 
 	var createSave = function(name) {
 		var saveContainer = getSaveContainer();
 
-		var defaultSave = getDefaultSaveClone();
-		var saveName = getSaveNameInput(defaultSave);
+		var newSave = getDefaultSaveClone();
+		var saveName = getSaveNameInput(newSave);
+
 		saveName.value = name;
 
-		
-		var saveMenu = getSaveMenu();
-		
-
-		var saveOptions = defaultSave.querySelector(".save-options");
+	
+		var saveOptions = newSave.querySelector(".save-options");
 		saveOptions.onclick = function() {
 			if (saveName.readOnly) {
-				// opening
-				saveName.readOnly = false;
-				saveName.parentNode.appendChild(saveMenu);
-
-				hide(getOverlay(defaultSave));
-
-				setTimeout(function() {
-					saveMenu.setAttribute("data-animate", "");
-				}, 1);
+				hideSaveMenu();
+				showSaveShow(newSave);
 			} else {
-				// closing
-				saveName.readOnly = true;
-				show(getOverlay(defaultSave));
-				saveMenu.removeAttribute("data-animate");
+				hideSaveMenu();
 			}
 		};
 
-		var overlay = defaultSave.querySelector(".overlay");
+		var overlay = newSave.querySelector(".overlay");
 		overlay.onclick = function() {
 			// FIX
 			var openedSave = getOpenedSave();
-			closeSave(openedSave);
+			closeSaves();
 
 			openSave(this.parentNode);
 		};
 
-		saveContainer.appendChild(defaultSave);
+		saveContainer.appendChild(newSave);
 	};
 
 
 
 
 
+	var showSaveShow = function(save) {
+		var saveName = getSaveNameInput(save);
+		var saveMenu = getSaveMenu();
 
+		saveName.readOnly = false;
+		save.appendChild(saveMenu);
+
+		hide(getOverlay(save));
+
+		setTimeout(function() {
+			saveMenu.setAttribute("data-animate", "");
+		}, 1);
+	};
+
+	var hideSaveMenu = function() {		
+		var save = getOpenedSave();
+
+		var saveName = getSaveNameInput(save);
+		var saveMenu = getSaveMenu();
+
+		saveName.readOnly = true;
+		show(getOverlay(save));
+		saveMenu.removeAttribute("data-animate");
+	};
 
 	var getOpenedSave = function() {
 		return getSaveMenu().parentNode;
@@ -708,9 +727,16 @@ var DayPlanner = function() {
 		save.className += " selected";
 	};
 
-	var closeSave = function(save) {
-		save.classList.remove("selected");
+	var closeSaves = function() {
+		var saves = getSaves();
+
+		for (var i = 0; i < saves.length; i++) {
+			saves[i].classList.remove("selected");
+		
+			getSaveNameInput(saves[i]).readOnly = true;
+		}
 	};
+
 
 	var getSaveContainer = function() {
 		return document.getElementById("save-container");
@@ -735,7 +761,7 @@ var DayPlanner = function() {
 	var showSaveMenu = function(index) {
 			
 	};
-	
+
 
 	return {
 		init: init
