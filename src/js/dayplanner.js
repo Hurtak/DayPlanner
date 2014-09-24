@@ -642,6 +642,9 @@ var DayPlanner = function() {
 			};			
 		};
 
+
+
+
 		var saveMenuInit = function() {
 			for (var i = 0; i < 3; i++) {
 				createSave(i);
@@ -683,7 +686,7 @@ var DayPlanner = function() {
 		saveOptions.onclick = function() {
 			if (saveName.readOnly) {
 				hideSaveMenu();
-				showSaveShow(newSave);
+				showSaveMenu(newSave);
 			} else {
 				hideSaveMenu();
 			}
@@ -691,8 +694,6 @@ var DayPlanner = function() {
 
 		var overlay = newSave.querySelector(".overlay");
 		overlay.onclick = function() {
-			// FIX
-			var openedSave = getOpenedSave();
 			closeSaves();
 			hideSaveMenu();
 
@@ -706,7 +707,7 @@ var DayPlanner = function() {
 
 
 
-	var showSaveShow = function(save) {
+	var showSaveMenu = function(save) {
 		var saveName = getSaveNameInput(save);
 		var saveMenu = getSaveMenu();
 
@@ -721,18 +722,18 @@ var DayPlanner = function() {
 	};
 
 	var hideSaveMenu = function() {		
-		var save = getOpenedSave();
-
-		var saveName = getSaveNameInput(save);
 		var saveMenu = getSaveMenu();
 
+		var saveWithMenu = saveMenu.parentNode;
+		var saveName = getSaveNameInput(saveWithMenu);
+
 		saveName.readOnly = true;
-		show(getOverlay(save));
+		show(getOverlay(saveWithMenu));
 		saveMenu.removeAttribute("data-animate");
 	};
 
 	var getOpenedSave = function() {
-		return getSaveMenu().parentNode;
+		return getSaveContainer().querySelector(".save.selected");
 	};
 
 	var openSave = function(save) {
@@ -740,13 +741,7 @@ var DayPlanner = function() {
 	};
 
 	var closeSaves = function() {
-		var saves = getSaves();
-
-		for (var i = 0; i < saves.length; i++) {
-			saves[i].classList.remove("selected");
-		
-			getSaveNameInput(saves[i]).readOnly = true;
-		}
+		getSaveContainer().querySelector(".selected").classList.remove("selected");
 	};
 
 
@@ -766,13 +761,10 @@ var DayPlanner = function() {
 		return document.getElementById("menu-save");
 	};
 
-
-
-
-
-	var showSaveMenu = function(index) {
-			
+	var getItemIndex = function(item) {
+		return Array.prototype.indexOf.call(item.parentNode.children, item);
 	};
+
 
 
 	return {
