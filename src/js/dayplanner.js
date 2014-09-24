@@ -559,12 +559,17 @@ var DayPlanner = function() {
 				}
 			};
 
-			// save button
-			document.getElementById("save").onclick = saveAppState;
+			// debug functions
 
-			// load button
-			document.getElementById("load").onclick = loadAppState;
+				// save button
+				document.getElementById("save").onclick = saveAppState;
 
+				// load button
+				document.getElementById("load").onclick = loadAppState;
+
+				document.getElementById("test").onclick = function() {
+
+				};
 		};
 
 		var menuInit = function() {
