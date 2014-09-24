@@ -647,10 +647,21 @@ var DayPlanner = function() {
 				createSave(i);
 			}
 
-			// getSaves()[0].appendChild(getSaveMenu());
-			// openSave(getOpenedSave());
+			var saveMenu = getSaveMenu();
 
-			// might be replaced with this
+			var deleteButton = saveMenu.querySelector(".delete-save");
+			deleteButton.onclick = function() {
+				var dialog = confirm("Are you sure?");
+				if (dialog) {
+					var openedSave = getOpenedSave();
+
+					hideAndMove(getSaveMenu());
+					deleteItem(openedSave);
+				}
+			}
+
+
+
 			openSave(getSaves()[0]);			
 		};
 
@@ -683,6 +694,7 @@ var DayPlanner = function() {
 			// FIX
 			var openedSave = getOpenedSave();
 			closeSaves();
+			hideSaveMenu();
 
 			openSave(this.parentNode);
 		};
