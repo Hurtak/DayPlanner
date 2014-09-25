@@ -56,6 +56,31 @@
 			background-color: rgba(0, 0, 0, .4);
 		}
 
+.add-save {
+	display: block;
+	position: relative;
+	
+	margin: auto;
+	margin-top: 10px;
+
+	width: 40%;
+	height: 50px;	
+
+	background-color: rgba(0, 0, 0, .2);
+}
+
+	.add-save:hover {
+		background-color: rgba(0, 0, 0, .4);
+	}
+
+	.add-save i {
+		position: absolute;
+		left: 15px;
+		top: 15px;
+
+		font-size: 20px;
+	}
+
 #menu-save {
 	width: calc(100% - 60px);
 	height: 100%;
