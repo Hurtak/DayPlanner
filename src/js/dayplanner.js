@@ -695,9 +695,13 @@ var DayPlanner = function() {
 				var dialog = confirm("Are you sure?");
 				if (dialog) {
 					var openedSave = getOpenedSave();
+					var saveWithMenu = getSaveMenu().parentNode;
 
-					hideAndMove(getSaveMenu());
-					deleteItem(openedSave);
+					if (openedSave !== saveWithMenu) {
+						hideAndMove(getSaveMenu());
+					}
+
+					deleteItem(saveWithMenu);
 				}
 			};
 	
