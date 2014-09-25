@@ -690,7 +690,7 @@ var DayPlanner = function() {
 
 			var saveMenu = getSaveMenu();
 
-			var deleteButton = saveMenu.querySelector(".delete-save");
+			var deleteButton = document.getElementById("delete-save");
 			deleteButton.onclick = function() {
 				var dialog = confirm("Are you sure?");
 				if (dialog) {
@@ -703,6 +703,12 @@ var DayPlanner = function() {
 
 					deleteItem(saveWithMenu);
 				}
+			};
+
+			var copyButton = document.getElementById("copy-save");
+			copyButton.onclick = function() {
+				var name = getSaveNameInput(getSaveMenu().parentNode).value;
+				createSave(name);
 			};
 	
 		};
