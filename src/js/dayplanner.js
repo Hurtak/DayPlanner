@@ -431,13 +431,19 @@ var DayPlanner = function() {
 			var items = getItems();
 			var saveIndex = getItemIndex(getOpenedSave());
 
+			data[saveIndex] = {
+				"name": getSaveNameInput(getOpenedSave()).value,
+				"items": []
+			};
+
 			for (var i = 0; i < items.length; i++) {
-				data[saveIndex][i] = {
-					"name": getItemName(items[saveIndex][i]),
-					"duration": getItemDuration(items[saveIndex][i]),
-					"color": getItemColor(items[saveIndex][i])
+				data[saveIndex].items[i] = {
+					"name": getItemName(items[i]),
+					"duration": getItemDuration(items[i]),
+					"color": getItemColor(items[i])
 				};
 			}
+
 
 			Storage.save(data, "data");
 			saveStartTime();
@@ -450,20 +456,30 @@ var DayPlanner = function() {
 
 			deleteAllItems();
 
-			var items = Storage.load("data")[saveIndex];
+			var data = Storage.load("data");
 
-			if (items) {
-				var item;
-				for (var i = 0; i < items.length; i++) {
-					item = getDefaultItemClone();
+			if (data) {
+				for (var i = 0; i < data.length; i++) {
 
-					setItemDuration(item, items[i].duration);
-					setItemName(item, items[i].name);
-					setItemColor(item, items[i].color);
+					createSave(data[i].name);
 
-					createItem(getItemsContainer(), false, i === 0 ? true : false, item);
+					if (i === saveIndex) {
+						var item;
 
+						for (var k = 0; k < data[i].items.length; k++) {
+							item = getDefaultItemClone();
+
+							setItemDuration(item, data[i].items[k].duration);
+							setItemName(item, data[i].items[k].name);
+							setItemColor(item, data[i].items[k].color);
+
+							createItem(getItemsContainer(), false, k === 0 ? true : false, item);
+						}
+					}
 				}
+
+				openSave(getSaves()[0]);
+
 			} else {
 				resetAppState();
 			}
@@ -478,6 +494,7 @@ var DayPlanner = function() {
 			var itemsContainer = getItemsContainer();
 
 			deleteAllItems();
+			deleteAllSaves();
 
 			createItem(itemsContainer, false, true);
 			for (var i = 1; i < numberOfItems; i++) {
@@ -555,8 +572,8 @@ var DayPlanner = function() {
 				}
 			};
 
-			resetAppState(3);
-			// loadAppState();
+			// resetAppState(3);
+			loadAppState();
 
 			menuInit();
 
@@ -577,6 +594,7 @@ var DayPlanner = function() {
 
 				document.getElementById("save").onclick = saveAppState;
 				document.getElementById("load").onclick = loadAppState;
+
 				document.getElementById("test").onclick = function() {
 					console.log(
 
@@ -773,11 +791,17 @@ var DayPlanner = function() {
 		return document.getElementById("menu-save");
 	};
 
-
 	var getItemIndex = function(item) {
 		return Array.prototype.indexOf.call(item.parentNode.children, item);
 	};
 
+	var deleteAllSaves = function() {
+		var saves = getSaves();
+
+		for (var i = 0; i < saves.length; i++) {
+			deleteItem(saves[i]);
+		}
+	};
 
 
 	return {
