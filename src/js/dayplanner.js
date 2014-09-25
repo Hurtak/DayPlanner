@@ -577,7 +577,7 @@ var DayPlanner = function() {
 
 			menuInit();
 
-			saveMenuInit();
+			saveInit();
 
 			initTime();
 
@@ -682,7 +682,12 @@ var DayPlanner = function() {
 
 
 
-		var saveMenuInit = function() {
+		var saveInit = function() {
+			document.getElementById("add-save").onclick = function() {
+				createSave("Default");
+			};
+
+
 			var saveMenu = getSaveMenu();
 
 			var deleteButton = saveMenu.querySelector(".delete-save");
@@ -695,7 +700,7 @@ var DayPlanner = function() {
 					deleteItem(openedSave);
 				}
 			};
-		
+	
 		};
 
 
