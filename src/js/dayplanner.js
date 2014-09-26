@@ -11,6 +11,7 @@ var DayPlanner = function() {
 	var maxItemInterval = 600; // minutes
 
 	var maxItemNameLength = 50;
+	var maxSaveNameLength = 50;
 
 	// regex patterns for html5 input validation
 	var startTimePattern = "^(0?[0-9]|1[0-9]|2[0-4]):[0-5][0-9]$"; // e.g.: "00:00"
@@ -758,6 +759,12 @@ var DayPlanner = function() {
 			openSave(this.parentNode);
 		};
 
+		var nameInput = newSave.querySelector(".save-name");
+		nameInput.oninput = function() {
+			setSaveName(getSaveWithMenu(), this.value);
+			saveSaveName(getSaveWithMenu(), this.value);
+		};
+
 		getSaveContainer().appendChild(newSave);
 	};
 
@@ -805,8 +812,28 @@ var DayPlanner = function() {
 			Storage.save(data, "data");				
 		};
 
+		var saveSaveName = function(save, name) {
+			var data = Storage.load("data");
+			var savePosition = getItemIndex(save);
+
+			data[savePosition].name = name;
+
+			Storage.save(data, "data");	
+		};
 
 
+
+
+
+	var setSaveName = function(save, name) {
+		var nameInput = getSaveNameInput(save);
+
+		if (name.length > maxSaveNameLength) {
+			name = name.substring(0, maxSaveNameLength);
+		}				
+		nameInput.value = name;
+
+	};
 
 
 	var showSaveMenu = function(save) {
