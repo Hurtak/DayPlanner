@@ -11,7 +11,7 @@ var DayPlanner = function() {
 	var maxItemInterval = 600; // minutes
 
 	var maxItemNameLength = 50;
-	var maxSaveNameLength = 50;
+	var maxSaveNameLength = 40;
 
 	// regex patterns for html5 input validation
 	var startTimePattern = "^(0?[0-9]|1[0-9]|2[0-4]):[0-5][0-9]$"; // e.g.: "00:00"
@@ -460,26 +460,23 @@ var DayPlanner = function() {
 			var data = Storage.load("data");
 
 			if (data) {
-				for (var i = 0; i < data.length; i++) {
+				if (data[saveIndex].items.length === 0) {
+					// empty save created with new save button
+					createItem(getItemsContainer(), false, true);
+					saveAppState();
+				} else {
+					var item;
 
-					createSaveDiv(data[i].name);
+					for (var k = 0; k < data[saveIndex].items.length; k++) {
+						item = getDefaultItemClone();
 
-					if (i === saveIndex) {
-						var item;
+						setItemDuration(item, data[saveIndex].items[k].duration);
+						setItemName(item, data[saveIndex].items[k].name);
+						setItemColor(item, data[saveIndex].items[k].color);
 
-						for (var k = 0; k < data[i].items.length; k++) {
-							item = getDefaultItemClone();
-
-							setItemDuration(item, data[i].items[k].duration);
-							setItemName(item, data[i].items[k].name);
-							setItemColor(item, data[i].items[k].color);
-
-							createItem(getItemsContainer(), false, k === 0 ? true : false, item);
-						}
+						createItem(getItemsContainer(), false, k === 0 ? true : false, item);
 					}
 				}
-
-				openSave(getSaves()[0]);
 
 			} else {
 				resetAppState();
@@ -492,6 +489,8 @@ var DayPlanner = function() {
 		};
 
 		var resetAppState = function(numberOfItems) {
+			Storage.save([], "data");
+
 			var itemsContainer = getItemsContainer();
 
 			deleteAllItems();
@@ -573,8 +572,8 @@ var DayPlanner = function() {
 				}
 			};
 
-			// resetAppState(3);
-			loadAppState();
+			loadAppState(loadOpenedSaveIndex());
+			loadSavePositions();
 
 			menuInit();
 
@@ -757,6 +756,10 @@ var DayPlanner = function() {
 			hideSaveMenu();
 
 			openSave(this.parentNode);
+
+			loadAppState(getItemIndex(getOpenedSave()));
+
+			saveOpenedSaveIndex();
 		};
 
 		var nameInput = newSave.querySelector(".save-name");
@@ -809,7 +812,10 @@ var DayPlanner = function() {
 			data[savePosition] = tmp;
 
 
-			Storage.save(data, "data");				
+			Storage.save(data, "data");
+
+
+			saveOpenedSaveIndex(savePosition + positionChange);
 		};
 
 		var saveSaveName = function(save, name) {
@@ -818,9 +824,28 @@ var DayPlanner = function() {
 
 			data[savePosition].name = name;
 
-			Storage.save(data, "data");	
+			Storage.save(data, "data");
 		};
 
+		var saveOpenedSaveIndex = function() {
+			Storage.save(getItemIndex(getOpenedSave()), "save-position");
+		};
+
+		var loadOpenedSaveIndex = function() {
+			return Storage.load("save-position");
+		};
+
+		var loadSavePositions = function() {
+			var data = Storage.load("data");
+
+			for (var i = 0; i < data.length; i++) {
+
+				createSaveDiv(data[i].name);
+
+			}
+
+			openSave(getSaves()[loadOpenedSaveIndex()]);
+		};
 
 
 
