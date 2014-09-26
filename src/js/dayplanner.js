@@ -684,8 +684,9 @@ var DayPlanner = function() {
 
 		var saveInit = function() {
 			document.getElementById("add-save").onclick = function() {
-				createSaveDiv("Default");
-				createNewSave("Default");
+				var name = Math.round(Math.random() * 10000);
+				createSaveDiv(name);
+				createNewSave(name);
 
 
 			};
@@ -698,7 +699,7 @@ var DayPlanner = function() {
 				var dialog = confirm("Are you sure?");
 				if (dialog) {
 					var openedSave = getOpenedSave();
-					var saveWithMenu = getSaveMenu().parentNode;
+					var saveWithMenu = getSaveWithMenu();
 
 					if (openedSave !== saveWithMenu) {
 						hideAndMove(getSaveMenu());
@@ -710,18 +711,20 @@ var DayPlanner = function() {
 
 			var copyButton = document.getElementById("copy-save");
 			copyButton.onclick = function() {
-				var name = getSaveNameInput(getSaveMenu().parentNode).value;
+				var name = getSaveNameInput(getSaveWithMenu()).value;
 				createSaveDiv(name);
 			};
 	
 			var moveUpButton = document.getElementById("move-save-up");
 			moveUpButton.onclick = function() {
-
+				moveItem(getSaveWithMenu(), true);
+				moveSave(getSaveWithMenu(), true);
 			};
 
 			var moveDownButton = document.getElementById("move-save-down");
-			moveUpButton.onclick = function() {
-
+			moveDownButton.onclick = function() {
+				moveItem(getSaveWithMenu(), false);
+				moveSave(getSaveWithMenu(), false);
 			};
 
 		};
@@ -784,6 +787,24 @@ var DayPlanner = function() {
 			deleteItem(save);
 		};
 
+		var moveSave = function(save, moveUp) {
+			// deletes from local storage
+			var data = Storage.load("data");
+			var tmp;
+			var savePosition = getItemIndex(save);
+			var positionChange = 1;
+			if (!moveUp) {
+				positionChange = -1;
+			}
+
+			tmp = data[savePosition + positionChange];
+			data[savePosition + positionChange] = data[savePosition];
+			data[savePosition] = tmp;
+
+
+			Storage.save(data, "data");				
+		};
+
 
 
 
@@ -840,6 +861,10 @@ var DayPlanner = function() {
 
 	var getSaveMenu = function() {
 		return document.getElementById("save-menu");
+	};
+
+	var getSaveWithMenu = function() {
+		return getSaveMenu().parentNode;
 	};
 
 	var getItemIndex = function(item) {
