@@ -220,8 +220,8 @@ var DayPlanner = function() {
 			};
 
 			var isFirstItem = function(item) {
-				var items = getItems();
-				if (items[0] === item) {
+				var items = item.parentNode;
+				if (items.children[0] === item) {
 					return true;
 				} else {
 					return false;
@@ -229,8 +229,8 @@ var DayPlanner = function() {
 			};
 
 			var isLastItem = function(item) {
-				var items = getItems();
-				if (items[items.length - 1] === item) {
+				var items = item.parentNode;
+				if (items.children[items.children.length - 1] === item) {
 					return true;
 				} else {
 					return false;
@@ -714,6 +714,16 @@ var DayPlanner = function() {
 				createSaveDiv(name);
 			};
 	
+			var moveUpButton = document.getElementById("move-save-up");
+			moveUpButton.onclick = function() {
+
+			};
+
+			var moveDownButton = document.getElementById("move-save-down");
+			moveUpButton.onclick = function() {
+
+			};
+
 		};
 
 
