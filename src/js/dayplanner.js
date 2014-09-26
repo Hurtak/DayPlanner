@@ -461,7 +461,7 @@ var DayPlanner = function() {
 			if (data) {
 				for (var i = 0; i < data.length; i++) {
 
-					createSave(data[i].name);
+					createSaveDiv(data[i].name);
 
 					if (i === saveIndex) {
 						var item;
@@ -501,7 +501,7 @@ var DayPlanner = function() {
 				createItem(itemsContainer, false, false);
 			}
 
-			createSave("Default save");
+			createSaveDiv("Default save");
 			openSave(getSaves()[0]);
 
 			setStartTime("00:00");
@@ -509,7 +509,7 @@ var DayPlanner = function() {
 			resetItemsHeight();
 			recalculateTimes();
 
-			// saveAppState();
+			saveAppState();
 		};
 
 		var saveStartTime = function() {
@@ -684,7 +684,11 @@ var DayPlanner = function() {
 
 		var saveInit = function() {
 			document.getElementById("add-save").onclick = function() {
-				createSave("Default");
+				createSaveDiv("Default");
+				createNewSave("Default");
+
+
+
 			};
 
 
@@ -701,14 +705,14 @@ var DayPlanner = function() {
 						hideAndMove(getSaveMenu());
 					}
 
-					deleteItem(saveWithMenu);
+					deleteSave(saveWithMenu);
 				}
 			};
 
 			var copyButton = document.getElementById("copy-save");
 			copyButton.onclick = function() {
 				var name = getSaveNameInput(getSaveMenu().parentNode).value;
-				createSave(name);
+				createSaveDiv(name);
 			};
 	
 		};
@@ -718,15 +722,12 @@ var DayPlanner = function() {
 
 
 
-	var createSave = function(name) {
-		var saveContainer = getSaveContainer();
-
+	var createSaveDiv = function(name) {
 		var newSave = getDefaultSaveClone();
 		var saveName = getSaveNameInput(newSave);
 
 		saveName.value = name;
 
-	
 		var saveOptions = newSave.querySelector(".save-options");
 		saveOptions.onclick = function() {
 			if (saveName.readOnly) {
@@ -745,8 +746,38 @@ var DayPlanner = function() {
 			openSave(this.parentNode);
 		};
 
-		saveContainer.appendChild(newSave);
+		getSaveContainer().appendChild(newSave);
 	};
+
+
+
+	// save save functions
+		var createNewSave = function(name) {
+			var data = Storage.load("data");
+
+			data.push({
+				"name": name,
+				"items": []
+			});
+
+			Storage.save(data, "data");
+		};
+
+		var deleteSave = function(save) {
+
+			// deletes from local storage
+			var data = Storage.load("data");
+
+			console.log(save.parentNode);
+
+			data.splice(getItemIndex(save), 1);
+
+			Storage.save(data, "data");
+			
+			// deletes div
+			deleteItem(save);
+
+		};
 
 
 
