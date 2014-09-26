@@ -688,7 +688,6 @@ var DayPlanner = function() {
 				createNewSave("Default");
 
 
-
 			};
 
 
@@ -764,11 +763,8 @@ var DayPlanner = function() {
 		};
 
 		var deleteSave = function(save) {
-
 			// deletes from local storage
 			var data = Storage.load("data");
-
-			console.log(save.parentNode);
 
 			data.splice(getItemIndex(save), 1);
 
@@ -776,7 +772,6 @@ var DayPlanner = function() {
 			
 			// deletes div
 			deleteItem(save);
-
 		};
 
 
@@ -834,7 +829,7 @@ var DayPlanner = function() {
 	};
 
 	var getSaveMenu = function() {
-		return document.getElementById("menu-save");
+		return document.getElementById("save-menu");
 	};
 
 	var getItemIndex = function(item) {
