@@ -818,8 +818,7 @@ var DayPlanner = function() {
 
 			Storage.save(data, "data");
 
-
-			saveOpenedSaveIndex(savePosition + positionChange);
+			saveOpenedSaveIndex();
 		};
 
 		var saveSaveName = function(save, name) {
