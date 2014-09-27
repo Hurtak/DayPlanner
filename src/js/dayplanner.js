@@ -30,7 +30,7 @@ var DayPlanner = function() {
 				if (where === getItemsContainer()) {
 					// adds item inside "where" which is items container
 					newItem = where.appendChild(item);
-				} else { 
+				} else {
 					// adds item behind "where"
 					newItem = where.parentNode.insertBefore(item, where.nextSibling);
 				}
@@ -173,7 +173,7 @@ var DayPlanner = function() {
 			// 90 will be more visually distinguished between each other (e.g.:
 			// difference between 30 and 60 min will be bigger than 330 and 360)
 			var minutesToHeight = function(minutes) {
-				var rangeSplit = 90; // <minItemHeight;90) <90;maxItemHeight> 
+				var rangeSplit = 90; // <minItemHeight;90) <90;maxItemHeight>
 				var marginalHeight = 120; // marginal height for ranges transition (90 min == 120 px)
 
 				if (minutes < rangeSplit) {
@@ -186,10 +186,10 @@ var DayPlanner = function() {
 					);
 				} else {
 					minutes = Lib.linearConversion(
-						minutes, 
-						rangeSplit, 
-						maxItemInterval, 
-						marginalHeight, 
+						minutes,
+						rangeSplit,
+						maxItemInterval,
+						marginalHeight,
 						maxItemHeight
 					);
 				}
@@ -255,7 +255,7 @@ var DayPlanner = function() {
 			var setItemName = function(item, name) {
 				if (name.length > maxItemNameLength) {
 					name = name.substring(0, maxItemNameLength);
-				}				
+				}
 				getItemNameInput(item).value = name;
 			};
 
@@ -401,7 +401,7 @@ var DayPlanner = function() {
 
 		var getStartTime = function() {
 			return getStartTimeInput().value;
-		};	
+		};
 
 		var setStartTime = function(time) {
 			getStartTimeInput().value = time;
@@ -444,7 +444,6 @@ var DayPlanner = function() {
 					"color": getItemColor(items[i])
 				};
 			}
-
 
 			Storage.save(data, "data");
 			saveStartTime();
@@ -567,7 +566,7 @@ var DayPlanner = function() {
 
 				// changes 0:00 to 00:00
 				if (time.length < 5) {
-					this.value = "0" + time; 
+					this.value = "0" + time;
 				}
 			};
 
@@ -613,7 +612,7 @@ var DayPlanner = function() {
 			var addButton = document.getElementById("add-item");
 			addButton.onclick = function() {
 				// opened item needs to be initialized before hiding menu because opened item is located based on menu location
-				var openedItem = getOpenedItem(); 
+				var openedItem = getOpenedItem();
 
 				hideMenu();
 
@@ -634,7 +633,7 @@ var DayPlanner = function() {
 			deleteButton.onclick = function() {
 				var dialog = confirm("Are you sure?");
 				if (dialog) {
-					// opened item needs to be initialized before hiding menu because opened item is located based on menu location					
+					// opened item needs to be initialized before hiding menu because opened item is located based on menu location
 					var openedItem = getOpenedItem();
 
 					hideMenu();
@@ -685,7 +684,7 @@ var DayPlanner = function() {
 
 				recalculateTimes();
 				saveAppState();
-			};			
+			};
 		};
 
 
@@ -868,7 +867,7 @@ var DayPlanner = function() {
 
 		if (name.length > maxSaveNameLength) {
 			name = name.substring(0, maxSaveNameLength);
-		}				
+		}
 		nameInput.value = name;
 
 	};
@@ -888,7 +887,7 @@ var DayPlanner = function() {
 		}, 1);
 	};
 
-	var hideSaveMenu = function() {		
+	var hideSaveMenu = function() {
 		var saveMenu = getSaveMenu();
 
 		var saveWithMenu = saveMenu.parentNode;
