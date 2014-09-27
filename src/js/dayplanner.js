@@ -617,8 +617,12 @@ var DayPlanner = function() {
 
 				hideMenu();
 
-				// clones opened item and removes start time div if its first item
 				var clonedItem = openedItem.cloneNode(true);
+				if (isFirstItem(openedItem)) {
+					// removes start time div if its first item
+					clonedItem.removeChild(clonedItem.querySelector(".start-time"));
+				}
+
 				newItem = createItem(openedItem, clonedItem);
 				openItem(newItem);
 
