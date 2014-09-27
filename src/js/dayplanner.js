@@ -21,7 +21,7 @@ var DayPlanner = function() {
 
 		// create items
 
-			var createItem = function(where, behind, firstItem, item) {
+			var createItem = function(where, behind, item) {
 				if (typeof(item) === "undefined") {
 					item = getDefaultItemClone();
 				}
@@ -35,7 +35,7 @@ var DayPlanner = function() {
 					newItem = where.appendChild(item);
 				}
 
-				if (firstItem) {
+				if (getItems().length === 1) {
 					// if its first item in the list, we need to add start-time div
 					newItem.appendChild(getStartTimeDiv());
 				}
@@ -476,7 +476,7 @@ var DayPlanner = function() {
 						setItemName(item, data[saveIndex].items[k].name);
 						setItemColor(item, data[saveIndex].items[k].color);
 
-						createItem(getItemsContainer(), false, k === 0 ? true : false, item);
+						createItem(getItemsContainer(), false, item);
 					}
 				}
 
@@ -499,9 +499,8 @@ var DayPlanner = function() {
 			deleteAllItems();
 			deleteAllSaves();
 
-			createItem(itemsContainer, false, true);
-			for (var i = 1; i < numberOfItems; i++) {
-				createItem(itemsContainer, false, false);
+			for (var i = 0; i < numberOfItems; i++) {
+				createItem(itemsContainer, false);
 			}
 
 			createSaveDiv("Default save");
@@ -618,7 +617,7 @@ var DayPlanner = function() {
 
 				hideMenu();
 
-				newItem = createItem(openedItem, true, false, openedItem.cloneNode(true));
+				newItem = createItem(openedItem, true, openedItem.cloneNode(true));
 				openItem(newItem);
 
 				recalculateTimes();
