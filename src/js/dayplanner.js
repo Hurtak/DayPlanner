@@ -799,6 +799,8 @@ var DayPlanner = function() {
 			
 			// deletes div
 			deleteItem(save);
+
+			saveOpenedSaveIndex();
 		};
 
 		var moveSave = function(save, moveUp) {
@@ -814,7 +816,6 @@ var DayPlanner = function() {
 			tmp = data[savePosition + positionChange];
 			data[savePosition + positionChange] = data[savePosition];
 			data[savePosition] = tmp;
-
 
 			Storage.save(data, "data");
 
