@@ -460,14 +460,16 @@ var DayPlanner = function() {
 			var data = Storage.load("data");
 
 			if (data) {
-				if (data[saveIndex].items.length === 0) {
+				var numberOfSaves = data[saveIndex].items.length;
+
+				if (numberOfSaves === 0) {
 					// empty save created with new save button
 					createItem(getItemsContainer(), false, true);
 					saveAppState();
 				} else {
 					var item;
 
-					for (var k = 0; k < data[saveIndex].items.length; k++) {
+					for (var k = 0; k < numberOfSaves; k++) {
 						item = getDefaultItemClone();
 
 						setItemDuration(item, data[saveIndex].items[k].duration);
@@ -490,6 +492,7 @@ var DayPlanner = function() {
 
 		var resetAppState = function(numberOfItems) {
 			Storage.save([], "data");
+			saveOpenedSaveIndex(0);
 
 			var itemsContainer = getItemsContainer();
 
@@ -828,8 +831,12 @@ var DayPlanner = function() {
 			Storage.save(data, "data");
 		};
 
-		var saveOpenedSaveIndex = function() {
-			Storage.save(getItemIndex(getOpenedSave()), "save-position");
+		var saveOpenedSaveIndex = function(index) {
+			if (typeof(index) === "undefined") {
+				index = getItemIndex(getOpenedSave());
+			}
+
+			Storage.save(index, "save-position");
 		};
 
 		var loadOpenedSaveIndex = function() {
