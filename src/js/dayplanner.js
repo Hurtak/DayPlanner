@@ -21,18 +21,18 @@ var DayPlanner = function() {
 
 		// create items
 
-			var createItem = function(where, behind, item) {
+			var createItem = function(where, item) {
 				if (typeof(item) === "undefined") {
 					item = getDefaultItemClone();
 				}
 
 				var newItem;
-				if (behind) {
+				if (where === getItemsContainer()) {
+					// adds item inside "where" which is items container
+					newItem = where.appendChild(item);
+				} else { 
 					// adds item behind "where"
 					newItem = where.parentNode.insertBefore(item, where.nextSibling);
-				} else { 
-					// adds item inside "where"
-					newItem = where.appendChild(item);
 				}
 
 				if (getItems().length === 1) {
@@ -464,7 +464,7 @@ var DayPlanner = function() {
 
 				if (numberOfSaves === 0) {
 					// empty save created with new save button
-					createItem(getItemsContainer(), false, true);
+					createItem(getItemsContainer());
 					saveAppState();
 				} else {
 					var item;
@@ -476,7 +476,7 @@ var DayPlanner = function() {
 						setItemName(item, data[saveIndex].items[k].name);
 						setItemColor(item, data[saveIndex].items[k].color);
 
-						createItem(getItemsContainer(), false, item);
+						createItem(getItemsContainer(), item);
 					}
 				}
 
@@ -500,7 +500,7 @@ var DayPlanner = function() {
 			deleteAllSaves();
 
 			for (var i = 0; i < numberOfItems; i++) {
-				createItem(itemsContainer, false);
+				createItem(itemsContainer);
 			}
 
 			createSaveDiv("Default save");
@@ -617,7 +617,9 @@ var DayPlanner = function() {
 
 				hideMenu();
 
-				newItem = createItem(openedItem, true, openedItem.cloneNode(true));
+				// clones opened item and removes start time div if its first item
+				var clonedItem = openedItem.cloneNode(true);
+				newItem = createItem(openedItem, clonedItem);
 				openItem(newItem);
 
 				recalculateTimes();
