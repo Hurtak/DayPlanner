@@ -695,25 +695,34 @@ var DayPlanner = function() {
 				var name = Math.round(Math.random() * 10000);
 				createSaveDiv(name);
 				createNewSave(name);
-
-
 			};
-
-
-			var saveMenu = getSaveMenu();
 
 			var deleteButton = document.getElementById("delete-save");
 			deleteButton.onclick = function() {
 				var dialog = confirm("Are you sure?");
 				if (dialog) {
-					var openedSave = getOpenedSave();
 					var saveWithMenu = getSaveWithMenu();
 
-					if (openedSave !== saveWithMenu) {
-						hideAndMove(getSaveMenu());
+				 	hideAndMove(getSaveMenu());
+
+					if (saveWithMenu === getOpenedSave()) {
+						// deleting opened save
+						var saveIndex = getItemIndex(saveWithMenu);
+						if (isLastItem(saveWithMenu)) {
+							saveIndex--;
+						} else {
+							saveIndex++;
+						}
+
+						closeSaves();
+						openSave(getSaves()[saveIndex]);
+
+						loadAppState(saveIndex);
+
 					}
 
 					deleteSave(saveWithMenu);
+					saveOpenedSaveIndex();
 				}
 			};
 
@@ -722,7 +731,7 @@ var DayPlanner = function() {
 				var name = getSaveNameInput(getSaveWithMenu()).value;
 				createSaveDiv(name);
 			};
-	
+
 			var moveUpButton = document.getElementById("move-save-up");
 			moveUpButton.onclick = function() {
 				moveItem(getSaveWithMenu(), true);
@@ -800,11 +809,9 @@ var DayPlanner = function() {
 			data.splice(getItemIndex(save), 1);
 
 			Storage.save(data, "data");
-			
+
 			// deletes div
 			deleteItem(save);
-
-			saveOpenedSaveIndex();
 		};
 
 		var moveSave = function(save, moveUp) {
