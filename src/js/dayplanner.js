@@ -538,6 +538,14 @@ var DayPlanner = function() {
 
 		var init = function() {
 
+			// reset button
+			document.getElementById("reset").onclick = function() {
+				var dialog = confirm("Are you sure?");
+				if (dialog) {
+					resetAppState(5);
+				}
+			};
+
 			var startTimeInput = getStartTimeInput();
 
 			startTimeInput.oninput = function() {
@@ -581,14 +589,7 @@ var DayPlanner = function() {
 
 			initTime();
 
-			// reset button
-			document.getElementById("reset").onclick = function() {
-				var dialog = confirm("Are you sure?");
-				if (dialog) {
-					resetAppState(5);
-					saveAppState();
-				}
-			};
+
 
 			// debug functions
 
