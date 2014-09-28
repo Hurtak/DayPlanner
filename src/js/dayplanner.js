@@ -705,28 +705,35 @@ var DayPlanner = function() {
 			deleteButton.onclick = function() {
 				var dialog = confirm("Are you sure?");
 				if (dialog) {
-					var saveWithMenu = getSaveWithMenu();
+					if (getSaves().length > 1) {
 
-				 	hideAndMove(getSaveMenu());
+						var saveWithMenu = getSaveWithMenu();
 
-					if (saveWithMenu === getOpenedSave()) {
-						// deleting opened save
-						var saveIndex = getItemIndex(saveWithMenu);
-						if (isLastItem(saveWithMenu)) {
-							saveIndex--;
-						} else {
-							saveIndex++;
+					 	hideAndMove(getSaveMenu());
+
+						if (saveWithMenu === getOpenedSave()) {
+							// deleting opened save
+							var saveIndex = getItemIndex(saveWithMenu);
+							if (isLastItem(saveWithMenu)) {
+								saveIndex--;
+							} else {
+								saveIndex++;
+							}
+
+							closeSaves();
+							openSave(getSaves()[saveIndex]);
+
+							loadAppState(saveIndex);
+
 						}
 
-						closeSaves();
-						openSave(getSaves()[saveIndex]);
+						deleteSave(saveWithMenu);
+						saveOpenedSaveIndex();
+					} else {
 
-						loadAppState(saveIndex);
+						alert("You can't delete last save.");
 
 					}
-
-					deleteSave(saveWithMenu);
-					saveOpenedSaveIndex();
 				}
 			};
 
