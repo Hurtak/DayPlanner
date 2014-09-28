@@ -17,6 +17,48 @@ var DayPlanner = function() {
 	var startTimePattern = "^(0?[0-9]|1[0-9]|2[0-4]):[0-5][0-9]$"; // e.g.: "00:00"
 	var durationPattern = "^([1-9][0-9]?|[1-5][0-9]{2}|600)$"; // 1 - 600 range
 
+	// **** GENERAL ***
+
+		var getElementIndex = function(element) {
+			return Array.prototype.indexOf.call(element.parentNode.children, element);
+		};
+
+		var isFirstElement = function(element) {
+			var items = element.parentNode;
+			if (items.children[0] === element) {
+				return true;
+			} else {
+				return false;
+			}
+		};
+
+		var isLastElement = function(element) {
+			var items = element.parentNode;
+			if (items.children[items.children.length - 1] === element) {
+				return true;
+			} else {
+				return false;
+			}
+		};
+
+		var moveElement = function(element, moveUp) {
+			if (moveUp && !isFirstElement(element)) {
+				//move up
+				element.parentNode.insertBefore(element, element.previousSibling);
+				return true;
+			} else if (!moveUp && !isLastElement(element)) {
+				//move down
+				element.parentNode.insertBefore(element.nextSibling, element);
+				return true;
+			}
+
+			return false;
+		};		
+
+		var getOverlay = function(item) {
+			return item.querySelector(".overlay");
+		};
+
 	// *** ITEMS ***
 
 		// create items
@@ -70,7 +112,7 @@ var DayPlanner = function() {
 				getItemNameInput(newItem).oninput = function() {
 					setItemName(getOpenedItem(), this.value);
 
-					saveAppState();
+					saveItems();
 				};
 
 				return newItem;
@@ -93,22 +135,6 @@ var DayPlanner = function() {
 				for (var i = 0; i < items.length; i++) {
 					deleteElement(items[i]);
 				}
-			};
-
-		// move item
-
-			var moveElement = function(element, moveUp) {
-				if (moveUp && !isFirstItem(element)) {
-					//move up
-					element.parentNode.insertBefore(element, element.previousSibling);
-					return true;
-				} else if (!moveUp && !isLastItem(element)) {
-					//move down
-					element.parentNode.insertBefore(element.nextSibling, element);
-					return true;
-				}
-
-				return false;
 			};
 
 		// default item
@@ -205,24 +231,6 @@ var DayPlanner = function() {
 				return getItemsContainer().querySelectorAll(".item");
 			};
 
-			var isFirstItem = function(item) {
-				var items = item.parentNode;
-				if (items.children[0] === item) {
-					return true;
-				} else {
-					return false;
-				}
-			};
-
-			var isLastItem = function(item) {
-				var items = item.parentNode;
-				if (items.children[items.children.length - 1] === item) {
-					return true;
-				} else {
-					return false;
-				}
-			};
-
 		// item name
 
 			var getItemNameDiv = function(item) {
@@ -280,7 +288,7 @@ var DayPlanner = function() {
 				resizeOpenedItem(amount);
 				recalculateTimes();
 
-				saveAppState();
+				saveItems();
 			};
 
 			var changeDuration = function(amount) {
@@ -291,7 +299,7 @@ var DayPlanner = function() {
 					resizeOpenedItem(amount);
 					recalculateTimes();
 
-					saveAppState();
+					saveItems();
 				}
 			};
 
@@ -305,13 +313,7 @@ var DayPlanner = function() {
 				item.style.backgroundColor = color;
 			};
 
-		// item overlay (for click events)
-
-			var getOverlay = function(item) {
-				return item.querySelector(".overlay");
-			};
-
-	// *** MENU ***
+	// *** ITEMS MENU ***
 
 		var getMenu = function() {
 			return document.getElementById("menu");
@@ -330,7 +332,7 @@ var DayPlanner = function() {
 
 			var openedItem = getOpenedItem();
 
-			if (isFirstItem(item)) {
+			if (isFirstElement(item)) {
 				// first item
 				hide(document.getElementById("delete-item"));
 				setStartTimeInputReadonly(false); // changes readonly of start time input
@@ -343,8 +345,6 @@ var DayPlanner = function() {
 			getItemDurationInput(item).readOnly = false;
 			getItemNameInput(item).readOnly = false;
 			hide(getOverlay(item));
-
-			refreshMenu();
 		};
 
 		var hideMenu = function() {
@@ -355,67 +355,185 @@ var DayPlanner = function() {
 			getItemNameInput(openedItem).readOnly = true;
 			show(getOverlay(openedItem));
 
-			if (isFirstItem(openedItem)) {
+			if (isFirstElement(openedItem)) {
 				setStartTimeInputReadonly(true); // changes readonly of start time input
 			}
 
 			hideAndMove(getMenu());
 		};
 
-		var refreshMenu = function() {
-			// var openedItem = getOpenedItem();
+	// *** SAVES ***
+	
+		var getSaveContainer = function() {
+			return document.getElementById("save-container");
 		};
 
-	// *** CURRENT TIME ***
-
-		var timeInit = function() {
-			// var minTime = getStartTime;
-			// var maxTime = getItems();
-			// maxTime = maxTime[maxTime.length - 1].querySelector(".time").value;
+		var getSaves = function() {
+			return getSaveContainer().querySelectorAll(".save");
 		};
 
-	// *** TIME ***
-
-		var getStartTimeDiv = function() {
-			return getStartTimeInput().parentNode;
+		var getOpenedSave = function() {
+			return getSaveContainer().querySelector(".save.selected");
 		};
 
-		var getStartTimeInput = function() {
-			return document.getElementById("start-time");
+		var getSaveWithMenu = function() {
+			return getSaveMenu().parentNode;
 		};
 
-		var getStartTime = function() {
-			return getStartTimeInput().value;
+		var getSaveNameInput = function(save) {
+			return save.querySelector(".save-name");
 		};
 
-		var setStartTime = function(time) {
-			getStartTimeInput().value = time;
+
+		var openSave = function(save) {
+			save.className += " selected";
 		};
 
-		var setStartTimeInputReadonly = function(readOnlyValue) {
-			getStartTimeInput().readOnly = readOnlyValue;
+		var closeSaves = function() {
+			getSaveContainer().querySelector(".selected").classList.remove("selected");
 		};
 
-		var recalculateTimes = function() {
-			var items = getItems();
 
-			var previousTime = getStartTime();
-			for (var i = 0; i < items.length; i++) {
-				items[i].querySelector(".time-input").value = Time.minutesToTime(Time.timeToMinutes(previousTime) + getItemDuration(items[i]));
-				previousTime = Time.minutesToTime(getItemDuration(items[i]) + Time.timeToMinutes(previousTime));
+		var deleteAllSaves = function() {
+			var saves = getSaves();
+
+			for (var i = 0; i < saves.length; i++) {
+				deleteElement(saves[i]);
 			}
+		};
+
+
+		var createNewSave = function(name, saveData, index) {
+			var data = Storage.load("data");
+
+			if (typeof(saveData) === "undefined") {
+				saveData = [];
+			}
+
+			if (typeof(index) === "undefined") {
+				index = data.length;
+			}
+
+
+			data.splice(index, 0, {
+				"name": name,
+				"items": saveData
+			});
+
+			Storage.save(data, "data");
+		};
+
+		var moveSave = function(save, moveUp) {
+			var positionChange = 1;
+			if (!moveUp) {
+				positionChange = -1;
+			}
+
+			var data = Storage.load("data");
+
+			var savePosition = getElementIndex(save);
+			var tmp = data[savePosition + positionChange];
+			data[savePosition + positionChange] = data[savePosition];
+			data[savePosition] = tmp;
+
+			Storage.save(data, "data");
+
+			saveOpenedSaveIndex();
+		};
+
+
+		var createSaveDiv = function(name, where) {
+			var newSave = getDefaultSaveClone();
+			var saveName = getSaveNameInput(newSave);
+
+			saveName.value = name;
+
+			var saveOptions = newSave.querySelector(".save-options");
+			saveOptions.onclick = function() {
+				if (saveName.readOnly) {
+					hideSaveMenu();
+					showSaveMenu(newSave);
+				} else {
+					hideSaveMenu();
+				}
+			};
+
+			var overlay = newSave.querySelector(".overlay");
+			overlay.onclick = function() {
+				closeSaves();
+				hideSaveMenu();
+
+				openSave(this.parentNode);
+
+				loadItems(getElementIndex(getOpenedSave()));
+
+				saveOpenedSaveIndex();
+			};
+
+			var nameInput = newSave.querySelector(".save-name");
+			nameInput.oninput = function() {
+				var save = getSaveWithMenu();
+
+				if (this.value.length > maxSaveNameLength) {
+					this.value = this.value.substring(0, maxSaveNameLength);
+				}
+
+				// saves changed name to local storage
+				var data = Storage.load("data");
+				var savePosition = getElementIndex(save);
+
+				data[savePosition].name = this.value;
+
+				Storage.save(data, "data");
+			};
+
+			if (where === getSaveContainer()) {
+				where.appendChild(newSave);
+			} else {
+				where.parentNode.insertBefore(newSave, where.nextSibling);
+			}
+
+		};
+
+	// *** SAVES MENU ***
+
+		var getSaveMenu = function() {
+			return document.getElementById("save-menu");
+		};
+
+		var showSaveMenu = function(save) {
+			getSaveNameInput(save).readOnly = false;
+
+			var saveMenu = getSaveMenu();
+			save.appendChild(saveMenu);
+
+			hide(getOverlay(save));
+
+			setTimeout(function() {
+				saveMenu.setAttribute("data-animate", "");
+			}, 1);
+		};
+
+		var hideSaveMenu = function() {
+			var saveMenu = getSaveMenu();
+			var saveWithMenu = saveMenu.parentNode;
+
+			getSaveNameInput(saveWithMenu).readOnly = true;
+			show(getOverlay(saveWithMenu));
+
+			saveMenu.removeAttribute("data-animate");
 		};
 
 	// *** LOCAL STORAGE ***
 
-		var saveAppState = function() {
+		var saveItems = function() {
 			var data = Storage.load("data");
 			if (data === null) {
 				data = [];
 			}
 
 			var items = getItems();
-			var saveIndex = getItemIndex(getOpenedSave());
+			var saveIndex = getElementIndex(getOpenedSave());
 
 			data[saveIndex] = {
 				"name": getSaveNameInput(getOpenedSave()).value,
@@ -434,7 +552,7 @@ var DayPlanner = function() {
 			saveStartTime();
 		};
 
-		var loadAppState = function(saveIndex) {
+		var loadItems = function(saveIndex) {
 			if (typeof(saveIndex) === "undefined") {
 				saveIndex = 0;
 			}
@@ -449,7 +567,7 @@ var DayPlanner = function() {
 				if (numberOfSaves === 0) {
 					// empty save created with new save button
 					createItem(getItemsContainer());
-					saveAppState();
+					saveItems();
 				} else {
 					var item;
 
@@ -499,7 +617,7 @@ var DayPlanner = function() {
 			resetItemsHeight();
 			recalculateTimes();
 
-			saveAppState();
+			saveItems();
 		};
 
 		var saveStartTime = function() {
@@ -508,6 +626,69 @@ var DayPlanner = function() {
 
 		var loadStartTime = function() {
 			setStartTime(Storage.load("start-time"));
+		};
+
+		var saveOpenedSaveIndex = function(index) {
+			if (typeof(index) === "undefined") {
+				index = getElementIndex(getOpenedSave());
+			}
+
+			Storage.save(index, "save-position");
+		};
+
+		var loadOpenedSaveIndex = function() {
+			return Storage.load("save-position");
+		};
+
+		var loadSavePositions = function() {
+			var data = Storage.load("data");
+
+			for (var i = 0; i < data.length; i++) {
+				createSaveDiv(data[i].name, getSaveContainer());
+			}
+
+			openSave(getSaves()[loadOpenedSaveIndex()]);
+		};
+
+	// *** CURRENT TIME ***
+
+		var timeInit = function() {
+			// TODO
+			// var minTime = getStartTime;
+			// var maxTime = getItems();
+			// maxTime = maxTime[maxTime.length - 1].querySelector(".time").value;
+		};
+
+	// *** TIME ***
+
+		var getStartTimeDiv = function() {
+			return getStartTimeInput().parentNode;
+		};
+
+		var getStartTimeInput = function() {
+			return document.getElementById("start-time");
+		};
+
+		var getStartTime = function() {
+			return getStartTimeInput().value;
+		};
+
+		var setStartTime = function(time) {
+			getStartTimeInput().value = time;
+		};
+
+		var setStartTimeInputReadonly = function(readOnlyValue) {
+			getStartTimeInput().readOnly = readOnlyValue;
+		};
+
+		var recalculateTimes = function() {
+			var items = getItems();
+
+			var previousTime = getStartTime();
+			for (var i = 0; i < items.length; i++) {
+				items[i].querySelector(".time-input").value = Time.minutesToTime(Time.timeToMinutes(previousTime) + getItemDuration(items[i]));
+				previousTime = Time.minutesToTime(getItemDuration(items[i]) + Time.timeToMinutes(previousTime));
+			}
 		};
 
 	// *** HIDE / SHOW ***
@@ -543,7 +724,7 @@ var DayPlanner = function() {
 				if (pattern.test(time)) {
 					recalculateTimes();
 
-					saveAppState();
+					saveItems();
 				}
 			};
 			startTimeInput.onblur = function() {
@@ -567,27 +748,26 @@ var DayPlanner = function() {
 				}
 			};
 
-			loadAppState(loadOpenedSaveIndex());
+			loadItems(loadOpenedSaveIndex());
 			loadSavePositions();
 
 			menuInit();
 			saveInit();
+			saveMenuInit();
 			timeInit();
 
 			// debug functions
 
-				document.getElementById("save").onclick = saveAppState;
-				document.getElementById("load").onclick = loadAppState;
+				document.getElementById("save").onclick = saveItems;
+				document.getElementById("load").onclick = loadItems;
 				document.getElementById("test").onclick = function() {
 					console.log(
-						getItemIndex(getOpenedSave())
+						getElementIndex(getOpenedSave())
 					);
 				};
 		};
 
 		var menuInit = function() {
-			menu = document.getElementById('menu');
-
 			document.getElementById("add-item").onclick = function() {
 				// opened item needs to be initialized before hiding menu because opened item is located based on menu location
 				var openedItem = getOpenedItem();
@@ -595,7 +775,7 @@ var DayPlanner = function() {
 				hideMenu();
 
 				var clonedItem = openedItem.cloneNode(true);
-				if (isFirstItem(openedItem)) {
+				if (isFirstElement(openedItem)) {
 					// removes start time div if its first item
 					clonedItem.removeChild(clonedItem.querySelector(".start-time"));
 				}
@@ -604,7 +784,7 @@ var DayPlanner = function() {
 				openItem(newItem);
 
 				recalculateTimes();
-				saveAppState();
+				saveItems();
 			};
 
 			document.getElementById("delete-item").onclick = function() {
@@ -618,7 +798,7 @@ var DayPlanner = function() {
 					deleteElement(openedItem);
 
 					recalculateTimes();
-					saveAppState();
+					saveItems();
 				}
 			};
 
@@ -637,16 +817,15 @@ var DayPlanner = function() {
 
 			document.getElementById("colors").addEventListener('click', function(e){
 				setItemColor(getOpenedItem(), getItemColor(e.target));
-				saveAppState();
+				saveItems();
 			});
 
 			document.getElementById("move-up").onclick = function() {
 				var item = getOpenedItem();
-
 				var itemMoved = moveElement(item, true);
 
 				if (itemMoved) {
-					if (isFirstItem(item)) {
+					if (isFirstElement(item)) {
 						// 2nd item moved to 1st position
 						hide(document.getElementById("delete-item"));
 						setStartTimeInputReadonly(false);
@@ -656,17 +835,16 @@ var DayPlanner = function() {
 					}
 
 					recalculateTimes();
-					saveAppState();
+					saveItems();
 				}
 			};
 
 			document.getElementById("move-down").onclick = function() {
 				var item = getOpenedItem();
-
 				var itemMoved = moveElement(item, false);
 
 				if (itemMoved) {
-					if (isFirstItem(item.previousSibling)) {
+					if (isFirstElement(item.previousSibling)) {
 						// move of 1st item to 2nd position
 						show(document.getElementById("delete-item"));
 						setStartTimeInputReadonly(true);
@@ -675,7 +853,7 @@ var DayPlanner = function() {
 					}
 
 					recalculateTimes();
-					saveAppState();
+					saveItems();
 				}
 			};
 		};
@@ -686,7 +864,9 @@ var DayPlanner = function() {
 				createSaveDiv(name, getSaveContainer());
 				createNewSave(name);
 			};
+		};
 
+		var saveMenuInit = function() {
 			document.getElementById("delete-save").onclick = function() {
 				var dialog = confirm("Are you sure?");
 				if (dialog) {
@@ -696,10 +876,10 @@ var DayPlanner = function() {
 
 					 	hideAndMove(getSaveMenu());
 
+						// deleting opened save
 						if (saveWithMenu === getOpenedSave()) {
-							// deleting opened save
-							var saveIndex = getItemIndex(saveWithMenu);
-							if (isLastItem(saveWithMenu)) {
+							var saveIndex = getElementIndex(saveWithMenu);
+							if (isLastElement(saveWithMenu)) {
 								saveIndex--;
 							} else {
 								saveIndex++;
@@ -708,12 +888,12 @@ var DayPlanner = function() {
 							closeSaves();
 							openSave(saves[saveIndex]);
 
-							loadAppState(saveIndex);
+							loadItems(saveIndex);
 						}
 
 						// delete save from local storage
 						var data = Storage.load("data");
-						data.splice(getItemIndex(saveWithMenu), 1);
+						data.splice(getElementIndex(saveWithMenu), 1);
 						Storage.save(data, "data");
 
 						// deletes div
@@ -729,14 +909,13 @@ var DayPlanner = function() {
 			document.getElementById("copy-save").onclick = function() {
 				var save = getSaveWithMenu();
 				var name = getSaveNameInput(save).value;
-				var index = getItemIndex(save);
+				var index = getElementIndex(save);
 
 				var data = Storage.load("data");
 
 
 				createSaveDiv(name, save);
 				createNewSave(name, data[index].items, index);
-
 			};
 
 			document.getElementById("move-save-up").onclick = function() {
@@ -758,197 +937,6 @@ var DayPlanner = function() {
 			};
 
 		};
-
-
-	var createSaveDiv = function(name, where) {
-		var newSave = getDefaultSaveClone();
-		var saveName = getSaveNameInput(newSave);
-
-		saveName.value = name;
-
-		var saveOptions = newSave.querySelector(".save-options");
-		saveOptions.onclick = function() {
-			if (saveName.readOnly) {
-				hideSaveMenu();
-				showSaveMenu(newSave);
-			} else {
-				hideSaveMenu();
-			}
-		};
-
-		var overlay = newSave.querySelector(".overlay");
-		overlay.onclick = function() {
-			closeSaves();
-			hideSaveMenu();
-
-			openSave(this.parentNode);
-
-			loadAppState(getItemIndex(getOpenedSave()));
-
-			saveOpenedSaveIndex();
-		};
-
-		var nameInput = newSave.querySelector(".save-name");
-		nameInput.oninput = function() {
-			var save = getSaveWithMenu();
-
-			if (this.value.length > maxSaveNameLength) {
-				this.value = this.value.substring(0, maxSaveNameLength);
-			}
-
-			// saves changed name to local storage
-			var data = Storage.load("data");
-			var savePosition = getItemIndex(save);
-
-			data[savePosition].name = this.value;
-
-			Storage.save(data, "data");
-		};
-
-		if (where === getSaveContainer()) {
-			where.appendChild(newSave);
-		} else {
-			where.parentNode.insertBefore(newSave, where.nextSibling);
-		}
-
-	};
-
-
-
-	// save save functions
-		var createNewSave = function(name, saveData, index) {
-			var data = Storage.load("data");
-
-			if (typeof(saveData) === "undefined") {
-				saveData = [];
-			}
-
-			if (typeof(index) === "undefined") {
-				index = data.length;
-			}
-
-
-			data.splice(index, 0, {
-				"name": name,
-				"items": saveData
-			});
-
-			Storage.save(data, "data");
-		};
-
-		var moveSave = function(save, moveUp) {
-			var positionChange = 1;
-			if (!moveUp) {
-				positionChange = -1;
-			}
-
-			var data = Storage.load("data");
-
-			var savePosition = getItemIndex(save);
-			var tmp = data[savePosition + positionChange];
-			data[savePosition + positionChange] = data[savePosition];
-			data[savePosition] = tmp;
-
-			Storage.save(data, "data");
-
-			saveOpenedSaveIndex();
-		};
-
-		var saveOpenedSaveIndex = function(index) {
-			if (typeof(index) === "undefined") {
-				index = getItemIndex(getOpenedSave());
-			}
-
-			Storage.save(index, "save-position");
-		};
-
-		var loadOpenedSaveIndex = function() {
-			return Storage.load("save-position");
-		};
-
-		var loadSavePositions = function() {
-			var data = Storage.load("data");
-
-			for (var i = 0; i < data.length; i++) {
-
-				createSaveDiv(data[i].name, getSaveContainer());
-
-			}
-
-			openSave(getSaves()[loadOpenedSaveIndex()]);
-		};
-
-
-	var showSaveMenu = function(save) {
-		var saveName = getSaveNameInput(save);
-		var saveMenu = getSaveMenu();
-
-		saveName.readOnly = false;
-		save.appendChild(saveMenu);
-
-		hide(getOverlay(save));
-
-		setTimeout(function() {
-			saveMenu.setAttribute("data-animate", "");
-		}, 1);
-	};
-
-	var hideSaveMenu = function() {
-		var saveMenu = getSaveMenu();
-
-		var saveWithMenu = saveMenu.parentNode;
-		var saveName = getSaveNameInput(saveWithMenu);
-
-		saveName.readOnly = true;
-		show(getOverlay(saveWithMenu));
-		saveMenu.removeAttribute("data-animate");
-	};
-
-	var getOpenedSave = function() {
-		return getSaveContainer().querySelector(".save.selected");
-	};
-
-	var openSave = function(save) {
-		save.className += " selected";
-	};
-
-	var closeSaves = function() {
-		getSaveContainer().querySelector(".selected").classList.remove("selected");
-	};
-
-
-	var getSaveContainer = function() {
-		return document.getElementById("save-container");
-	};
-
-	var getSaves = function() {
-		return getSaveContainer().querySelectorAll(".save");
-	};
-
-	var getSaveNameInput = function(save) {
-		return save.querySelector(".save-name");
-	};
-
-	var getSaveMenu = function() {
-		return document.getElementById("save-menu");
-	};
-
-	var getSaveWithMenu = function() {
-		return getSaveMenu().parentNode;
-	};
-
-	var getItemIndex = function(item) {
-		return Array.prototype.indexOf.call(item.parentNode.children, item);
-	};
-
-	var deleteAllSaves = function() {
-		var saves = getSaves();
-
-		for (var i = 0; i < saves.length; i++) {
-			deleteElement(saves[i]);
-		}
-	};
-
 
 	return {
 		init: init
