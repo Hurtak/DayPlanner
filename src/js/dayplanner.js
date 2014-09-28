@@ -78,9 +78,8 @@ var DayPlanner = function() {
 
 		// delete items
 
-			var deleteItem = function(item) {
-				// item.outerHTML = "";
-				item.parentNode.removeChild(item);
+			var deleteElement = function(element) {
+				element.parentNode.removeChild(element);
 			};
 
 			var deleteAllItems = function() {
@@ -92,7 +91,7 @@ var DayPlanner = function() {
 				// removes all items
 				var items = getItems();
 				for (var i = 0; i < items.length; i++) {
-					deleteItem(items[i]);
+					deleteElement(items[i]);
 				}
 			};
 
@@ -628,7 +627,7 @@ var DayPlanner = function() {
 
 					hideMenu();
 
-					deleteItem(openedItem);
+					deleteElement(openedItem);
 
 					recalculateTimes();
 					saveAppState();
@@ -737,7 +736,14 @@ var DayPlanner = function() {
 							loadAppState(saveIndex);
 						}
 
-						deleteSave(saveWithMenu);
+						// delete save from local storage
+						var data = Storage.load("data");
+						data.splice(getItemIndex(saveWithMenu), 1);
+						Storage.save(data, "data");
+
+						// deletes div
+						deleteElement(saveWithMenu);
+
 						saveOpenedSaveIndex();
 					} else {
 						alert("You can't delete last save.");
@@ -816,8 +822,19 @@ var DayPlanner = function() {
 
 		var nameInput = newSave.querySelector(".save-name");
 		nameInput.oninput = function() {
-			setSaveName(getSaveWithMenu(), this.value);
-			saveSaveName(getSaveWithMenu(), this.value);
+			var save = getSaveWithMenu();
+
+			if (this.value.length > maxSaveNameLength) {
+				this.value = this.value.substring(0, maxSaveNameLength);
+			}
+
+			// saves changed name to local storage
+			var data = Storage.load("data");
+			var savePosition = getItemIndex(save);
+
+			data[savePosition].name = this.value;
+
+			Storage.save(data, "data");
 		};
 
 		if (where === getSaveContainer()) {
@@ -851,18 +868,6 @@ var DayPlanner = function() {
 			Storage.save(data, "data");
 		};
 
-		var deleteSave = function(save) {
-			// deletes from local storage
-			var data = Storage.load("data");
-
-			data.splice(getItemIndex(save), 1);
-
-			Storage.save(data, "data");
-
-			// deletes div
-			deleteItem(save);
-		};
-
 		var moveSave = function(save, moveUp) {
 			// deletes from local storage
 			var data = Storage.load("data");
@@ -880,15 +885,6 @@ var DayPlanner = function() {
 			Storage.save(data, "data");
 
 			saveOpenedSaveIndex();
-		};
-
-		var saveSaveName = function(save, name) {
-			var data = Storage.load("data");
-			var savePosition = getItemIndex(save);
-
-			data[savePosition].name = name;
-
-			Storage.save(data, "data");
 		};
 
 		var saveOpenedSaveIndex = function(index) {
@@ -918,15 +914,6 @@ var DayPlanner = function() {
 
 
 
-	var setSaveName = function(save, name) {
-		var nameInput = getSaveNameInput(save);
-
-		if (name.length > maxSaveNameLength) {
-			name = name.substring(0, maxSaveNameLength);
-		}
-		nameInput.value = name;
-
-	};
 
 
 	var showSaveMenu = function(save) {
@@ -995,7 +982,7 @@ var DayPlanner = function() {
 		var saves = getSaves();
 
 		for (var i = 0; i < saves.length; i++) {
-			deleteItem(saves[i]);
+			deleteElement(saves[i]);
 		}
 	};
 
