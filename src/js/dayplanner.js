@@ -705,8 +705,8 @@ var DayPlanner = function() {
 			deleteButton.onclick = function() {
 				var dialog = confirm("Are you sure?");
 				if (dialog) {
-					if (getSaves().length > 1) {
-
+					var saves = getSaves();
+					if (saves.length > 1) {
 						var saveWithMenu = getSaveWithMenu();
 
 					 	hideAndMove(getSaveMenu());
@@ -721,18 +721,15 @@ var DayPlanner = function() {
 							}
 
 							closeSaves();
-							openSave(getSaves()[saveIndex]);
+							openSave(saves[saveIndex]);
 
 							loadAppState(saveIndex);
-
 						}
 
 						deleteSave(saveWithMenu);
 						saveOpenedSaveIndex();
 					} else {
-
 						alert("You can't delete last save.");
-
 					}
 				}
 			};
