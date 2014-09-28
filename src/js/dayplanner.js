@@ -490,6 +490,10 @@ var DayPlanner = function() {
 		};
 
 		var resetAppState = function(numberOfItems) {
+			if (typeof(numberOfItems) === "undefined") {
+				numberOfItems = 1;
+			}
+
 			Storage.save([], "data");
 			saveOpenedSaveIndex(0);
 
@@ -543,7 +547,7 @@ var DayPlanner = function() {
 			document.getElementById("reset").onclick = function() {
 				var dialog = confirm("Are you sure?");
 				if (dialog) {
-					resetAppState(5);
+					resetAppState(1);
 				}
 			};
 
