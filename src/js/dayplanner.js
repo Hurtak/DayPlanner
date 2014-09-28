@@ -502,7 +502,7 @@ var DayPlanner = function() {
 				createItem(itemsContainer);
 			}
 
-			createSaveDiv("Default save");
+			createSaveDiv("Default save", getSaveContainer());
 			openSave(getSaves()[0]);
 
 			setStartTime("00:00");
@@ -693,7 +693,7 @@ var DayPlanner = function() {
 		var saveInit = function() {
 			document.getElementById("add-save").onclick = function() {
 				var name = Math.round(Math.random() * 10000);
-				createSaveDiv(name);
+				createSaveDiv(name, getSaveContainer());
 				createNewSave(name);
 			};
 
@@ -728,8 +728,16 @@ var DayPlanner = function() {
 
 			var copyButton = document.getElementById("copy-save");
 			copyButton.onclick = function() {
-				var name = getSaveNameInput(getSaveWithMenu()).value;
-				createSaveDiv(name);
+				var save = getSaveWithMenu();
+				var name = getSaveNameInput(save).value;
+				var index = getItemIndex(save);
+
+				var data = Storage.load("data");
+
+
+				createSaveDiv(name, save);
+				createNewSave(name, data[index].items, index);
+
 			};
 
 			var moveUpButton = document.getElementById("move-save-up");
@@ -751,7 +759,7 @@ var DayPlanner = function() {
 
 
 
-	var createSaveDiv = function(name) {
+	var createSaveDiv = function(name, where) {
 		var newSave = getDefaultSaveClone();
 		var saveName = getSaveNameInput(newSave);
 
@@ -785,18 +793,32 @@ var DayPlanner = function() {
 			saveSaveName(getSaveWithMenu(), this.value);
 		};
 
-		getSaveContainer().appendChild(newSave);
+		if (where === getSaveContainer()) {
+			where.appendChild(newSave);
+		} else {
+			where.parentNode.insertBefore(newSave, where.nextSibling);
+		}
+
 	};
 
 
 
 	// save save functions
-		var createNewSave = function(name) {
+		var createNewSave = function(name, saveData, index) {
 			var data = Storage.load("data");
 
-			data.push({
+			if (typeof(saveData) === "undefined") {
+				saveData = [];
+			}
+
+			if (typeof(index) === "undefined") {
+				index = data.length;
+			}
+
+
+			data.splice(index, 0, {
 				"name": name,
-				"items": []
+				"items": saveData
 			});
 
 			Storage.save(data, "data");
@@ -859,7 +881,7 @@ var DayPlanner = function() {
 
 			for (var i = 0; i < data.length; i++) {
 
-				createSaveDiv(data[i].name);
+				createSaveDiv(data[i].name, getSaveContainer());
 
 			}
 
