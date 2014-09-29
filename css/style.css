@@ -5,8 +5,6 @@ html {
 body {
 	overflow-y: scroll;
 
-	padding: 15px 0;
-
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
@@ -31,6 +29,8 @@ body {
 	max-width: 602px;
 
 	margin: 0 auto;
+
+	padding: 15px 0;
 }
 
 .hidden {
@@ -41,7 +41,7 @@ body {
 h1 {
 	text-align: center;
 	margin-top: 0;
-	margin-bottom: 14px; 
+	margin-bottom: 14px;
 
 	font-size: 50px;
 	font-family: 'Dancing Script', cursive;
@@ -49,14 +49,26 @@ h1 {
 }
 
 h2 {
-	font-family: 'Cambria', "Times New Roman";
-	text-align: center;
+	font-family: "Cambria", "Times New Roman", serif;
+	font-size: 28px;
+	text-decoration: underline;
+	font-style: italic;
 	
+	text-align: center;
+	 
+	margin-top: 25px;
+	margin-bottom: 8px;
 }
 
-input:invalid {
-	background-color: rgb(255, 120, 120)!important;
+input {
+	font-family: "Cambria", "Times New Roman", serif;
+	font-size: 20px;
+
 }
+
+	input:invalid {
+		background-color: rgb(255, 120, 120)!important;
+	}
 
 button {
 	border: 0;

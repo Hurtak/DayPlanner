@@ -3,15 +3,19 @@
 }
 
 .save {
+	position: relative;
+	
 	width: 100%;
 	height: 60px;
 
 	margin-top: 10px;
 	
 	background-color: rgba(0, 0, 0, .2);
-
-	position: relative;
 }
+
+	.save:first-child {
+		margin-top: 0;
+	}
 
 	.save .overlay {
 		width: calc(100% - 60px);

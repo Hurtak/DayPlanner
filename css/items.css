@@ -57,9 +57,6 @@
 		border: 0;
 		outline: 0;
 
-		font-family: "Cambria", "Times New Roman", serif;
-		font-size: 18px;
-
 		margin-top: 50px;
 		padding-left: 8px;
 	}
@@ -99,8 +96,6 @@
 		background-color: white;
 
 		text-align: right;
-		font-family: "Cambria", "Times New Roman", serif;
-		font-size: 18px;
 		
 		width: 50px;
 		height: 30px;
