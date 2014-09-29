@@ -609,7 +609,7 @@ var DayPlanner = function() {
 				createItem(itemsContainer);
 			}
 
-			createSaveDiv("Default save", getSaveContainer());
+			createSaveDiv("Save", getSaveContainer());
 			openSave(getSaves()[0]);
 
 			setStartTime("00:00");
@@ -860,7 +860,7 @@ var DayPlanner = function() {
 
 		var saveInit = function() {
 			document.getElementById("add-save").onclick = function() {
-				var name = Math.round(Math.random() * 10000);
+				var name = "Save";
 				createSaveDiv(name, getSaveContainer());
 				createNewSave(name);
 			};
