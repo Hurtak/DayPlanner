@@ -725,6 +725,7 @@ var DayPlanner = function() {
 				var dialog = confirm("Do you really want to reset application? This will result in losing all of your saved data.");
 				if (dialog) {
 					resetAppState(1);
+					location.reload(true);
 				}
 			};
 
