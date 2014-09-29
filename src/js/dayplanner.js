@@ -718,7 +718,7 @@ var DayPlanner = function() {
 		var init = function() {
 
 			document.getElementById("reset").onclick = function() {
-				var dialog = confirm("Are you sure?");
+				var dialog = confirm("Do you really want to reset application? This will result in losing all of your saved data.");
 				if (dialog) {
 					resetAppState(1);
 				}
@@ -876,7 +876,7 @@ var DayPlanner = function() {
 
 		var saveMenuInit = function() {
 			document.getElementById("delete-save").onclick = function() {
-				var dialog = confirm("Are you sure?");
+				var dialog = confirm("Do you really want to delete this save?");
 				if (dialog) {
 					var saves = getSaves();
 					if (saves.length > 1) {
