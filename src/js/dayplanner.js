@@ -457,6 +457,8 @@ var DayPlanner = function() {
 
 			var overlay = newSave.querySelector(".overlay");
 			overlay.onclick = function() {
+				var scrollPositionFromBottom = Lib.getDocumentHeight() - window.scrollY;
+
 				closeSaves();
 				hideSaveMenu();
 
@@ -465,6 +467,8 @@ var DayPlanner = function() {
 				loadItems(getElementIndex(getOpenedSave()));
 
 				saveOpenedSaveIndex();
+
+				window.scrollTo(0, Lib.getDocumentHeight() - scrollPositionFromBottom);
 			};
 
 			var nameInput = newSave.querySelector(".save-name");

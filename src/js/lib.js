@@ -23,14 +23,30 @@ var Lib = function() {
 		} else {
 			var newRange = newMax - newMin;
 			newValue = (((number - oldMin) * newRange) / oldRange) + newMin;
-		}	
+		}
 
 		return newValue;
+	};
+
+	var getDocumentHeight = function() {
+		var body = document.body;
+    	var html = document.documentElement;
+
+		var height = Math.max(
+			body.scrollHeight,
+			body.offsetHeight,
+			html.clientHeight,
+			html.scrollHeight,
+			html.offsetHeight
+		);
+
+		return height;
 	};
 
 	return {
 		isNumber: isNumber,
 		linearConversion: linearConversion,
+		getDocumentHeight: getDocumentHeight
 	};
 	
 }();
