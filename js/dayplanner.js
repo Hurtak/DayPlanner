@@ -496,7 +496,7 @@ var DayPlanner = function() {
 
 		};
 
-	// *** SAVES MENU ***
+	// *** SAVE MENU ***
 
 		var getSaveMenu = function() {
 			return document.getElementById("save-menu");
@@ -592,7 +592,7 @@ var DayPlanner = function() {
 				}
 
 			} else {
-				resetAppState();
+				resetAppState(3);
 			}
 
 			loadStartTime();
@@ -724,7 +724,7 @@ var DayPlanner = function() {
 			document.getElementById("reset").onclick = function() {
 				var dialog = confirm("Do you really want to reset application? This will result in losing all of your saved data.");
 				if (dialog) {
-					resetAppState(1);
+					resetAppState(3);
 					location.reload(true);
 				}
 			};
