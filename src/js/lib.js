@@ -32,4 +32,5 @@ var Lib = function() {
 		isNumber: isNumber,
 		linearConversion: linearConversion,
 	};
+	
 }();

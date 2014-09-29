@@ -29,4 +29,5 @@ var Time = function() {
 		timeToMinutes: timeToMinutes,
 		minutesToTime: minutesToTime
 	};
+	
 }();

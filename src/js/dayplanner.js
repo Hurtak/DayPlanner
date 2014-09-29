@@ -402,45 +402,42 @@ var DayPlanner = function() {
 			}
 		};
 
-
-		var createNewSave = function(name, saveData, index) {
-			var data = Storage.load("data");
-
-			if (typeof(saveData) === "undefined") {
-				saveData = [];
-			}
-
-			if (typeof(index) === "undefined") {
-				index = data.length;
-			}
-
-
-			data.splice(index, 0, {
-				"name": name,
-				"items": saveData
-			});
-
-			Storage.save(data, "data");
-		};
-
 		var moveSave = function(save, moveUp) {
 			var positionChange = 1;
 			if (!moveUp) {
 				positionChange = -1;
 			}
 
-			var data = Storage.load("data");
+			var data = loadData();
 
 			var savePosition = getElementIndex(save);
 			var tmp = data[savePosition + positionChange];
 			data[savePosition + positionChange] = data[savePosition];
 			data[savePosition] = tmp;
 
-			Storage.save(data, "data");
+			saveData(data);
 
 			saveOpenedSaveIndex();
 		};
 
+		var saveNewSave = function(name, items, index) {
+			if (typeof(items) === "undefined") {
+				items = [];
+			}
+
+			var data = loadData();
+			if (typeof(index) === "undefined") {
+				// no argument, data will be inserted in last position				
+				index = data.length;
+			}
+
+			data.splice(index, 0, {
+				"name": name,
+				"items": items
+			});
+
+			saveData(data);
+		};
 
 		var createSaveDiv = function(name, where) {
 			var newSave = getDefaultSaveClone();
@@ -479,12 +476,12 @@ var DayPlanner = function() {
 				}
 
 				// saves changed name to local storage
-				var data = Storage.load("data");
+				var data = loadData();
 				var savePosition = getElementIndex(save);
 
 				data[savePosition].name = this.value;
 
-				Storage.save(data, "data");
+				saveData(data);
 			};
 
 			if (where === getSaveContainer()) {
@@ -526,8 +523,16 @@ var DayPlanner = function() {
 
 	// *** LOCAL STORAGE ***
 
+		var saveData = function(data) {
+			Storage.save("data", data);
+		};
+
+		var loadData = function() {
+			return Storage.load("data");
+		};
+
 		var saveItems = function() {
-			var data = Storage.load("data");
+			var data = loadData();
 			if (data === null) {
 				data = [];
 			}
@@ -548,7 +553,7 @@ var DayPlanner = function() {
 				};
 			}
 
-			Storage.save(data, "data");
+			saveData(data);
 			saveStartTime();
 		};
 
@@ -559,7 +564,7 @@ var DayPlanner = function() {
 
 			deleteAllItems();
 
-			var data = Storage.load("data");
+			var data = loadData();
 
 			if (data) {
 				var numberOfSaves = data[saveIndex].items.length;
@@ -597,7 +602,7 @@ var DayPlanner = function() {
 				numberOfItems = 1;
 			}
 
-			Storage.save([], "data");
+			Storage.save("data", []);
 			saveOpenedSaveIndex(0);
 
 			var itemsContainer = getItemsContainer();
@@ -620,28 +625,31 @@ var DayPlanner = function() {
 			saveItems();
 		};
 
+
 		var saveStartTime = function() {
-			Storage.save(getStartTime(), "start-time");
+			Storage.save("start-time", getStartTime());
 		};
 
 		var loadStartTime = function() {
 			setStartTime(Storage.load("start-time"));
 		};
 
+
 		var saveOpenedSaveIndex = function(index) {
 			if (typeof(index) === "undefined") {
 				index = getElementIndex(getOpenedSave());
 			}
 
-			Storage.save(index, "save-position");
+			Storage.save("save-position", index);
 		};
 
 		var loadOpenedSaveIndex = function() {
 			return Storage.load("save-position");
 		};
 
+
 		var loadSavePositions = function() {
-			var data = Storage.load("data");
+			var data = loadData();
 
 			for (var i = 0; i < data.length; i++) {
 				createSaveDiv(data[i].name, getSaveContainer());
@@ -862,7 +870,7 @@ var DayPlanner = function() {
 			document.getElementById("add-save").onclick = function() {
 				var name = "Save";
 				createSaveDiv(name, getSaveContainer());
-				createNewSave(name);
+				saveNewSave(name);
 			};
 		};
 
@@ -892,9 +900,9 @@ var DayPlanner = function() {
 						}
 
 						// delete save from local storage
-						var data = Storage.load("data");
+						var data = loadData();
 						data.splice(getElementIndex(saveWithMenu), 1);
-						Storage.save(data, "data");
+						saveData(data);
 
 						// deletes div
 						deleteElement(saveWithMenu);
@@ -911,11 +919,11 @@ var DayPlanner = function() {
 				var name = getSaveNameInput(save).value;
 				var index = getElementIndex(save);
 
-				var data = Storage.load("data");
+				var data = loadData();
 
 
 				createSaveDiv(name, save);
-				createNewSave(name, data[index].items, index);
+				saveNewSave(name, data[index].items, index);
 			};
 
 			document.getElementById("move-save-up").onclick = function() {
@@ -941,4 +949,5 @@ var DayPlanner = function() {
 	return {
 		init: init
 	};
+
 }();
