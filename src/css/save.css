@@ -1,5 +1,5 @@
 .save.selected {
-	background-color: rgba(0, 0, 255, .3);
+	background-color: rgba(0, 0, 200, .2);
 }
 
 .save {
@@ -81,7 +81,7 @@
 		font-size: 20px;
 	}
 
-#save-menu {
+.save-menu {
 	width: calc(100% - 60px);
 	height: 100%;
 	position: absolute;
@@ -91,7 +91,15 @@
 	overflow: hidden;
 }
 
-	#save-menu .move-save {
+	.save-menu button {
+		background-color: rgba(255, 255, 255, .4);
+	}
+
+		.save-menu button:hover {
+			background-color: rgba(0, 0, 0, .2)!important;
+		}
+
+	.save-menu .move-save {
 		width: 10%;
 		height: 100%;
 
@@ -100,7 +108,7 @@
 		left: -10%;
 	}
 
-		#save-menu[data-animate] .move-save {
+		.save-menu[data-animate] .move-save {
 			left: 0;
 		}
 
@@ -112,15 +120,13 @@
 			bottom: 0;
 
 			padding-bottom: 3px;
-
-			background-color: rgba(255, 255, 255, .3)!important;
 		}
 
 		.move-save button:first-child {
 			top: 0
 		}
 
-	#save-menu .controls-save {
+	.save-menu .controls-save {
 		height: 100%;
 		width: 50%;
 
@@ -129,21 +135,15 @@
 		right: -50%;
 	}
 
-		#save-menu[data-animate] .controls-save {
+		.save-menu[data-animate] .controls-save {
 			right: 0;
 		}
 
-		#save-menu .controls-save button {
+		.save-menu .controls-save button {
 			width: 46%;
 			height: 100%;
 
 			float: right;
 			
 			margin-right: 4%;
-
-			background-color: rgba(255, 60, 60, .3);
 		}
-
-		#save-menu .controls-save button:first-child {
-			background-color: rgba(60, 255, 60, .3);
-		}		
