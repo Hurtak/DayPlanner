@@ -64,7 +64,7 @@ var DayPlanner = function() {
 		// create items
 
 			var createItem = function(where, item) {
-				if (typeof(item) === "undefined") {
+				if (typeof item === "undefined") {
 					item = getDefaultItemClone();
 				}
 
@@ -420,15 +420,15 @@ var DayPlanner = function() {
 		};
 
 		var saveNewSave = function(name, startTime, items, index) {
-			if (typeof(startTime) === "undefined") {
+			if (typeof startTime === "undefined") {
 				startTime = "00:00";
 			}
-			if (typeof(items) === "undefined") {
+			if (typeof items === "undefined") {
 				items = [];
 			}
 
 			var data = loadData();
-			if (typeof(index) === "undefined") {
+			if (typeof index === "undefined") {
 				// no argument, data will be inserted in last position				
 				index = data.length;
 			}
@@ -566,7 +566,7 @@ var DayPlanner = function() {
 		};
 
 		var loadItems = function(saveIndex) {
-			if (typeof(saveIndex) === "undefined") {
+			if (typeof saveIndex === "undefined") {
 				saveIndex = 0;
 			}
 
@@ -605,7 +605,7 @@ var DayPlanner = function() {
 		};
 
 		var resetAppState = function(numberOfItems) {
-			if (typeof(numberOfItems) === "undefined") {
+			if (typeof numberOfItems === "undefined") {
 				numberOfItems = 1;
 			}
 
@@ -634,7 +634,7 @@ var DayPlanner = function() {
 		};
 
 		var saveStartTime = function(index) {
-			if (typeof(index) === "undefined") {
+			if (typeof index === "undefined") {
 				index = getElementIndex(getOpenedSave());
 			}
 
@@ -646,7 +646,7 @@ var DayPlanner = function() {
 		};
 
 		var loadStartTime = function(index) {
-			if (typeof(index) === "undefined") {
+			if (typeof index === "undefined") {
 				index = loadOpenedSaveIndex();
 			}
 
@@ -657,7 +657,7 @@ var DayPlanner = function() {
 		};
 
 		var saveOpenedSaveIndex = function(index) {
-			if (typeof(index) === "undefined") {
+			if (typeof index === "undefined") {
 				index = getElementIndex(getOpenedSave());
 			}
 
