@@ -111,7 +111,6 @@ var DayPlanner = function() {
 				// changes name of item
 				getItemNameInput(newItem).oninput = function() {
 					setItemName(getOpenedItem(), this.value);
-
 					saveItems();
 				};
 
@@ -420,7 +419,10 @@ var DayPlanner = function() {
 			saveOpenedSaveIndex();
 		};
 
-		var saveNewSave = function(name, items, index) {
+		var saveNewSave = function(name, startTime, items, index) {
+			if (typeof(startTime) === "undefined") {
+				startTime = "00:00";
+			}
 			if (typeof(items) === "undefined") {
 				items = [];
 			}
@@ -433,6 +435,7 @@ var DayPlanner = function() {
 
 			data.splice(index, 0, {
 				"name": name,
+				"startTime": startTime,
 				"items": items
 			});
 
@@ -544,10 +547,12 @@ var DayPlanner = function() {
 			var items = getItems();
 			var saveIndex = getElementIndex(getOpenedSave());
 
-			data[saveIndex] = {
-				"name": getSaveNameInput(getOpenedSave()).value,
-				"items": []
-			};
+			if (typeof data[saveIndex] !== 'object') {
+				data[saveIndex] = {};
+			}
+
+			data[saveIndex].name = getSaveNameInput(getOpenedSave()).value;
+			data[saveIndex].items = [];
 
 			for (var i = 0; i < items.length; i++) {
 				data[saveIndex].items[i] = {
@@ -558,7 +563,6 @@ var DayPlanner = function() {
 			}
 
 			saveData(data);
-			saveStartTime();
 		};
 
 		var loadItems = function(saveIndex) {
@@ -580,22 +584,21 @@ var DayPlanner = function() {
 				} else {
 					var item;
 
-					for (var k = 0; k < numberOfSaves; k++) {
+					for (var i = 0; i < numberOfSaves; i++) {
 						item = getDefaultItemClone();
 
-						setItemDuration(item, data[saveIndex].items[k].duration);
-						setItemName(item, data[saveIndex].items[k].name);
-						setItemColor(item, data[saveIndex].items[k].color);
+						setItemDuration(item, data[saveIndex].items[i].duration);
+						setItemName(item, data[saveIndex].items[i].name);
+						setItemColor(item, data[saveIndex].items[i].color);
 
 						createItem(getItemsContainer(), item);
 					}
 				}
 
+				setStartTime(data[saveIndex].startTime);
 			} else {
 				resetAppState(3);
 			}
-
-			loadStartTime();
 
 			resetItemsHeight();
 			recalculateTimes();
@@ -606,7 +609,7 @@ var DayPlanner = function() {
 				numberOfItems = 1;
 			}
 
-			Storage.save("data", []);
+			saveData([]);
 			saveOpenedSaveIndex(0);
 
 			var itemsContainer = getItemsContainer();
@@ -627,17 +630,31 @@ var DayPlanner = function() {
 			recalculateTimes();
 
 			saveItems();
+			saveStartTime();
 		};
 
+		var saveStartTime = function(index) {
+			if (typeof(index) === "undefined") {
+				index = getElementIndex(getOpenedSave());
+			}
 
-		var saveStartTime = function() {
-			Storage.save("start-time", getStartTime());
+			var data = loadData();
+
+			data[index].startTime = getStartTime();
+
+			saveData(data);
 		};
 
-		var loadStartTime = function() {
-			setStartTime(Storage.load("start-time"));
-		};
+		var loadStartTime = function(index) {
+			if (typeof(index) === "undefined") {
+				index = loadOpenedSaveIndex();
+			}
 
+			var data = loadData();
+			var startTime = data[index].startTime;
+
+			return startTime;
+		};
 
 		var saveOpenedSaveIndex = function(index) {
 			if (typeof(index) === "undefined") {
@@ -736,17 +753,15 @@ var DayPlanner = function() {
 
 				if (pattern.test(time)) {
 					recalculateTimes();
-
-					saveItems();
+					saveStartTime();
 				}
 			};
 			startTimeInput.onblur = function() {
-				loadStartTime();
-				var time = this.value;
+				this.value = loadStartTime();
 
 				// changes 0:00 to 00:00
-				if (time.length < 5) {
-					this.value = "0" + time;
+				if (this.value.length < 5) {
+					this.value = "0" + this.value;
 				}
 			};
 
@@ -928,7 +943,7 @@ var DayPlanner = function() {
 
 
 				createSaveDiv(name, save);
-				saveNewSave(name, data[index].items, index);
+				saveNewSave(name, data[index].startTime, data[index].items, index);
 			};
 
 			document.getElementById("move-save-up").onclick = function() {
