@@ -14,7 +14,7 @@ var DayPlanner = function() {
 	var maxSaveNameLength = 40;
 
 	// regex patterns for html5 input validation
-	var startTimePattern = "^(0?[0-9]|1[0-9]|2[0-4]):[0-5][0-9]$"; // e.g.: "00:00"
+	var startTimePattern = "^(0?[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"; // e.g.: "00:00"
 	var durationPattern = "^([1-9][0-9]?|[1-5][0-9]{2}|600)$"; // 1 - 600 range
 
 	// **** GENERAL ***
@@ -747,6 +747,9 @@ var DayPlanner = function() {
 			};
 
 			var startTimeInput = getStartTimeInput();
+
+			startTimeInput.setAttribute("pattern", startTimePattern);
+
 			startTimeInput.oninput = function() {
 				var time = this.value;
 				var pattern = new RegExp(startTimePattern);
@@ -756,6 +759,7 @@ var DayPlanner = function() {
 					saveStartTime();
 				}
 			};
+
 			startTimeInput.onblur = function() {
 				this.value = loadStartTime();
 
@@ -766,7 +770,9 @@ var DayPlanner = function() {
 			};
 
 			var animationsCheckbox = document.getElementById("animations-checkbox");
+
 			animationsCheckbox.checked = true;
+
 			animationsCheckbox.onclick = function() {
 				var animationsStyle = document.getElementById("animations-style");
 				if (this.checked) {
