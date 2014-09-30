@@ -30,7 +30,7 @@
 .duration-controls button {
 	position: absolute;
 	right: 45px;
-	
+
 	width: 50px;
 	height: 50px;
 
@@ -63,7 +63,7 @@
 		height: 100%;
 
 		margin-right: 2%;
-		
+
 		float: right;
 		position: relative;
 	}
@@ -74,7 +74,7 @@
 
 	.controls button i {
 		position: absolute;
-		left: 15px; 
+		left: 15px;
 		margin: 0 auto;
 
 		font-size: 24px;
@@ -87,7 +87,7 @@
 	position: absolute;
 	left: -10%;
 	top: 0;
-	
+
 	width: 8%;
 	height: 100%;
 }

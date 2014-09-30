@@ -3,7 +3,7 @@ var Time = function() {
 	var addLeadingZeros = function(number) {
 		while (number.length < 2) {
 			number = "0" + number;
-		}	
+		}
 		return number;
 	};
 
@@ -29,5 +29,5 @@ var Time = function() {
 		timeToMinutes: timeToMinutes,
 		minutesToTime: minutesToTime
 	};
-	
+
 }();

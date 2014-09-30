@@ -55,7 +55,7 @@ var DayPlanner = function() {
 			}
 
 			return false;
-		};		
+		};
 
 		var getOverlay = function(item) {
 			return item.querySelector(".overlay");
@@ -366,7 +366,7 @@ var DayPlanner = function() {
 		};
 
 	// *** SAVES ***
-	
+
 		var getSaveContainer = function() {
 			return document.getElementById("save-container");
 		};
@@ -433,7 +433,7 @@ var DayPlanner = function() {
 
 			var data = loadData();
 			if (typeof index === "undefined") {
-				// no argument, data will be inserted in last position				
+				// no argument, data will be inserted in last position
 				index = data.length;
 			}
 

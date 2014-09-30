@@ -8,7 +8,7 @@ var Storage = function() {
 	var load = function(objectName) {
 		var object = localStorage.getItem(objectName);
 		object = JSON.parse(object);
-		
+
 		return object;
 	};
 
@@ -16,5 +16,5 @@ var Storage = function() {
 		save: save,
 		load: load
 	};
-	
+
 }();

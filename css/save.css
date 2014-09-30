@@ -4,12 +4,12 @@
 
 .save {
 	position: relative;
-	
+
 	width: 100%;
 	height: 60px;
 
 	margin-top: 10px;
-	
+
 	background-color: rgba(0, 0, 0, .2);
 	background: -moz-linear-gradient(-45deg,  rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.25) 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(0,0,0,0.1)), color-stop(100%,rgba(0,0,0,0.25))); /* Chrome,Safari4+ */
@@ -37,7 +37,7 @@
 
 		height: 30px;
 		width: 30%;
-		
+
 		margin-top: 15px;
 		margin-left: 12%;
 
@@ -45,14 +45,14 @@
 
 		z-index: 10;
 		position: relative;
-	}	
+	}
 
 		.save input[readonly] {
 			background-color: transparent;
 
 			margin-left: 2%;
 			width: 80%;
-		}	
+		}
 
 	.save button {
 		height: 100%;
@@ -60,7 +60,7 @@
 
 		float: right;
 		background-color: rgba(0, 0, 0, .2);
-	
+
 	}
 
 		.save button:hover {
@@ -70,12 +70,12 @@
 .add-save {
 	display: block;
 	position: relative;
-	
+
 	margin: auto;
 	margin-top: 10px;
 
 	width: 40%;
-	height: 50px;	
+	height: 50px;
 
 	background-color: rgba(0, 0, 0, .2);
 }
@@ -155,6 +155,6 @@
 			height: 100%;
 
 			float: right;
-			
+
 			margin-right: 4%;
 		}
