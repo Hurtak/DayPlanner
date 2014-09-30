@@ -7,7 +7,7 @@
 		position: relative;
 
 		float: left;
-		margin-right: 2%; 
+		margin-right: 2%;
 
 		width: 49%;
 		height: 60px;
@@ -15,7 +15,7 @@
 
 	.options button i {
 		position: absolute;
-		
+
 		left: 20px;
 		top: 20px;
 	}

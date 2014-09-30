@@ -48,5 +48,5 @@ var Lib = function() {
 		linearConversion: linearConversion,
 		getDocumentHeight: getDocumentHeight
 	};
-	
+
 }();

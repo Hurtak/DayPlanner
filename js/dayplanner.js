@@ -55,7 +55,7 @@ var DayPlanner = function() {
 			}
 
 			return false;
-		};		
+		};
 
 		var getOverlay = function(item) {
 			return item.querySelector(".overlay");
@@ -93,7 +93,7 @@ var DayPlanner = function() {
 				durationInput.setAttribute("pattern", durationPattern);
 				durationInput.oninput = function() {
 					// backward compatibility: <input onchange="doSomething();" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-					changeDuration(this.value);
+					changeDuration(this.value, false);
 				};
 
 				durationInput.onblur = function() {
@@ -107,12 +107,13 @@ var DayPlanner = function() {
 						duration = minItemInterval;
 					}
 
-					changeDuration(duration);
+					changeDuration(duration, true);
 				};
 
 				// changes name of item
-				getItemNameInput(newItem).oninput = function() {
-					setItemName(getOpenedItem(), this.value);
+				var nameInput = getItemNameInput(newItem);
+				nameInput.setAttribute("maxlength", maxItemNameLength);
+				nameInput.oninput = function() {
 					saveItems();
 				};
 
@@ -292,10 +293,11 @@ var DayPlanner = function() {
 				saveItems();
 			};
 
-			var changeDuration = function(amount) {
+			var changeDuration = function(amount, rewriteInput) {
 				if (Lib.isNumber(amount) && amount >= minItemInterval && amount <= maxItemInterval) {
-
-					setItemDuration(getOpenedItem(), Math.round(amount));
+					if (rewriteInput) {
+						setItemDuration(getOpenedItem(), Math.round(amount));
+					}
 
 					resizeOpenedItem(amount);
 					recalculateTimes();
@@ -364,7 +366,7 @@ var DayPlanner = function() {
 		};
 
 	// *** SAVES ***
-	
+
 		var getSaveContainer = function() {
 			return document.getElementById("save-container");
 		};
@@ -431,7 +433,7 @@ var DayPlanner = function() {
 
 			var data = loadData();
 			if (typeof index === "undefined") {
-				// no argument, data will be inserted in last position				
+				// no argument, data will be inserted in last position
 				index = data.length;
 			}
 

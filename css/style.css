@@ -20,7 +20,6 @@ body {
 	background: -ms-linear-gradient(top,  rgb(156,197,229) 10%,rgb(201,255,191) 90%) ; /* IE10+ */
 	background: linear-gradient(to bottom,  rgb(156,197,229) 10%,rgb(201,255,191) 90%) ; /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9cc5e5', endColorstr='#c9ffbf',GradientType=0 ); /* IE6-9 */
-
 }
 
 .wrapper {
@@ -53,9 +52,9 @@ h2 {
 	font-size: 28px;
 	text-decoration: underline;
 	font-style: italic;
-	
+
 	text-align: center;
-	 
+
 	margin-top: 25px;
 	margin-bottom: 8px;
 }
@@ -84,18 +83,18 @@ button, label {
 	background-color: rgba(255, 255, 255, .6);
 
 	font-family: "Cambria", "Times New Roman", serif;
-	font-size: 18px;	
+	font-size: 18px;
 }
 
 #debug {
 	display: none;
-	
+
 	position: fixed;
 
 	bottom: 0;
 	left: 0;
 }
 
-#debug button {
-	padding: 10px 20px;
-}
+	#debug button {
+		padding: 10px 20px;
+	}
