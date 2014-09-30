@@ -1,4 +1,4 @@
-dayplanner
+DayPlanner
 ==========
 
 ### Simple application for planning your day 
