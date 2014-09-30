@@ -87,3 +87,15 @@ button, label {
 	font-size: 18px;	
 }
 
+#debug {
+	display: none;
+	
+	position: fixed;
+
+	bottom: 0;
+	left: 0;
+}
+
+#debug button {
+	padding: 10px 20px;
+}

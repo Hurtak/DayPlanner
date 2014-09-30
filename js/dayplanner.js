@@ -17,6 +17,8 @@ var DayPlanner = function() {
 	var startTimePattern = "^(0?[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"; // e.g.: "00:00"
 	var durationPattern = "^([1-9][0-9]?|[1-5][0-9]{2}|600)$"; // 1 - 600 range
 
+	var debugMode = false;
+
 	// **** GENERAL ***
 
 		var getElementIndex = function(element) {
@@ -737,7 +739,6 @@ var DayPlanner = function() {
 	// *** INIT ***
 
 		var init = function() {
-
 			document.getElementById("reset").onclick = function() {
 				var dialog = confirm("Do you really want to reset application? This will result in losing all of your saved data.");
 				if (dialog) {
@@ -791,14 +792,14 @@ var DayPlanner = function() {
 			timeInit();
 
 			// debug functions
-
-				document.getElementById("save").onclick = saveItems;
-				document.getElementById("load").onclick = loadItems;
+			if (debugMode) {
+				document.getElementById("debug").style.display = "block";
 				document.getElementById("test").onclick = function() {
 					console.log(
 						getElementIndex(getOpenedSave())
 					);
 				};
+			}
 		};
 
 		var menuInit = function() {
