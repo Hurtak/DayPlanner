@@ -7,6 +7,8 @@ DayPlanner
 * <a href="http://hurtak.github.io/DayPlanner">hurtak.github.io/DayPlanner</a>
 
 ## Features
+* #### App state immediately saved to local storage
+
 * #### Simple interface
 <img src="http://i.imgur.com/RG5k6no.png">
 
