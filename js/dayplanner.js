@@ -1,3 +1,5 @@
+"use strict";
+
 var DayPlanner = function() {
 	var menu;
 
@@ -817,7 +819,7 @@ var DayPlanner = function() {
 					clonedItem.removeChild(clonedItem.querySelector(".start-time"));
 				}
 
-				newItem = createItem(openedItem, clonedItem);
+				var newItem = createItem(openedItem, clonedItem);
 				openItem(newItem);
 
 				recalculateTimes();

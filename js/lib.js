@@ -1,3 +1,5 @@
+"use strict";
+
 var Lib = function() {
 
 	var isNumber = function(n) {
