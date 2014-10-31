@@ -12,7 +12,7 @@ DayPlanner
 * #### Simple interface
 <img src="http://i.imgur.com/RG5k6no.png">
 
-* #### Easy editing
+* #### Easy touch friendly editing
 <img src="http://i.imgur.com/s8kSJog.png">
 
 * #### Multiple save positions
