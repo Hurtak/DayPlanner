@@ -1,7 +1,7 @@
 DayPlanner
 ==========
 
-### Simple application for planning your day 
+### Simple web application for planning your day
 
 ## Demo
 * <a href="http://hurtak.github.io/DayPlanner">hurtak.github.io/DayPlanner</a>
