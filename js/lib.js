@@ -32,7 +32,7 @@ var Lib = function() {
 
 	var getDocumentHeight = function() {
 		var body = document.body;
-    	var html = document.documentElement;
+		var html = document.documentElement;
 
 		var height = Math.max(
 			body.scrollHeight,
