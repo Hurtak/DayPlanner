@@ -1,3 +1,5 @@
+"use strict";
+
 var Time = function() {
 
 	var addLeadingZeros = function(number) {

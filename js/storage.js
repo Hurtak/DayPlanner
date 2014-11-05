@@ -1,3 +1,5 @@
+"use strict";
+
 var Storage = function() {
 
 	var save = function(objectName, object) {

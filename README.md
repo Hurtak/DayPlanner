@@ -1,7 +1,7 @@
 DayPlanner
 ==========
 
-### Simple application for planning your day 
+### Simple web application for planning your daily routine
 
 ## Demo
 * <a href="http://hurtak.github.io/DayPlanner">hurtak.github.io/DayPlanner</a>
@@ -12,7 +12,7 @@ DayPlanner
 * #### Simple interface
 <img src="http://i.imgur.com/RG5k6no.png">
 
-* #### Easy editing
+* #### Easy touch friendly editing
 <img src="http://i.imgur.com/s8kSJog.png">
 
 * #### Multiple save positions
