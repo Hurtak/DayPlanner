@@ -1,171 +1,176 @@
 <!doctype html>
-<meta charset="utf-8">
+<html>
+  <head>
+    <meta charset="utf-8">
 
-<title>day planner</title>
+    <title>day planner</title>
 
-<meta name="description" content="Simple application for planning your day">
-<meta name="author" content="Petr Huřťák">
-<meta name="contact" content="petr.hurtak@gmail.com">
+    <meta name="description" content="Simple application for planning your day">
+    <meta name="author" content="Petr Huřťák">
+    <meta name="contact" content="petr.hurtak@gmail.com">
 
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/items.css">
-<link rel="stylesheet" href="css/menu.css">
-<link rel="stylesheet" href="css/options.css">
-<link rel="stylesheet" href="css/save.css">
-<link rel="stylesheet" href="css/animations.css" id="animations-style">
-<link rel="stylesheet" href="css/time.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/items.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/options.css">
+    <link rel="stylesheet" href="css/save.css">
+    <link rel="stylesheet" href="css/animations.css" id="animations-style">
+    <link rel="stylesheet" href="css/time.css">
 
-<link rel="stylesheet" href="css/elusive-webfont.css">
-<link href='http://fonts.googleapis.com/css?family=Dancing+Script:700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/elusive-webfont.css">
+    <link href='http://fonts.googleapis.com/css?family=Dancing+Script:700' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <div class="wrapper">
 
-<div class="wrapper">
+      <h1>Day planner</h1>
+      <div id="items-container">
+        <!-- <div id="current-time">10:30</div> -->
+      </div>
 
-	<h1>Day planner</h1>
-	<div id="items-container">
-		<!-- <div id="current-time">10:30</div> -->
-	</div>
+      <h2>Load</h2>
+      <div id="save-container">
 
-	<h2>Load</h2>
-	<div id="save-container">
+      </div>
+      <button id="add-save" class="add-save">
+        <i class="el-icon-plus"></i>
+        New save
+      </button>
 
-	</div>
-	<button id="add-save" class="add-save">
-		<i class="el-icon-plus"></i>
-		New save
-	</button>
+      <h2>Options</h2>
+      <div id="options" class="options">
+        <button id="reset">
+          <i class="el-icon-repeat"></i>
+          Reset
+        </button>
+        <div class="animations-checkbox">
+          <label>
+            <input type="checkbox" id="animations-checkbox">
+            <span>
+              Animations
+            </span>
+          </label>
+        </div>
+      </div>
 
-	<h2>Options</h2>
-	<div id="options" class="options">
-		<button id="reset">
-			<i class="el-icon-repeat"></i>
-			Reset
-		</button>
-		<div class="animations-checkbox">
-			<label>
-				<input type="checkbox" id="animations-checkbox">
-				<span>
-					Animations
-				</span>
-			</label>
-		</div>
-	</div>
+    </div>
 
-</div>
+    <!-- dev menu -->
+    <div id="debug">
+      <button id="test">test</button>
+    </div>
 
-<!-- dev menu -->
-<div id="debug">
-	<button id="test">test</button>
-</div>
+    <div id="hide" class="hidden">
 
-<div id="hide" class="hidden">
+      <div id="menu" class="menu">
+        <div class="duration-controls">
+          <button id="duration-minus">
+            <i class="el-icon-minus"></i>
+          </button>
+          <button id="duration-plus">
+            <i class="el-icon-plus"></i>
+          </button>
+        </div>
+        <div id="colors" class="colors">
+          <div style="background-color: #FF8080"></div>
+          <div style="background-color: #FFBF80"></div>
+          <div style="background-color: #FFFF80"></div>
+          <div style="background-color: #C0FF80"></div>
+          <div style="background-color: #80FF80"></div>
+          <div style="background-color: #80FFC0"></div>
+          <div style="background-color: #80FFFF"></div>
+          <div style="background-color: #80BFFF"></div>
+          <div style="background-color: #8080FF"></div>
+          <div style="background-color: #BF80FF"></div>
+          <div style="background-color: #FF80FF"></div>
+          <div style="background-color: #FF80BF"></div>
+          <div style="background-color: #BFBFBF"></div>
+        </div>
+        <div class="controls">
+          <button id="hide-menu">
+            <i class="el-icon-ok-sign"></i>
+            OK
+          </button>
+          <button id="add-item">
+            <i class="el-icon-file-new-alt"></i>
+            Add
+          </button>
+          <button id="delete-item">
+            <i class="el-icon-remove-sign"></i>
+            Delete
+          </button>
+        </div>
+        <div class="move">
+          <button id="move-up">
+            <i class="el-icon-chevron-up"></i>
+          </button>
+          <button id="move-down">
+            <i class="el-icon-chevron-down"></i>
+          </button>
+        </div>
+      </div>
 
-	<div id="menu" class="menu">
-		<div class="duration-controls">
-			<button id="duration-minus">
-				<i class="el-icon-minus"></i>
-			</button>
-			<button id="duration-plus">
-				<i class="el-icon-plus"></i>
-			</button>
-		</div>
-		<div id="colors" class="colors">
-			<div style="background-color: #FF8080"></div>
-			<div style="background-color: #FFBF80"></div>
-			<div style="background-color: #FFFF80"></div>
-			<div style="background-color: #C0FF80"></div>
-			<div style="background-color: #80FF80"></div>
-			<div style="background-color: #80FFC0"></div>
-			<div style="background-color: #80FFFF"></div>
-			<div style="background-color: #80BFFF"></div>
-			<div style="background-color: #8080FF"></div>
-			<div style="background-color: #BF80FF"></div>
-			<div style="background-color: #FF80FF"></div>
-			<div style="background-color: #FF80BF"></div>
-			<div style="background-color: #BFBFBF"></div>
-		</div>
-		<div class="controls">
-			<button id="hide-menu">
-				<i class="el-icon-ok-sign"></i>
-				OK
-			</button>
-			<button id="add-item">
-				<i class="el-icon-file-new-alt"></i>
-				Add
-			</button>
-			<button id="delete-item">
-				<i class="el-icon-remove-sign"></i>
-				Delete
-			</button>
-		</div>
-		<div class="move">
-			<button id="move-up">
-				<i class="el-icon-chevron-up"></i>
-			</button>
-			<button id="move-down">
-				<i class="el-icon-chevron-down"></i>
-			</button>
-		</div>
-	</div>
+      <div id="save-menu" class="save-menu">
+        <div class="move-save">
+          <button id="move-save-up">
+            <i class="el-icon-chevron-up"></i>
+          </button>
+          <button id="move-save-down">
+            <i class="el-icon-chevron-down"></i>
+          </button>
+        </div>
+        <div class="controls-save">
+          <button id="copy-save" class="copy-save">
+            <i class="el-icon-file-new-alt"></i>
+            Copy
+          </button>
+          <button id="delete-save" class="delete-save">
+            <i class="el-icon-remove-sign"></i>
+            Delete
+          </button>
+        </div>
 
-	<div id="save-menu" class="save-menu">
-		<div class="move-save">
-			<button id="move-save-up">
-				<i class="el-icon-chevron-up"></i>
-			</button>
-			<button id="move-save-down">
-				<i class="el-icon-chevron-down"></i>
-			</button>
-		</div>
-		<div class="controls-save">
-			<button id="copy-save" class="copy-save">
-				<i class="el-icon-file-new-alt"></i>
-				Copy
-			</button>
-			<button id="delete-save" class="delete-save">
-				<i class="el-icon-remove-sign"></i>
-				Delete
-			</button>
-		</div>
+      </div>
 
-	</div>
+      <div id="default-item">
+        <div class="item">
+          <div class="overlay"></div>
+          <div class="item-name">
+            <input type="text" value="Activity name" readonly>
+          </div>
+          <div class="duration">
+            <input type="text" value="60" readonly>
+            <span>min</span>
+          </div>
+          <div class="time">
+            <input type="text" class="time-input" readonly>
+          </div>
+        </div>
+      </div>
 
-	<div id="default-item">
-		<div class="item">
-			<div class="overlay"></div>
-			<div class="item-name">
-				<input type="text" value="Activity name" readonly>
-			</div>
-			<div class="duration">
-				<input type="text" value="60" readonly>
-				<span>min</span>
-			</div>
-			<div class="time">
-				<input type="text" class="time-input" readonly>
-			</div>
-		</div>
-	</div>
+      <div id="default-save">
+        <div class="save">
+          <div class="overlay"></div>
+          <input type="text" class="save-name" value="Save" readonly>
+          <button class="save-options">
+            <i class="el-icon-cog"></i>
+          </button>
+        </div>
+      </div>
 
-	<div id="default-save">
-		<div class="save">
-			<div class="overlay"></div>
-			<input type="text" class="save-name" value="Save" readonly>
-			<button class="save-options">
-				<i class="el-icon-cog"></i>
-			</button>
-		</div>
-	</div>
+      <div class="start-time time">
+        <input type="text" id="start-time" class="time-input" value="00:00" readonly>
+      </div>
 
-	<div class="start-time time">
-		<input type="text" id="start-time" class="time-input" value="00:00" readonly>
-	</div>
+    </div>
 
-</div>
+    <script src="js/dayplanner.js"></script>
+    <script src="js/time.js"></script>
+    <script src="js/lib.js"></script>
+    <script src="js/storage.js"></script>
 
-<script src="js/dayplanner.js"></script>
-<script src="js/time.js"></script>
-<script src="js/lib.js"></script>
-<script src="js/storage.js"></script>
-
-<script>
-	DayPlanner.init();
-</script>
+    <script>
+      DayPlanner.init();
+    </script>
+  </body>
+</html>
