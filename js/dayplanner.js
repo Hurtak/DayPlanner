@@ -239,7 +239,7 @@ var DayPlanner = function() {
       };
 
       var getItemNameInput = function(item) {
-        return getItemNameDiv(item).getElementsByTagName('input')[0];
+        return getItemNameDiv(item).getElementsByTagName("input")[0];
       };
 
       var getItemName = function(item) {
@@ -260,7 +260,7 @@ var DayPlanner = function() {
       };
 
       var getItemDurationInput = function(item) {
-        return getItemDurationDiv(item).getElementsByTagName('input')[0];
+        return getItemDurationDiv(item).getElementsByTagName("input")[0];
       };
 
       var getItemDuration = function(item) {
@@ -550,7 +550,7 @@ var DayPlanner = function() {
       var items = getItems();
       var saveIndex = getElementIndex(getOpenedSave());
 
-      if (typeof data[saveIndex] !== 'object') {
+      if (typeof data[saveIndex] !== "object") {
         data[saveIndex] = {};
       }
 
@@ -725,7 +725,7 @@ var DayPlanner = function() {
     };
 
     var show = function(element) {
-      element.classList.remove('hidden');
+      element.classList.remove("hidden");
     };
 
   // *** INIT ***
@@ -842,7 +842,7 @@ var DayPlanner = function() {
         hideMenu();
       };
 
-      document.getElementById("colors").addEventListener('click', function(e){
+      document.getElementById("colors").addEventListener("click", function(e){
         setItemColor(getOpenedItem(), getItemColor(e.target));
         saveItems();
       });
