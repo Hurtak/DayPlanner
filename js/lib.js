@@ -1,4 +1,6 @@
-var Lib = function() {
+/*exported Lib */
+
+var Lib = (function() {
   "use strict";
 
   var isNumber = function(n) {
@@ -50,4 +52,4 @@ var Lib = function() {
     getDocumentHeight: getDocumentHeight
   };
 
-}();
+}());

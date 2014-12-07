@@ -1,4 +1,8 @@
-"use strict";
+/*global Lib, Storage, Time */
+/*exported DayPlanner */
+
+var DayPlanner = (function() {
+  "use strict";
 
   var minItemHeight = 42; // px
   var maxItemHeight = 200; // px
@@ -29,12 +33,8 @@
     };
 
     var isLastElement = function(element) {
-      var items = element.parentNode;
-      if (items.children[items.children.length - 1] === element) {
-        return true;
-      } else {
-        return false;
-      }
+      var items = element.parentNode.children;
+      return items[items.length - 1] === element;
     };
 
     var moveElement = function(element, moveUp) {
@@ -317,7 +317,6 @@
     };
 
     var showMenu = function(item) {
-
       item.appendChild(getMenu());
 
       if (isFirstElement(item)) {
@@ -372,7 +371,6 @@
       return save.querySelector(".save-name");
     };
 
-
     var openSave = function(save) {
       save.className += " selected";
     };
@@ -380,7 +378,6 @@
     var closeSaves = function() {
       getSaveContainer().querySelector(".selected").classList.remove("selected");
     };
-
 
     var deleteAllSaves = function() {
       var saves = getSaves();
@@ -772,9 +769,7 @@
       if (debugMode) {
         document.getElementById("debug").style.display = "block";
         document.getElementById("test").onclick = function() {
-          console.log(
-            getElementIndex(getOpenedSave())
-          );
+          console.log(getElementIndex(getOpenedSave()));
         };
       }
     };
@@ -953,4 +948,4 @@
     init: init
   };
 
-}();
+}());

@@ -1,4 +1,6 @@
-var Time = function() {
+/*exported Time */
+
+var Time = (function() {
   "use strict";
 
   var addLeadingZeros = function(number) {
@@ -31,4 +33,4 @@ var Time = function() {
     minutesToTime: minutesToTime
   };
 
-}();
+}());

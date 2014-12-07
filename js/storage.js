@@ -1,4 +1,6 @@
-var Storage = function() {
+/*exported Storage */
+
+var Storage = (function() {
   "use strict";
 
   var save = function(objectName, object) {
@@ -18,4 +20,4 @@ var Storage = function() {
     load: load
   };
 
-}();
+}());
