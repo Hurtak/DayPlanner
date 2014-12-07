@@ -1,10 +1,5 @@
 "use strict";
 
-var DayPlanner = function() {
-  var tadd;
-
-  var menu;
-
   var minItemHeight = 42; // px
   var maxItemHeight = 200; // px
 
@@ -321,18 +316,9 @@ var DayPlanner = function() {
       return document.getElementById("menu");
     };
 
-    var isMenuShown = function() {
-      if (getItemsContainer().querySelector("#menu")) {
-        return true;
-      }
-      return false;
-    };
-
     var showMenu = function(item) {
 
       item.appendChild(getMenu());
-
-      var openedItem = getOpenedItem();
 
       if (isFirstElement(item)) {
         // first item
@@ -781,7 +767,6 @@ var DayPlanner = function() {
       menuInit();
       saveInit();
       saveMenuInit();
-      timeInit();
 
       // debug functions
       if (debugMode) {
