@@ -1,6 +1,5 @@
-"use strict";
-
 var Storage = function() {
+	"use strict";
 
 	var save = function(objectName, object) {
 		object = JSON.stringify(object);

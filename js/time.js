@@ -1,6 +1,5 @@
-"use strict";
-
 var Time = function() {
+	"use strict";
 
 	var addLeadingZeros = function(number) {
 		while (number.length < 2) {

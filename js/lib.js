@@ -1,9 +1,8 @@
-"use strict";
-
 var Lib = function() {
+	"use strict";
 
 	var isNumber = function(n) {
-		return (Object.prototype.toString.call(n) === '[object Number]' || Object.prototype.toString.call(n) === '[object String]') &&!isNaN(parseFloat(n)) && isFinite(n.toString().replace(/^-/, ''));
+		return (Object.prototype.toString.call(n) === "[object Number]" || Object.prototype.toString.call(n) === "[object String]") &&!isNaN(parseFloat(n)) && isFinite(n.toString().replace(/^-/, ""));
 	};
 
 	/**

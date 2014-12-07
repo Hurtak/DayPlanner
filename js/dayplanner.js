@@ -1,6 +1,6 @@
-"use strict";
-
 var DayPlanner = function() {
+	"use strict";
+
 	var menu;
 
 	var minItemHeight = 42; // px
