@@ -1,5 +1,7 @@
+"use strict";
+
 var DayPlanner = function() {
-  "use strict";
+  var tadd;
 
   var menu;
 
@@ -28,12 +30,7 @@ var DayPlanner = function() {
     };
 
     var isFirstElement = function(element) {
-      var items = element.parentNode;
-      if (items.children[0] === element) {
-        return true;
-      } else {
-        return false;
-      }
+      return element.parentNode.children[0] === element;
     };
 
     var isLastElement = function(element) {
@@ -685,15 +682,6 @@ var DayPlanner = function() {
       openSave(getSaves()[loadOpenedSaveIndex()]);
     };
 
-  // *** CURRENT TIME ***
-
-    var timeInit = function() {
-      // TODO
-      // var minTime = getStartTime;
-      // var maxTime = getItems();
-      // maxTime = maxTime[maxTime.length - 1].querySelector(".time").value;
-    };
-
   // *** TIME ***
 
     var getStartTimeDiv = function() {
@@ -951,7 +939,6 @@ var DayPlanner = function() {
         var index = getElementIndex(save);
 
         var data = loadData();
-
 
         createSaveDiv(name, save);
         saveNewSave(name, data[index].startTime, data[index].items, index);
