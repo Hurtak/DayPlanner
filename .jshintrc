@@ -22,5 +22,6 @@
   // Relaxing options
 
   // Environments
-  "browser": true
+  "browser": true,
+  "devel": true
 }
